@@ -23,7 +23,7 @@ app.post('/admin/user/add-user', function (req, res) {
 
     var info = {}
 
-    if (/[a-z\d]{256}/.test(req.body._) === false) {
+    if (/^[a-z\d]{256}$/.test(req.body._) === false) {
         info.msg = '用户名或密码参数非法'
         info.success = false
         res.json(info)
