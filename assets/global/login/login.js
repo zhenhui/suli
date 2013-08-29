@@ -50,7 +50,7 @@ define(function (require, exports, module) {
             }, function (data) {
                 switch (data.status) {
                     case 1:
-                        loginSuccess()
+                        loginSuccess(data)
                         break
                     case -1:
                         loginFail(data)
@@ -64,30 +64,33 @@ define(function (require, exports, module) {
 
     })
 
-
-    function loginSuccess() {
-        var loginContainer = $('#login-register-area')
-        $('.J-login-register-triggers').animate({
-            height: 0
-        },100,function(){
-
-        });
-
-
-    }
-
-
-    function loginFail() {
-
-    }
-
-
-    new Popup({
+    var popup = new Popup({
         trigger: '.J-login-triggers',
         triggerType: 'click',
         element: template.render(tpl, {status: 'login'}),
         delegateNode: document.body,
         effect: "slide"
     })
+
+
+    function loginSuccess(data) {
+
+        data.status = 'login-success'
+        var html = template.render(tpl, data)
+        $loginNode.append($(html))
+
+        $('.J-login-register-triggers').animate({
+            marginTop: -19
+        }, 100, function () {
+            $('.login-user-info').animate({top: 0}, 100)
+            popup.element.fadeOut()
+            $('.login-user-info img').css('opacity', 0).animate({width: 20, height: 20, opacity: 1})
+        })
+    }
+
+
+    function loginFail(data) {
+
+    }
 
 })

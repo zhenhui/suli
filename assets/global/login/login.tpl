@@ -1,3 +1,4 @@
+#if(status=="login")
 
 <div class="login-small-dialog">
     <div class="wrapper">
@@ -10,10 +11,13 @@
     </div>
 </div>
 
+#elseif(status=="login-success")
 
 <div class="login-user-info">
     <span class="avatar">
-        <img src="http://dribbble.s3.amazonaws.com/users/49563/avatars/original/f7c80d46.jpg?1325837502">
+        <img src="http://dribbble.s3.amazonaws.com/users/49563/avatars/original/f7c80d46.jpg?1325837502"><i></i>
     </span>
-    <span class="J-user-name">username</span>
+    <span class="J-user-name">#{data.name}</span>
 </div>
+
+#end

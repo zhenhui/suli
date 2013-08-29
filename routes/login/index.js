@@ -18,6 +18,7 @@ app.post('/login', function (req, res) {
     //用户名和密码应该是一个256位的效验和，前半是用户名，后半是密码
 
     if (!/[a-z\d]{256}/.test(req.body._)) {
+
         info.status = -1
         info.msg = '用户名和密码不正确'
         res.json(info)
@@ -32,6 +33,11 @@ app.post('/login', function (req, res) {
             info.status = 1
             info.msg = '登陆成功'
             info.data = data
+
+            req.session.login_ts = Date.now()
+            req.session.name = data.name
+            req.session._id = data._id
+
         } else {
             info.status = -2
             info.msg = '用户名或密码不正确'
@@ -39,5 +45,5 @@ app.post('/login', function (req, res) {
         res.json(info)
     })
 
-
 })
+
