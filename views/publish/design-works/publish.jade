@@ -1,0 +1,48 @@
+extends /layout
+
+block css
+    link(rel='stylesheet', href='/publish/design-works/publish.css')
+
+block content
+    #publish.wrapper
+        .wrapper-990
+            .crumbs
+                a.J-back.back(href="#") 返回
+            form(name="publish",method="post",action="/publish/design-works")
+                table
+                    tr
+                        th 标题
+                        td
+                            input.text(type="text",name="title",placeholder="20字以内")
+                    tr
+                        th 简介
+                        td
+                            textarea(name="content",placeholder="200字以内")
+                    tr
+                        th 缩略图
+                        td
+                            label.btn(for="upload-thumbnails",tabindex="0") 上传
+                            input.hide#upload-thumbnails(type="file")
+                            a(href="/down",download="缩略图模板.psd") 下载缩略图模板
+                            span  大小200x175.格式 jpg
+                    tr
+                        th 设计作品
+                        td
+                            | jpg或者gif格式文件
+                            .J-upload-file-triggers
+                                span.tip.J-tip 点击上传或者拖动文件到此处
+                    tr
+                        th 附件
+                        td
+                            .btn.btn-small 上传
+                            |  最多上传3个
+                    tr
+                        th 标签
+                        td
+                            input(type="text",name="tag")
+                            | 标签之间用空格隔开
+                            .J-tag
+                    tr.submit
+                        td(colspan=2)
+                            button.btn.btn-large(type="submit",name="preview") 预览
+                            button.btn.btn-large(type="submit",name="publish") 发布

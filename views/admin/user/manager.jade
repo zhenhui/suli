@@ -1,0 +1,55 @@
+extends /layout
+
+block css
+    link(rel='stylesheet', href='/admin/user/manager.css')
+block js
+    script.
+        seajs.use('/admin/user/manager')
+
+block content
+    .wrapper
+        .wrapper-990
+            h1 添加新用户
+            form#add-user(action="/admin/user/add-user",method="post",name="add-user")
+                table
+                    tr
+                        th(width) 用户名
+                        td
+                            input(type="text",name="user-name")
+                    tr
+                        th 密码
+                        td
+                            input(type="password",name="pwd1")
+
+                    tr
+                        th 确认密码
+                        td
+                            input(type="password",name="pwd2")
+                    tr
+                        th 权限(空格隔开)
+                        td
+                            input(type="text",name="group")
+                    tr
+                        th
+                        td
+                            input.btn.btn-large(type="submit",value="添加用户")
+            h1 编辑用户权限
+            #edit-user
+                table
+                    tr
+                        th.user-name 用户名
+                        th.group 权限(空格隔开)
+                        th.st 创建时间
+                        th.control 操作
+                    - docs.forEach(function(user){
+                        tr
+                            td
+                                span.user-name=user.name
+                            td
+                                input.group(type="text",name="group",value="#{user.group}")
+                            td
+                                - var d = new Date(user.ts)
+                                span.ts #{d.getFullYear()}-#{d.getMonth()+1}-#{d.getDate()} #{d.toLocaleTimeString()}
+                            td
+                                a(href="./delete/user/#{user._id}") 删除
+                    -})

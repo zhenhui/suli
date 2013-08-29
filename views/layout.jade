@@ -1,8 +1,60 @@
 doctype 5
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/reset.css')
-    link(rel='stylesheet', href='/style.css')
-  body
-    block content
+    head
+        title= title
+        link(rel='stylesheet', href='/reset.css')
+        link(rel='stylesheet', href='/global.css')
+        block css
+    body
+        #navigation
+            .wrapper
+                .wrapper-990
+                    h1 Logo
+                    ul
+                        li
+                            a 作品展
+                        li
+                            a 文章
+                        li
+                            a 关于我们
+                        li
+                            a 招聘
+                        li
+                            #login-register-area
+                                //#user-info
+                                    span
+                                        img(src="http://dribbble.s3.amazonaws.com/users/49563/avatars/original/f7c80d46.jpg?1325837502")
+                                    span.user_name Jakon
+                                    .list
+                                        a 信息
+                                        a("/publish/design-works") 发布作品
+                                        a 设置帐号
+                                        a 退出
+
+                                .J-login-register-triggers
+                                    a.J-login-triggers(href="#") 登陆
+                                    span.J-spector.spector /
+                                    a(href="#") 注册
+
+
+        block content
+        a.J-login-triggers(href="#") 登陆
+
+        script(src="/global/sea.js")
+        script.
+            seajs.config({
+                base: "/sea-modules/",
+                vars: {
+                    locale: 'zh-cn'
+                },
+                plugins: ['text'],
+                alias: {
+                    "$": '/global/jquery',
+                    template: 'xiongsongsong/template/1.1.0/template',
+                    'text': 'seajs/seajs-text/1.0.2/seajs-text',
+                    'sha3':'/global/crypto/sha3'
+                },
+                preload: ['$','text','sha3']
+            });
+            seajs.use('/global/init')
+        block js

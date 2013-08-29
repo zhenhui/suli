@@ -1,0 +1,93 @@
+/**
+ * Created with JetBrains WebStorm.
+ * User: 松松
+ * Date: 13-8-27
+ * Time: 下午9:19
+ * To change this template use File | Settings | File Templates.
+ */
+
+
+
+define(function (require, exports, module) {
+
+    var $loginNode = $('#login-register-area')
+    var Popup = require('arale/popup/1.1.4/popup')
+    var sha3 = require('sha3')
+
+    $loginNode.mouseenter(function () {
+        $loginNode.find('.J-spector').stop(true, true)
+        $loginNode.find('.J-spector').animate({opacity: 0}, 200)
+    }).mouseleave(function () {
+            $loginNode.find('.J-spector').animate({opacity: 1}, 200)
+        })
+
+    var tpl = require('./login.tpl')
+
+    var template = require('template')
+
+
+    //如果是登陆的FORM
+    $(document).on('submit', 'form', function (ev) {
+
+        if (this.action.indexOf('/login') > -1) {
+            ev.preventDefault();
+
+            var user = $.trim(this.elements["user-name"].value)
+            var pwd = $.trim(this.elements["pwd"].value)
+
+            if (user.length < 2) {
+                alert('用户名长度太短，至少2个字符')
+                return
+            }
+
+            if (pwd.length < 2) {
+                alert('密码必须大于3位')
+                return
+            }
+
+            $.post("/login", {
+                "_": sha3(user).toString() + sha3(pwd).toString()
+            }, function (data) {
+                switch (data.status) {
+                    case 1:
+                        loginSuccess()
+                        break
+                    case -1:
+                        loginFail(data)
+                        break
+                    case -2:
+                        loginFail(data)
+                        break
+                }
+            }, 'json')
+        }
+
+    })
+
+
+    function loginSuccess() {
+        var loginContainer = $('#login-register-area')
+        $('.J-login-register-triggers').animate({
+            height: 0
+        },100,function(){
+
+        });
+
+
+    }
+
+
+    function loginFail() {
+
+    }
+
+
+    new Popup({
+        trigger: '.J-login-triggers',
+        triggerType: 'click',
+        element: template.render(tpl, {status: 'login'}),
+        delegateNode: document.body,
+        effect: "slide"
+    })
+
+})
