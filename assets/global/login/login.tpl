@@ -1,4 +1,4 @@
-#if(status=="login")
+#if(status<1)
 
 <div class="login-small-dialog">
     <div class="wrapper">
@@ -11,13 +11,24 @@
     </div>
 </div>
 
-#elseif(status=="login-success")
+#elseif(status==1)
 
-<div class="login-user-info">
+<div class="login-user-info J-logged-list-triggers">
     <span class="avatar">
         <img src="http://dribbble.s3.amazonaws.com/users/49563/avatars/original/f7c80d46.jpg?1325837502"><i></i>
     </span>
-    <span class="J-user-name">#{data.name}</span>
+    <span class="J-user-name">#{name}</span>
 </div>
 
+#elseif(status=="logged")
+<div class="logged-list J-logged-list">
+    <div class="list">
+        <ul>
+            <li><a href="#">信息</a></li>
+            <li><a href="/publish/design-works">上传作品</a></li>
+            <li><a href="/admin/user">设置帐号</a></li>
+            <li><a href="/login/login-out">退出</a></li>
+        </ul>
+    </div>
+</div>
 #end

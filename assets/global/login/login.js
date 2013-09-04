@@ -67,7 +67,15 @@ define(function (require, exports, module) {
     var popup = new Popup({
         trigger: '.J-login-triggers',
         triggerType: 'click',
-        element: template.render(tpl, {status: 'login'}),
+        element: template.render(tpl, {status: '0'}),
+        delegateNode: document.body,
+        effect: "slide"
+    })
+
+    var loggedPopup = new Popup({
+        trigger: '.J-logged-list-triggers',
+        triggerType: 'click',
+        element: template.render(tpl, {status: 'logged'}),
         delegateNode: document.body,
         effect: "slide"
     })
@@ -75,7 +83,8 @@ define(function (require, exports, module) {
 
     function loginSuccess(data) {
 
-        data.status = 'login-success'
+        if (popup && popup.element) popup.element.fadeOut(100)
+
         var html = template.render(tpl, data)
         $loginNode.append($(html))
 
@@ -83,7 +92,6 @@ define(function (require, exports, module) {
             marginTop: -19
         }, 100, function () {
             $('.login-user-info').animate({top: 0}, 100)
-            popup.element.fadeOut()
             $('.login-user-info img').css('opacity', 0).animate({width: 20, height: 20, opacity: 1})
         })
     }
@@ -92,5 +100,13 @@ define(function (require, exports, module) {
     function loginFail(data) {
 
     }
+
+    $.getJSON('/login/is-login?r=' + Math.random(), function (data) {
+        if (data.status == 1) {
+            loginSuccess(data)
+        } else {
+            loginFail(data)
+        }
+    })
 
 })
