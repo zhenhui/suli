@@ -72,7 +72,7 @@ define(function (require, exports, module) {
         effect: "slide"
     })
 
-    var loggedPopup = new Popup({
+    new Popup({
         trigger: '.J-logged-list-triggers',
         triggerType: 'click',
         element: template.render(tpl, {status: 'logged'}),

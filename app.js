@@ -16,7 +16,12 @@ app.set('view engine', 'jade')
 app.locals.basedir = './views'
 app.use(express.favicon())
 app.use(express.logger('dev'))
-app.use(express.bodyParser())
+
+app.use(express.bodyParser({keepExtensions: false, uploadDir: __dirname + '/temp'}));
+
+//上传文件上限100Mb
+app.use(express.limit(1024 * 100000));
+
 app.use(express.methodOverride())
 app.use(express.cookieParser('your secret here'))
 app.use(express.session())
@@ -32,8 +37,6 @@ if ('development' == app.get('env')) {
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'))
 })
-
-var crypto = require("sha3")
 
 exports.app = app
 

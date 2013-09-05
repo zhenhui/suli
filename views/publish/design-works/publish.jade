@@ -3,6 +3,10 @@ extends /layout
 block css
     link(rel='stylesheet', href='/publish/design-works/publish.css')
 
+block js
+    script.
+        seajs.use('/publish/design-works/init')
+
 block content
     #publish.wrapper
         .wrapper-990
@@ -35,7 +39,7 @@ block content
                         th 附件
                         td
                             .btn.btn-small 上传
-                            |  最多上传3个
+                            | 最多上传3个
                     tr
                         th 标签
                         td
