@@ -20,12 +20,12 @@ var fileSize = 150 * 1024 * 1000
 
 exports.saveFile = function (req, res) {
 
-    var serverInfo = {
+    var uploadInfo = {
         err: []
     }
 
     if (!req.files || !req.files.file) {
-        serverInfo.err.push('未接收到文件')
+        uploadInfo.err.push('未接收到文件')
         end()
         return
     }
@@ -39,7 +39,7 @@ exports.saveFile = function (req, res) {
         } else {
             //大于fileSize的文件，直接删除
             fs.unlink(f.path)
-            serverInfo.err.push('不能上传大于' + fileSize + '的文件')
+            uploadInfo.err.push('不能上传大于' + fileSize + '的文件')
             end()
             return false
         }
@@ -52,7 +52,7 @@ exports.saveFile = function (req, res) {
      }*/
 
     if (file.length > 1) {
-        serverInfo.err.push('必须且只能上传1个文件')
+        uploadInfo.err.push('必须且只能上传1个文件')
         end()
         //删除所有临时文件
         file.forEach(function (f) {
@@ -65,7 +65,7 @@ exports.saveFile = function (req, res) {
     file = file[0]
 
     if (file.size < 1) {
-        serverInfo.err.push('不允许上传0字节文件')
+        uploadInfo.err.push('不允许上传0字节文件')
         end()
         return
     }
@@ -92,59 +92,49 @@ exports.saveFile = function (req, res) {
             //如果是允许上传的图片文件
             if (!err && allowFile[format.toLowerCase()]) {
 
-                console.log(file.name + '是合法的图片文件，源图格式为：' + extName, '当前格式为：' + file.format)
+                format = format.toLowerCase()
 
-                //将图片的方向旋转正确，并且获取文件的尺寸
-                gm(file.path).autoOrient().size(function (err, size) {
+                if (format === 'jpg' || format === 'jpeg') format = 'jpg'
 
+                file.format = format
+
+                console.log('图片格式为' + format, '开始获取文件大小')
+
+                //获取大小
+
+                gm(file.path).size(function (err, size) {
                     if (!err) {
-                        file.width = size.width
-                        file.height = size.height
-                        //文件的真实格式
-                        file.format = format
-
-                        console.log('有效的图片文件，原始扩展名' + extName, '真实扩展名' + file.format)
-
-                        options.metadata.origin_name = file.name.substring(0, file.name.lastIndexOf('.') + 1) + file.format
-                        options.metadata.ext = file.format
-
-                        options.metadata.width = file.width
-                        options.metadata.owner = req.session._id
-                        options.metadata.height = file.height
-
-                        //将meta信息发送会浏览器端
-                        serverInfo.metadata = {
-                            width: file.width,
-                            height: file.height,
-                            ext: file.format
+                        //如果是PSD之外的文件，则获取文件描述信息
+                        if (format !== 'psd') {
+                            console.log('开始获取文件描述信息')
+                            gm(file.path).identify(function (err, profile) {
+                                if (!err) {
+                                    console.log('获取到了文件描述信息')
+                                    options.metadata.profile = profile
+                                    saveOriginImageFile(file, size)
+                                } else {
+                                    console.log('读取profile时发生错误', err)
+                                    uploadInfo.err.push('读取profileF时发生错误')
+                                    end()
+                                    unlink(file.path)
+                                }
+                            })
+                        } else {
+                            console.log('开始保存原图')
+                            saveOriginImageFile(file, size)
                         }
-
-                        //保存原始文件,原图的标志为：_origin
-                        var fileName = file.fileId + '_origin' + '_w' + file.width + '_h' + file.height + '.' + file.format
-                        serverInfo._id = fileName
-                        console.log('保存原始文件' + fileName)
-                        var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
-                        gs.writeFile(file.path, function (err) {
-                            if (!err) {
-                                //开始生成并保存各种缩略图
-                                resize(file)
-                                end()
-                            } else {
-                                serverInfo.err.push('无法保存' + file.name)
-                                unlink(file.path)
-                                end()
-                            }
-                        })
                     } else {
-                        console.log('无效的图片文件', err)
-                        serverInfo.err.push('无效的图片文件')
-                        unlink(file.path)
+                        console.log('无法获取文件的尺寸', err)
+                        uploadInfo.err.push('无法获取文件的尺寸')
                         end()
+                        unlink(file.path)
                     }
                 })
+
+
             } else {
                 console.log('无效的图片文件', err)
-                serverInfo.err.push('无效的图片文件')
+                uploadInfo.err.push('无效的图片文件')
                 unlink(file.path)
                 end()
             }
@@ -154,75 +144,161 @@ exports.saveFile = function (req, res) {
         saveOriginFile()
     }
 
-    function end() {
-        if (serverInfo.err.length < 1) {
-            delete serverInfo.err
-            serverInfo.origin_name = file.name
-            serverInfo.size = file.size
+
+    //保存图片的原始数据
+    function saveOriginImageFile(file, size) {
+
+        file.width = size.width
+        file.height = size.height
+
+        options.metadata.origin_name = file.name.substring(0, file.name.lastIndexOf('.') + 1) + file.format
+        options.metadata.ext = file.format
+
+        options.metadata.width = size.width
+        options.metadata.owner = req.session._id
+        options.metadata.height = size.height
+
+        //保存原始文件,原图的标志为：_origin
+        var fileName = file.fileId + '_origin' + '_w' + size.width + '_h' + size.height + '.' + file.format
+        uploadInfo._id = fileName
+        console.log('保存原始文件' + fileName)
+
+        var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
+        gs.writeFile(file.path, function (err) {
+            if (!err) {
+                end()
+                //预处理图片，以准备生成缩略图
+                预处理图片(file)
+            } else {
+                uploadInfo.err.push('无法保存' + file.name)
+                end()
+                unlink(file.path)
+            }
+        })
+    }
+
+    //TODO:缩放前的预处理工作
+    //预处理完成后，方可生成各种规格的缩略图文件
+    function 预处理图片(file) {
+
+        console.log('开始预处理，图片格式为：' + file.format)
+
+        switch (file.format) {
+            //对于jpeg，提供一个原比例90压缩率的版本
+            case 'jpg':
+                var qualityPath = file.path + '_quality80'
+                gm(file.path).noProfile().quality(80).write(qualityPath, function (err) {
+                    var fileName = file.fileId + '_quality' + '_w' + file.width + '_h' + file.height + '.' + file.format
+                    var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
+                    gs.writeFile(qualityPath, function (err) {
+                        if (!err) {
+                            //开始生成并保存各种缩略图
+                            resize(file)
+                            unlink(qualityPath)
+                        } else {
+                            unlink(file.path)
+                        }
+                    })
+                })
+                break;
+            //对于gif，不优化直接进行压缩
+            case 'gif':
+                resize(file)
+                break;
+            case 'psd':
+                var dstPath = file.path + '_psd_to_jpg.jpg'
+                console.log('开始预处理PSD', file.path)
+                gm.subClass({ imageMagick: true })(file.path + '[0]').setFormat('jpg').write(dstPath, function (err) {
+                    if (!err) {
+                        unlink(file.path)
+                        file.path = dstPath
+                        file.format = 'jpg'
+                        var fileName = file.fileId + '_quality' + '_w' + file.width + '_h' + file.height + '.' + file.format
+                        var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
+                        gs.writeFile(dstPath, function (err) {
+                            if (!err) {
+                                //开始生成并保存各种缩略图
+                                resize(file)
+                            } else {
+                                uploadInfo.err.push('无法保存' + file.name)
+                                unlink(dstPath)
+                            }
+                        })
+                    } else {
+                        console.log(err)
+                        unlink(file.path)
+                    }
+                })
+                break;
+            //直接进行尺寸压缩，不进行任何优化
+            case 'png':
+                resize(file)
+                break;
+
         }
-        res.end(JSON.stringify(serverInfo, undefined, '    '))
     }
 
     function saveOriginFile() {
         console.log('非图片格式，直接进行保存，文件类型是：' + extName)
         options.metadata.origin_name = file.name
         var fileName = file.fileId + '.' + extName
-        serverInfo._id = fileName
+        uploadInfo._id = fileName
         var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
-        /*  gs.writeFile(files.path, function (err) {
-         if (!err) {
-         console.log(files.name + '保存成功')
-         } else {
-         serverInfo.err.push(fileName + '无法保存')
-         console.log(files.name + '保存失败', err)
-         }
-         end()
-         })*/
+        gs.writeFile(file.path, function (err) {
+            if (!err) {
+                console.log(file.name + '保存成功')
+            } else {
+                uploadInfo.err.push(fileName + '无法保存')
+                console.log(file.name + '保存失败', err)
+            }
+            end()
+        })
 
 
     }
+
+    function end() {
+        if (uploadInfo.err.length < 1) {
+            delete uploadInfo.err
+            uploadInfo.origin_name = file.name
+            uploadInfo.size = file.size
+        }
+        res.end(JSON.stringify(uploadInfo, undefined, '    '))
+    }
+
 }
 
+
 var allowFile = {
-    'jpg': 'image/jpg',
-    'jpeg': 'image/jpg',
-    'gif': 'image/gif',
-    'png': 'image/png'
+    'jpg': {
+        dstExtName: 'jpg'
+    },
+    'jpeg': {
+        dstExtName: 'jpg'
+    },
+    'gif': {
+        dstExtName: 'gif'
+    },
+    'png': {
+        dstExtName: 'png'
+    },
+    'psd': {
+        dstExtName: 'png'
+    }
 }
 
 
 //各种规格
 var resizeParam = [
     {
-        width: 20,
+        width: 50,
         height: 20,
-        quality: 60
-    } ,
-    {
-        width: 30,
-        height: 30,
-        quality: 60
-    },
-    {
-        width: 55,
-        height: 55,
-        quality: 60
-    },
-    {
-        width: 80,
-        height: 80,
-        quality: 60
+        quality: 90
     },
     {
         width: 190,
-        height: 70,
-        quality: 60
-    } ,
-    {
-        width: 230,
-        height: 175,
-        quality: 80
-    } ,
+        quality: 90
+    },
     {
         width: 790,
         quality: 90
@@ -239,32 +315,83 @@ function resize(file) {
 
     function _resize() {
         if (_resizeParam.length < 1) {
-            // unlink(file.path)
+            unlink(file.path)
             return
         }
         var cur = _resizeParam.shift()
 
         //生成缩略图并存入库中
-        var fileName = file.fileId + '_w' + cur.width + '_h' + cur.height + '.' + file.format
+        var fileName = file.fileId + '_w_' + cur.width + '_h_' + (cur.height ? cur.height : 'geometric')
 
-        //生成图片后的路径
-        var dstSrc = path.join(path.dirname(file.path), fileName).toString()
+        //转换后的图片路径
+        var dstSrc = path.join(path.dirname(file.path), fileName).toString() + '.' + file.format
 
-        //生成缩略图，并且为60%的质量
-        gm(file.path).resize(cur.width, (cur.height ? cur.height : null)).noProfile().quality(cur.quality).write(dstSrc, function (err) {
-            if (!err) {
-                var gs = new GridStore(DB.dbServer, fileName, fileName, "w", {
-                    "chunk_size": 10240
+        fileName += '.' + file.format
+
+        console.log('压缩并生成缩略图', file.format)
+
+        switch (file.format) {
+            //PSD因为压缩后会生成jpg，所以其实是case 'jpg|psd''
+            case 'jpg':
+                gm(file.path).resize(cur.width, (cur.height ? cur.height : null)).noProfile().quality(cur.quality).write(dstSrc, function (err) {
+                    if (!err) {
+                        save(fileName, dstSrc)
+                    } else {
+                        console.log(err)
+                        unlink(dstSrc)
+                        _resize()
+                    }
                 })
-                gs.writeFile(dstSrc, function (err) {
+                break;
+            case 'gif':
+                //增加背景色是为了减弱gif的锯齿，类似于ps中的杂边
+                //http://imagemagick.org/Usage/anim_mods/
+                //Resize with Flatten, A General Solution.
+                gm.subClass({ imageMagick: true })(file.path).coalesce().borderColor('white').border(0, 0).resize(cur.width, (cur.height ? cur.height : null)).write(dstSrc, function (err) {
+                    if (!err) {
+                        save(fileName, dstSrc)
+                    } else {
+                        console.log(err)
+                        unlink(dstSrc)
+                        _resize()
+                    }
+                })
+                break;
+            case 'png':
+                gm(file.path).resize(cur.width, (cur.height ? cur.height : null)).write(dstSrc, function (err) {
+                    if (!err) {
+                        save(fileName, dstSrc)
+                    } else {
+                        console.log(err)
+                        unlink(dstSrc)
+                        _resize()
+                    }
+                })
+                break;
+        }
+
+    }
+
+    function save(fileName, path) {
+        //获取生成后的图片的实际大小
+        gm(path).size(function (err, size) {
+            if (!err) {
+                var option = {
+                    "chunk_size": 10240,
+                    metadata: {
+                        width: size.width,
+                        height: size.height
+                    }
+                }
+                var gs = new GridStore(DB.dbServer, fileName, fileName, "w", option)
+                gs.writeFile(path, function (err) {
                     if (err) console.log(err)
-                    //  unlink(dstSrc)
+                    unlink(path)
                     _resize()
                 })
             } else {
-                console.log(err)
-                //  unlink(dstSrc)
-                _resize()
+                unlink(path)
+                console.log('无法获取优化后的图片大小')
             }
         })
     }
@@ -281,6 +408,7 @@ function resize(file) {
 
 function unlink(file) {
     if (!file) return
+    return
     fs.unlink(file, function (err) {
         if (!err) {
             console.log(file + '\t already unlink')
