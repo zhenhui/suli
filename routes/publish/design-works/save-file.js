@@ -152,11 +152,8 @@ exports.saveFile = function (req, res) {
         file.height = size.height
 
         options.metadata.origin_name = file.name.substring(0, file.name.lastIndexOf('.') + 1) + file.format
-        options.metadata.ext = file.format
 
-        options.metadata.width = size.width
         options.metadata.owner = req.session._id
-        options.metadata.height = size.height
 
         //保存原始文件,原图的标志为：_origin
         var fileName = file.fileId + '_origin' + '_w' + size.width + '_h' + size.height + '.' + file.format
@@ -177,7 +174,6 @@ exports.saveFile = function (req, res) {
         })
     }
 
-    //TODO:缩放前的预处理工作
     //预处理完成后，方可生成各种规格的缩略图文件
     function 预处理图片(file) {
 
@@ -208,7 +204,7 @@ exports.saveFile = function (req, res) {
             case 'psd':
                 var dstPath = file.path + '_psd_to_jpg.jpg'
                 console.log('开始预处理PSD', file.path)
-                gm.subClass({ imageMagick: true })(file.path + '[0]').setFormat('jpg').write(dstPath, function (err) {
+                gm.subClass({ imageMagick: true })(file.path + '[0]').setFormat('jpg').quality(90).write(dstPath, function (err) {
                     if (!err) {
                         unlink(file.path)
                         file.path = dstPath
@@ -268,7 +264,6 @@ exports.saveFile = function (req, res) {
 
 }
 
-
 var allowFile = {
     'jpg': {
         dstExtName: 'jpg'
@@ -287,18 +282,20 @@ var allowFile = {
     }
 }
 
-
-//各种规格
+//缩略图规格
 var resizeParam = [
     {
-        width: 50,
-        height: 20,
+        width: 100,
         quality: 90
     },
     {
-        width: 190,
-        quality: 90
-    },
+        width: 200,
+        quality: 1
+    } ,
+    {
+        width: 500,
+        quality: 50
+    } ,
     {
         width: 790,
         quality: 90
@@ -328,7 +325,7 @@ function resize(file) {
 
         fileName += '.' + file.format
 
-        console.log('压缩并生成缩略图', file.format)
+        console.log('压缩并生成缩略图', '原图：' + file.path, '现在图片：' + file.path)
 
         switch (file.format) {
             //PSD因为压缩后会生成jpg，所以其实是case 'jpg|psd''
@@ -391,7 +388,7 @@ function resize(file) {
                 })
             } else {
                 unlink(path)
-                console.log('无法获取优化后的图片大小')
+                console.error('无法获取优化后的图片大小')
             }
         })
     }
@@ -408,12 +405,12 @@ function resize(file) {
 
 function unlink(file) {
     if (!file) return
-    return
+    console.log('正在删除文件：', file)
     fs.unlink(file, function (err) {
         if (!err) {
-            console.log(file + '\t already unlink')
+            console.log('成功删除文件：' + file)
         } else {
-            console.log('unlink fail', err, file)
+            console.error('失败失败：', err, file)
         }
     })
 }
