@@ -7,3 +7,6 @@ require('./publish')
 require('./admin')
 
 require('./login')
+
+//展现共享
+require('./design-works')

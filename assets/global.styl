@@ -1,7 +1,16 @@
+html
+      background-color:#e7e7e7
 body
   font: 14px "华文细黑","微软雅黑",simsun,"Lucida Grande", Helvetica, Arial, sans-serif
   color:#333
-
+.clearfix:after
+    content:"."
+    display:block
+    height:0
+    clear:both
+    visibility:hidden
+.clearfix
+    zoom:1
 a-color=#333333
 hover-color=#ff3b35
 bg-color=#bebfb3
@@ -34,19 +43,31 @@ a:hover
     background:bg-color
     border-radius:2px
     display:inline-block
+    text-align:center
     border:none
     padding:3px 12px
+    font-family:"华文细黑","Microsoft Yahei",sans-serif
 
-.btn:focus
-        outline:solid 1px hover-color
+.btn-normal
+    padding:5px 12px
+    font-size:14px
 
-.btn:active
-        outline:solid 1px hover-color
+.w100
+    width:100%
 
+.block
+    display:block
 
 .btn-large
     padding:11px 24px
     font-size:16px
+
+.btn-error
+    background-color:#ff3d33
+    color:#fff
+
+.btn-error:hover
+    color:#fff
 
 //导航
 #navigation
