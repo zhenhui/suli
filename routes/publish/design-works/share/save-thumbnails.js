@@ -44,11 +44,11 @@ exports.saveFile = function (req, res) {
         }
     })
 
-    /*if (require('helper').isLogin(req) === false) {
-     serverInfo.err.push('请先登陆')
-     end()
-     return
-     }*/
+    if (require('helper').isLogin(req) === false) {
+        uploadInfo.err.push('请先登陆')
+        end()
+        return
+    }
 
     if (file.length > 1) {
         uploadInfo.err.push('必须且只能上传1个文件')

@@ -44,11 +44,11 @@ exports.saveFile = function (req, res) {
         }
     })
 
-    /*if (require('helper').isLogin(req) === false) {
-     serverInfo.err.push('请先登陆')
-     end()
-     return
-     }*/
+    if (require('helper').isLogin(req) === false) {
+        uploadInfo.err.push('请先登陆')
+        end()
+        return
+    }
 
     if (file.length > 1) {
         uploadInfo.err.push('必须且只能上传1个文件')
@@ -72,10 +72,12 @@ exports.saveFile = function (req, res) {
     //生成一一对应的文件ID
     file.fileId = new ObjectID()
 
+    var ownerID = req.session._id
+
     var options = {
         chunk_size: 102400,
         metadata: {
-            owner: req.session._id
+            owner: ownerID
         }
     }
 
@@ -190,7 +192,7 @@ exports.saveFile = function (req, res) {
                     gs.writeFile(qualityPath, function (err) {
                         if (!err) {
                             //开始生成并保存各种缩略图
-                            resize(file)
+                            resize(file, ownerID)
                             unlink(qualityPath)
                         } else {
                             unlink(file.path)
@@ -200,7 +202,7 @@ exports.saveFile = function (req, res) {
                 break;
             //对于gif，不优化直接进行压缩
             case 'gif':
-                resize(file)
+                resize(file, ownerID)
                 break;
             case 'psd':
                 var dstPath = file.path + '_psd_to_jpg.jpg'
@@ -215,7 +217,7 @@ exports.saveFile = function (req, res) {
                         gs.writeFile(dstPath, function (err) {
                             if (!err) {
                                 //开始生成并保存各种缩略图
-                                resize(file)
+                                resize(file, ownerID)
                             } else {
                                 uploadInfo.err.push('无法保存' + file.name)
                                 unlink(dstPath)
@@ -229,7 +231,7 @@ exports.saveFile = function (req, res) {
                 break;
             //直接进行尺寸压缩，不进行任何优化
             case 'png':
-                resize(file)
+                resize(file, ownerID)
                 break;
 
         }
@@ -285,7 +287,7 @@ var resizeParam = [
 ]
 
 //对上传的图片生成不同规格的缩略图
-function resize(file) {
+function resize(file, ownerID) {
 
     //过滤掉无意义的宽度（避免小图转换为大图）
     var _resizeParam = resizeParam.filter(function (item) {
@@ -358,6 +360,7 @@ function resize(file) {
                 var option = {
                     "chunk_size": 10240,
                     metadata: {
+                        owner: ownerID,
                         width: size.width,
                         height: size.height
                     }

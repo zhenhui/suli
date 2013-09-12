@@ -8,11 +8,12 @@
 
 define(function (require, exports, module) {
 
+    //缩略图上限为1Mb
+    var fileSize = 1 * 1024 * 1024
+
     var url = '/publish/design-works/save-thumbnails'
 
     var uploadQueue = []
-
-    var fileSize = 1500000 * 1024 * 1024
 
     function uploadImg() {
 
@@ -21,20 +22,21 @@ define(function (require, exports, module) {
 
         var formData = new FormData()
 
-
         formData.append('file', file)
 
         var xhr = new XMLHttpRequest()
+
+        var $tip = $('.J-thumbnails-status')
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 try {
                     var serverInfo = $.parseJSON(xhr.responseText)
-                    if (serverInfo._id) {
+                    if (serverInfo._id && !serverInfo.err) {
                         $('#thumbnails_id').val(serverInfo._id)
-                        $('.J-thumbnails-status').addClass('text-success').removeClass('text-error').html('上传成功');
+                        $tip.addClass('text-success').removeClass('text-error').html('上传成功');
                     } else {
-                        $('.J-thumbnails-status').addClass('text-error').removeClass('text-success').html('上传失败：' + serverInfo.err);
+                        $tip.addClass('text-error').removeClass('text-success').html('上传失败：' + serverInfo.err);
                     }
                 } catch (e) {
 

@@ -10,4 +10,6 @@ define(function (require, exports, module) {
     require('./upload-main-file')
     //上传缩略图
     require('./upload-thumbnails')
+    //上传附件
+    require('./upload-ps')
 })

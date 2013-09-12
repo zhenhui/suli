@@ -48,7 +48,7 @@ block content
                             label.btn(for="upload-ps",tabindex="0") 上传
                             input.hide#upload-ps(type="file",multiple)
                             | 最多上传3个
-                            input(type="hidden",name="ps_id")
+                            textarea#ps_id.hide(name="ps_id",readonly='readonly')
                             #ps-list
                     tr
                         th 标签

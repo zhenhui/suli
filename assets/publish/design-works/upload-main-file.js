@@ -8,6 +8,8 @@
 
 define(function (require, exports, module) {
 
+    var fileSize = 100 * 1024 * 1024
+
     var $pic = $('div.J-upload-file-triggers')
 
     var url = '/publish/design-works/save-main-file'
@@ -16,9 +18,6 @@ define(function (require, exports, module) {
     $pic.bind('dragenter', function (e) {
         e.preventDefault()
     })
-
-    //存储上传成功的文件
-    var uploadList = []
 
     //拖来拖去 , 一定要注意dragover事件一定要清除默认事件
     //不然会无法触发后面的drop事件
@@ -58,8 +57,6 @@ define(function (require, exports, module) {
         uploadImg()
     }
 
-    var fileSize = 1500000 * 1024 * 1024
-
     var $tip = $('.J-mail-file-status')
 
     function uploadImg() {
@@ -78,7 +75,7 @@ define(function (require, exports, module) {
             if (xhr.readyState === 4) {
                 try {
                     var serverInfo = $.parseJSON(xhr.responseText)
-                    if (serverInfo._id) {
+                    if (serverInfo._id && !serverInfo.err) {
                         $('#main-file_id').val(serverInfo._id)
                         $tip.addClass('text-success').removeClass('text-error').html('上传成功');
                     } else {
