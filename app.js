@@ -19,7 +19,7 @@ app.use(express.logger('dev'))
 
 app.use(express.bodyParser({keepExtensions: false, uploadDir: __dirname + '/temp'}));
 
-//上传文件上限100Mb
+//涓婁紶鏂囦欢涓婇檺100Mb
 app.use(express.limit(1024 * 100000));
 
 app.use(express.methodOverride())
