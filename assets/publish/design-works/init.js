@@ -6,5 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 define(function (require, exports, module) {
-    require('./upload')
+    //上传主图
+    require('./upload-main-file')
+    //上传缩略图
+    require('./upload-thumbnails')
 })

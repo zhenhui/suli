@@ -5,4 +5,4 @@ require('./article')
 require('./share')
 
 //设计作品
-require('./design-works')
+require('./design-works/share')

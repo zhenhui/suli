@@ -27,6 +27,8 @@ block content
                         td
                             label.btn(for="upload-thumbnails",tabindex="0") 上传
                             input.hide#upload-thumbnails(type="file")
+                            span.success.J-thumbnails-status
+                            input#thumbnails_id(type="hidden",name="thumbnails_id")
                             a(href="/down",download="缩略图模板.psd") 下载缩略图模板
                             span  大小200x175.格式 jpg
                     tr
@@ -34,12 +36,20 @@ block content
                         td
                             | jpg或者gif格式文件
                             .J-upload-file-triggers
-                                span.tip.J-tip 点击上传或者拖动文件到此处
+                                input#main-file-field.opacity-0(type="file",name="main-file")
+                                input#main-file_id(type="hidden",name="mail-file_id")
+                                span.tip.J-tip
+                                    label(for="main-file-field")
+                                        span.J-mail-file-status
+                                        | 点击上传或者拖动文件到此处
                     tr
                         th 附件
                         td
-                            .btn.btn-small 上传
+                            label.btn(for="upload-ps",tabindex="0") 上传
+                            input.hide#upload-ps(type="file",multiple)
                             | 最多上传3个
+                            input(type="hidden",name="ps_id")
+                            #ps-list
                     tr
                         th 标签
                         td

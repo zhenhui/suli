@@ -10,8 +10,7 @@ define(function (require, exports, module) {
 
     var $pic = $('div.J-upload-file-triggers')
 
-    var url = '/publish/design-works/save-file'
-
+    var url = '/publish/design-works/save-main-file'
 
     //拖进
     $pic.bind('dragenter', function (e) {
@@ -41,6 +40,7 @@ define(function (require, exports, module) {
     var uploadQueue = []
 
     var dropHandler = function (e) {
+        console.log('Upload')
         //将本地图片拖拽到页面中后要进行的处理都在这
         e.preventDefault()
         var fileList = e.originalEvent.dataTransfer.files
@@ -60,6 +60,8 @@ define(function (require, exports, module) {
 
     var fileSize = 1500000 * 1024 * 1024
 
+    var $tip = $('.J-mail-file-status')
+
     function uploadImg() {
 
         if (uploadQueue.length < 1) return
@@ -75,9 +77,15 @@ define(function (require, exports, module) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 try {
-                    var serverInfo = JSON.parse(xhr.responseText)
+                    var serverInfo = $.parseJSON(xhr.responseText)
+                    if (serverInfo._id) {
+                        $('#main-file_id').val(serverInfo._id)
+                        $tip.addClass('text-success').removeClass('text-error').html('上传成功');
+                    } else {
+                        $tip.addClass('text-error').removeClass('text-success').html('上传失败：' + serverInfo.err);
+                    }
                 } catch (e) {
-
+                    $tip.addClass('text-error').removeClass('text-success').html('上传失败');
                 }
             }
         }
@@ -85,7 +93,9 @@ define(function (require, exports, module) {
         xhr.open('post', url)
         xhr.upload.addEventListener("progress", function (evt) {
             var left = Math.round(evt.loaded * 100 / evt.total) + '%'
+            $tip.removeClass('text-success text-error').html('上传中：' + left)
             if (left === '100%') {
+                $tip.html('上传完成，等待结果中....')
             }
         }, false)
 
@@ -98,27 +108,23 @@ define(function (require, exports, module) {
         if (uploadQueue.length > 0) uploadImg()
     }
 
-    var $uploadFileField = $('#upload-thumbnails')
-    $uploadFileField.on('change', function (ev) {
+    var $uploadMainFile = $('#main-file-field')
+    $uploadMainFile.on('change', function (ev) {
         var files = ev.target.files
 
         for (var i = 0; i < files.length; i++) {
             var file = files[i]
-            files.id = $uploadFileField.attr('id')
+            files.id = $uploadMainFile.attr('id')
             uploadQueue.push(file)
         }
 
         uploadImg()
     })
 
+    var loadImageCl = 0
 
-    exports.getUploadList = function () {
-        return uploadList
+    function getImageUrl(_id) {
+
     }
-
-    exports.clearUploadList = function () {
-        uploadList = []
-    }
-
 
 })

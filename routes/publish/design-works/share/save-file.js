@@ -141,7 +141,9 @@ exports.saveFile = function (req, res) {
         })
     } else {
         //其它格式，直接进行转换
-        saveOriginFile()
+        uploadInfo.err.push('只允许上传图片')
+        unlink(file.path)
+        end()
     }
 
 
@@ -232,25 +234,6 @@ exports.saveFile = function (req, res) {
                 break;
 
         }
-    }
-
-    function saveOriginFile() {
-        console.log('非图片格式，直接进行保存，文件类型是：' + extName)
-        options.metadata.origin_name = file.name
-        var fileName = file.fileId + '.' + extName
-        uploadInfo._id = fileName
-        var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
-        gs.writeFile(file.path, function (err) {
-            if (!err) {
-                console.log(file.name + '保存成功')
-            } else {
-                uploadInfo.err.push(fileName + '无法保存')
-                console.log(file.name + '保存失败', err)
-            }
-            end()
-        })
-
-
     }
 
     function end() {
@@ -414,7 +397,3 @@ function unlink(file) {
         }
     })
 }
-
-var app = require('app')
-
-app.post('/publish/design-works/save-file', exports.saveFile)
