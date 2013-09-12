@@ -15,7 +15,6 @@ var ObjectID = DB.mongodb.ObjectID
 var gm = require('gm')
 
 
-//最大只允许上传10MB的文件
 var fileSize = 10 * 1024 * 1000
 
 exports.saveFile = function (req, res) {

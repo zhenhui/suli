@@ -15,8 +15,7 @@ var ObjectID = DB.mongodb.ObjectID
 var gm = require('gm')
 
 
-//最大只允许上传150MB的文件
-var fileSize = 150 * 1024 * 1000
+var fileSize = 100 * 1024 * 1000
 
 exports.saveFile = function (req, res) {
 
@@ -141,7 +140,7 @@ exports.saveFile = function (req, res) {
         })
     } else {
         //其它格式，直接进行转换
-        uploadInfo.err.push('只允许上传图片')
+        uploadInfo.err.push('只允许上传图片，不支持')
         unlink(file.path)
         end()
     }
