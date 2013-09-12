@@ -74,7 +74,9 @@ exports.saveFile = function (req, res) {
 
     var options = {
         chunk_size: 102400,
-        metadata: { }
+        metadata: {
+            owner: req.session._id
+        }
     }
 
     //获取文件的后缀名

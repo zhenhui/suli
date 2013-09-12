@@ -74,7 +74,9 @@ exports.saveFile = function (req, res) {
 
     var options = {
         chunk_size: 102400,
-        metadata: { }
+        metadata: {
+            owner: req.session._id
+        }
     }
 
     //获取文件的后缀名
@@ -153,8 +155,6 @@ exports.saveFile = function (req, res) {
         file.height = size.height
 
         options.metadata.origin_name = file.name.substring(0, file.name.lastIndexOf('.') + 1) + file.format
-
-        options.metadata.owner = req.session._id
 
         //保存原始文件,原图的标志为：_origin
         var fileName = file.fileId + '_origin' + '_w' + size.width + '_h' + size.height + '.' + file.format
