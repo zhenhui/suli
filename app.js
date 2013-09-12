@@ -19,8 +19,8 @@ app.use(express.logger('dev'))
 
 app.use(express.bodyParser({keepExtensions: false, uploadDir: __dirname + '/temp'}));
 
-//上传文件上限100Mb
-app.use(express.limit(1024 * 100000));
+//req.body实体大小为110M（大多数文件为100M，多余的10M预留给req.body参数）
+app.use(express.limit(110 * 1024 * 1000));
 
 app.use(express.methodOverride())
 app.use(express.cookieParser('your secret here'))
