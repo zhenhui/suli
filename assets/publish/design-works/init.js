@@ -12,4 +12,13 @@ define(function (require, exports, module) {
     require('./upload-thumbnails')
     //上传附件
     require('./upload-ps')
+
+    var form = document.forms['publish']
+    $(document.forms['publish']).on('submit', function (ev) {
+        $.post("/publish/design-works/save", $(form).serialize(), function (data) {
+            console.log(data)
+        });
+        ev.preventDefault()
+    })
+
 })

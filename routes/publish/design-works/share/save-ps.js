@@ -44,7 +44,7 @@ exports.saveFile = function (req, res) {
     })
 
     if (require('helper').isLogin(req) === false) {
-        uploadInfo.err.push('请先登陆')
+        serverInfo.err.push('请先登陆')
         end()
         return
     }

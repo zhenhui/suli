@@ -260,26 +260,15 @@ var allowFile = {
     },
     'png': {
         dstExtName: 'png'
-    },
-    'psd': {
-        dstExtName: 'png'
     }
+    /* ,
+     'psd': {
+     dstExtName: 'png'
+     }*/
 }
 
 //缩略图规格
 var resizeParam = [
-    {
-        width: 100,
-        quality: 90
-    },
-    {
-        width: 200,
-        quality: 1
-    } ,
-    {
-        width: 500,
-        quality: 50
-    } ,
     {
         width: 790,
         quality: 90

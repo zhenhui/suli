@@ -39,7 +39,6 @@ define(function (require, exports, module) {
     var uploadQueue = []
 
     var dropHandler = function (e) {
-        console.log('Upload')
         //将本地图片拖拽到页面中后要进行的处理都在这
         e.preventDefault()
         var fileList = e.originalEvent.dataTransfer.files

@@ -18,7 +18,7 @@ define(function (require, exports, module) {
 
     function uploadImg() {
 
-        if ($psList.find('div.J-ps-success,div.J-process-running').size() >= 3) {
+        if ($psList.find('div.J-success,div.J-process-running').size() >= 3) {
             alert('最多只允许上传3个附件')
             return
         }
@@ -44,15 +44,17 @@ define(function (require, exports, module) {
                     var serverInfo = $.parseJSON(xhr.responseText)
 
                     if (serverInfo._id && !serverInfo.err) {
-                        $('#ps_id').val($('#ps_id').val() + serverInfo._id + '\r\n')
-                        $ps.addClass('J-ps-success')
+                        $ps.addClass('J-success')
                         $ps.append('<a class="J-delete" data-id="' + serverInfo._id + '">删除文件</a>')
                         $ps.find('.J-process').remove()
+                        $ps.attr('data-id', serverInfo._id)
+
+                        getPsList()
                     } else {
-                        $ps('上传失败：' + serverInfo.err.join(','))
+                        $ps.find('.J-process').html('上传失败：' + serverInfo.err.join(','))
                     }
                 } catch (e) {
-                    $ps('服务器异常')
+                    $ps.find('.J-process').html('服务器异常')
                 }
             }
         }
@@ -80,17 +82,34 @@ define(function (require, exports, module) {
         if (uploadQueue.length > 0) uploadImg()
     }
 
+    function getPsList() {
+        $('#ps_id').val('')
+
+        //将上传成功的id  放置到textarea中
+        var ps = []
+        $psList.find('.J-success').each(function (i, item) {
+            ps.push($(item).attr('data-id'))
+        })
+
+        $('#ps_id').val(ps.join('\r\n'))
+    }
+
     //删除文件
     $psList.on('click', '.J-delete', function (ev) {
         var $this = $(this)
         var id = $(this).data('id')
         $this.parent('.J-ps').remove()
+        getPsList()
         $.get('/publish/design-works/delete', {
             id: id
         }, function (data) {
-            console.log(data)
         })
+    })
 
+    //取消上传
+    $psList.on('click', '.J-cancel', function (ev) {
+        $this.parent('.J-ps').remove()
+        xhr.abort()
     })
 
     function showPsList(xhr, file, id) {

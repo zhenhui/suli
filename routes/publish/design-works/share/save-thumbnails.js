@@ -105,8 +105,6 @@ exports.saveFile = function (req, res) {
                 gm(file.path).size(function (err, size) {
                     if (!err && size.width === 200 && size.height === 175) {
                         saveImageFile(file, size)
-                        uploadInfo._id = file.fileId
-                        end()
                     } else {
                         console.log('尺寸不正确', err)
                         uploadInfo.err.push('尺寸不正确')
@@ -156,6 +154,8 @@ exports.saveFile = function (req, res) {
             var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
             gs.writeFile(qualityPath, function (err) {
                 if (!err) {
+                    uploadInfo._id = fileName
+                    end()
                     unlink(qualityPath)
                 } else {
                     unlink(file.path)

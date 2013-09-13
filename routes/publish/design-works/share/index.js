@@ -27,3 +27,6 @@ app.post('/publish/design-works/save-ps', require('./save-ps').saveFile)
 
 //删除文件
 app.get('/publish/design-works/delete', require('./delete').delete)
+
+//保存共享的作品
+app.post('/publish/design-works/save', require('./save').save)
