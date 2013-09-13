@@ -30,8 +30,12 @@ exports.delete = function (req, res) {
 
     //先找出所有的文件
     var collection = new DB.mongodb.Collection(DB.Client, 'fs.files')
-    collection.find({ filename: id }, {_id: 1, fileName: 1, filename: 1}).toArray(function (err, docs) {
+    collection.find({ _id: id }, {_id: 1, filename: 1, 'metadata.owner': 1}).toArray(function (err, docs) {
         if (!err) {
+            //只能删除自己的文件
+            docs = docs.filter(function (item) {
+                return req.session._id === item.metadata.owner
+            })
             res.json({docs: docs})
             deletePSD(docs)
         } else {
