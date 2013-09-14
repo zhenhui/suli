@@ -7,11 +7,43 @@
  */
 
 var app = require('app')
+var helper = require('helper')
 
+//上传作品的界面
 app.get('/publish/design-works', function (req, res) {
 
-    res.render('publish/design-works/publish')
+    var result = {err: []}
+    if (require('helper').isLogin(req) === false) {
+        result.title = '您没有登陆'
+        result.err.push('未登陆')
+        //-10代表未登陆
+        result.status = -10
+        res.render('invalid-group', result)
+        return
+    }
 
+    var allowGroup = '上传个人作品'
+
+    helper.getGroup(req, function (group) {
+        if (group === undefined) {
+            result.title = '您似乎登陆已经失效啦'
+            result.err.push('请重新登陆')
+            res.render('invalid-group', result)
+            return
+        }
+
+        if (group.length > 0 && group.indexOf('上传共享作品') > -1) {
+            res.render('publish/design-works/publish', {type: 'share'})
+        }
+        else if (group.length > 0 && group.indexOf('上传个人作品') > -1) {
+            res.render('publish/design-works/publish', {type: 'my'})
+        } else {
+            result.title = '您没有权限'
+            result.err.push('您没有上传作品的权限')
+            res.render('invalid-group', result)
+            return
+        }
+    })
 })
 
 require('./save-file')

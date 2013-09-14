@@ -11,8 +11,16 @@ var DB = require('db')
 
 exports.save = function (req, res) {
 
+
+    var result = {
+        err: []
+    }
+
     if (require('helper').isLogin(req) === false) {
-        res.json({status: -1, err: '未登陆'})
+        result.err.push('未登陆')
+        //-10代表未登陆
+        result.status = -10
+        res.json(result)
         return
     }
 
@@ -27,16 +35,12 @@ exports.save = function (req, res) {
         ts: Date.now()
     }
 
-    var result = {
-        err: []
-    }
-
     //检测各种异常情况
-    if (typeof data.title !== 'string' || data.title.trim().length > 20) {
+    if (typeof data.title !== 'string' || data.title.trim().length > 20 || data.title.trim().length < 1) {
         result.err.push('标题长度不符合要求')
     }
 
-    if (typeof data.content !== 'string' || data.content.trim().length > 200) {
+    if (typeof data.content !== 'string' || data.content.trim().length > 200 || data.content.trim().length < 1) {
         result.err.push('内容长度必须在0-200之内')
     }
 
@@ -61,6 +65,12 @@ exports.save = function (req, res) {
 
     if (typeof data.file_id !== 'string') {
         result.err.push('您必须上传主图')
+    }
+
+
+    if (result.err.length > 0) {
+        res.json(result)
+        return
     }
 
     var share = new DB.mongodb.Collection(DB.Client, 'design-works-public-share')

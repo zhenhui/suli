@@ -10,28 +10,15 @@ block content
                 h3 管理共享文件
                 .list-area
                     ul.list
-                        li
-                            a(href="./1231234sdf3d23")
-                                img.avatar(src="http://img.hb.aicdn.com/328686f7972250344a3b86c7e59cb0535f4125b0a99a-SUWLSO_fw236w",width="230",height="175")
-                            .user
-                                a.avatar
-                                    img(src="")
-                                span.info 刷卡机上传了文件
-                        li
-                            a(href="./1231234sdf3d23")
-                                img.avatar(src="http://img.hb.aicdn.com/328686f7972250344a3b86c7e59cb0535f4125b0a99a-SUWLSO_fw236w",width="230",height="175")
-                        li
-                            a(href="./1231234sdf3d23")
-                                img.avatar(src="http://img.hb.aicdn.com/328686f7972250344a3b86c7e59cb0535f4125b0a99a-SUWLSO_fw236w",width="230",height="175")
-                        li
-                            a(href="./1231234sdf3d23")
-                                img.avatar(src="http://img.hb.aicdn.com/328686f7972250344a3b86c7e59cb0535f4125b0a99a-SUWLSO_fw236w",width="230",height="175")
-                        li
-                            a(href="./1231234sdf3d23")
-                                img.avatar(src="http://img.hb.aicdn.com/328686f7972250344a3b86c7e59cb0535f4125b0a99a-SUWLSO_fw236w",width="230",height="175")
-                        li
-                            a(href="./1231234sdf3d23")
-                                img.avatar(src="http://img.hb.aicdn.com/328686f7972250344a3b86c7e59cb0535f4125b0a99a-SUWLSO_fw236w",width="230",height="175")
+                        -docs.forEach(function(item){
+                            li
+                                a(href="/design-works/detail/#{item._id}")
+                                    img.avatar(src="/read/#{item.thumbnails_id}",width="230",height="175")
+                                .user
+                                    a.avatar
+                                        img(src="")
+                                    span.info=item.title
+                        -})
         .sidebar
             .manage-control
                 .user-info

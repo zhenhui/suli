@@ -34,6 +34,7 @@ app.post('/admin/user/add-user', function (req, res) {
         name: req.body.name,
         user: req.body._.substring(0, 128),
         pwd: req.body._.substring(128),
+        status: 1,
         ts: Date.now()
     }
 

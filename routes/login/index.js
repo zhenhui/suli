@@ -65,3 +65,9 @@ app.get('/login/is-login', function (req, res) {
 
 })
 
+
+//退出登陆
+app.get('/login/login-out', function (req, res) {
+    req.session.destroy();
+    res.redirect('/');
+})

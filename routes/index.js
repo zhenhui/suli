@@ -10,3 +10,6 @@ require('./login')
 
 //展现共享
 require('./design-works')
+
+//读取GS
+require('./read')
