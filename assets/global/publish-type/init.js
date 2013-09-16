@@ -7,6 +7,9 @@
  */
 
 define(function (require, exports, module) {
+
+    var $body = $(document.body)
+
     $(window).on('keypress', function (ev) {
         var target = ev.target;
         if (ev.keyCode != 78 && ev.keyCode != 110) return
@@ -18,15 +21,22 @@ define(function (require, exports, module) {
     var tpl = require('./type.tpl')
 
     var dialog = new Dialog({
+        trigger: '.J-publish-work',
         content: tpl,
         width: 884,
         height: 306
     })
 
+    $body.on('click', '.J-publish-work', function () {
+        //好让那个折叠菜单隐藏掉
+        $body.trigger('click')
+        //显示出来
+        dialog.show()
+    })
+
 
     exports.show = function () {
-        dialog.render()
         dialog.show()
-	}
+    }
 
 })

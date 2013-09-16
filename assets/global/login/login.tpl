@@ -25,7 +25,7 @@
     <div class="list">
         <ul>
             <li><a href="#">信息</a></li>
-            <li><a href="/publish/design-works">上传作品</a></li>
+            <li><a class="J-publish-work">发布作品</a></li>
             <li><a href="/admin/user">设置帐号</a></li>
             <li><a href="/login/login-out">退出</a></li>
         </ul>

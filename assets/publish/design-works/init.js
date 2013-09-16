@@ -16,7 +16,11 @@ define(function (require, exports, module) {
     var form = document.forms['publish']
     $(document.forms['publish']).on('submit', function (ev) {
         $.post("/publish/design-works/save", $(form).serialize(), function (data) {
-            console.log(data)
+            if (data && data.docs) {
+                window.location.href = '/design-works/share/manage'
+            } else {
+                alert('遇到错误:\r\n' + data.err.join('\r\n'))
+            }
         });
         ev.preventDefault()
     })

@@ -9,5 +9,6 @@
 
 define(function (require, exports, module) {
     require('./login/login')
+    require('./publish-type/init')
 })
 

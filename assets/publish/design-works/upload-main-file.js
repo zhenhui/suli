@@ -76,7 +76,7 @@ define(function (require, exports, module) {
                     var serverInfo = $.parseJSON(xhr.responseText)
                     if (serverInfo._id && !serverInfo.err) {
                         $('#main-file_id').val(serverInfo._id)
-                        $('#main-file-preview').css('background-image', 'url(/read/' + serverInfo._id + ')')
+                        $('#main-file-preview').attr('src', '/read/' + serverInfo._id )
                         $tip.addClass('text-success').removeClass('text-error').html('上传成功');
                     } else {
                         $tip.addClass('text-error').removeClass('text-success').html('上传失败：' + serverInfo.err);
