@@ -17,7 +17,9 @@ block content
                     tr
                         th 标题
                         td
-                            input.text(type="text",name="title",placeholder="20字以内",maxlength=20)
+                            input.title.text(type="text",name="title",placeholder="20字以内",maxlength=20)
+                            select.category(name="category",title="作品分类")
+                                option(value="视觉设计",selected="selected") 视觉设计
                     tr
                         th 简介
                         td

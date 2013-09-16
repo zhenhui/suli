@@ -30,6 +30,7 @@ exports.save = function (req, res) {
         thumbnails_id: req.body.thumbnails_id,
         file_id: req.body['mail-file_id'],
         ps_id: req.body.ps_id,
+        category: req.body.category,
         tag: req.body.tag,
         type: req.body.type,
         owner: req.session._id,
@@ -72,6 +73,19 @@ exports.save = function (req, res) {
         result.err.push('您必须上传主图')
     }
 
+    //作品分类
+    switch (data.category) {
+        case '视觉设计':
+            data.category = '视觉设计'
+            break;
+        default:
+            data.category = '未分类'
+            break;
+    }
+
+    //作品共享&个人
+    //share共享
+    //own个人
     switch (data.type) {
         case 'share':
             data.type = 'share'

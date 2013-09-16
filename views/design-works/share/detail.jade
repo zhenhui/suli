@@ -1,8 +1,23 @@
 extends /layout
 
 block css
-    link(rel="stylesheet",href="/design-works/share/manage.css")
+    link(rel="stylesheet",href="/design-works/share/detail.css")
 
 block content
-    h1 hello world
+    #main-container.wrapper-990.clearfix
+        .main-content
+            h1
+                a.avatar
+                    img(src="http://dribbble.s3.amazonaws.com/users/49563/avatars/original/f7c80d46.jpg?1325837502")
+                span.title 2013年秋冬流行色
+                span.date 2013年6月
+
+            .main-pic-container
+                .main-pic
+                    img(src="http://localhost/read/52370733d9ef702816000061_w_790_h_geometric.png")
+                .ps 附件下载
+                    a 原始文件
+
+
+        .sidebar
 
