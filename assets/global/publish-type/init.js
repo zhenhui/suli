@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created with JetBrains WebStorm.
  * User: 松松
  * Date: 13-9-16
@@ -27,5 +27,6 @@ define(function (require, exports, module) {
     exports.show = function () {
         dialog.render()
         dialog.show()
+	}
 
 })
