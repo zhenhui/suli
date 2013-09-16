@@ -34,10 +34,10 @@ define(function (require, exports, module) {
                     var serverInfo = $.parseJSON(xhr.responseText)
                     if (serverInfo._id && !serverInfo.err) {
                         $('#thumbnails_id').val(serverInfo._id)
-                        $tip.addClass('text-success').removeClass('text-error').html('上传成功');
+                        $tip.addClass('text-success').removeClass('text-error').html('上传成功')
                         $('#thumbnails-preview').attr('src', '/read/' + serverInfo._id).addClass('block')
                     } else {
-                        $tip.addClass('text-error').removeClass('text-success').html('上传失败：' + serverInfo.err);
+                        $tip.addClass('text-error').removeClass('text-success').html('上传失败：' + serverInfo.err)
                     }
                 } catch (e) {
 
@@ -60,7 +60,6 @@ define(function (require, exports, module) {
         }
         if (uploadQueue.length > 0) uploadImg()
     }
-
 
     var $uploadFileField = $('#upload-thumbnails')
     $uploadFileField.on('change', function (ev) {

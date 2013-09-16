@@ -155,11 +155,12 @@ exports.saveFile = function (req, res) {
             gs.writeFile(qualityPath, function (err) {
                 if (!err) {
                     uploadInfo._id = fileName
-                    end()
-                    unlink(qualityPath)
                 } else {
-                    unlink(file.path)
+                    uploadInfo.err.push('无法保存优化后的图片')
                 }
+                end()
+                unlink(qualityPath)
+                unlink(file.path)
             })
         })
 

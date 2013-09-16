@@ -31,6 +31,7 @@ exports.save = function (req, res) {
         file_id: req.body['mail-file_id'],
         ps_id: req.body.ps_id,
         tag: req.body.tag,
+        type: req.body.type,
         owner: req.session._id,
         ts: Date.now()
     }
@@ -67,13 +68,31 @@ exports.save = function (req, res) {
         result.err.push('您必须上传主图')
     }
 
+    if (typeof data.file_id !== 'string') {
+        result.err.push('您必须上传主图')
+    }
+
+    switch (data.type) {
+        case 'share':
+            data.type = 'share'
+            break;
+        case 'own':
+            data.type = 'own'
+            break;
+        case undefined:
+            data.type = 'own'
+            break;
+        default:
+            data.type = 'own'
+            break;
+    }
 
     if (result.err.length > 0) {
         res.json(result)
         return
     }
 
-    var share = new DB.mongodb.Collection(DB.Client, 'design-works-public-share')
+    var share = new DB.mongodb.Collection(DB.Client, 'design-works')
     share.insert(data, {safe: true}, function (err, docs) {
         if (!err && docs.length > 0) {
             res.json({docs: docs[0]})

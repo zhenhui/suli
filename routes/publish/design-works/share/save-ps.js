@@ -95,6 +95,7 @@ exports.saveFile = function (req, res) {
             uploadInfo.err.push(fileName + '无法保存')
             console.log(file.name + '保存失败', err)
         }
+        unlink(file.path)
         end()
     })
 
