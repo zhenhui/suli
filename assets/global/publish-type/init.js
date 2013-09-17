@@ -23,7 +23,7 @@ define(function (require, exports, module) {
     var dialog = new Dialog({
         trigger: '.J-publish-work',
         content: tpl,
-        width: 884,
+        width: 890,
         height: 306
     })
 

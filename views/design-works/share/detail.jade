@@ -16,11 +16,19 @@ block content
             .main-pic-container
                 .main-pic
                     img(src="/read/#{docs.file_id.split(':')[0]}")
-                .ps 附件下载
-                    -docs.ps_id.forEach(function(item,index){
-                        -item=item.split(':')
-                            a(href="/read/#{item[0]}",download="#{item[1]}") #{item[1]}
-                    -})
+                -if(docs.ps_id.length>0)
+                    .ps 附件下载
+                        -docs.ps_id.forEach(function(item,index){
+                            -item=item.split(':')
+                                a(href="/read/#{item[0]}",download="#{item[1]}") #{item[1]}
+                        -})
+                -else
+                    .ps 该文件没有附件
         .sidebar
             h2 设计简介：
-            .des
+            .des=docs.content
+            div(data-icon!="&#xe000;",aria-hidden="true") &#xe000;
+
+            //喜欢和评论
+            div.love-comment
+
