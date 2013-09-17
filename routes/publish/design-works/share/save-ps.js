@@ -44,7 +44,7 @@ exports.saveFile = function (req, res) {
     })
 
     if (require('helper').isLogin(req) === false) {
-        serverInfo.err.push('请先登陆')
+        uploadInfo.err.push('请先登陆')
         end()
         return
     }
@@ -61,6 +61,9 @@ exports.saveFile = function (req, res) {
     }
 
     file = file[0]
+
+    //移除冒号，因为冒号作为_id和fileName的分隔符
+    file.name = file.name.replace(':', '')
 
     if (file.size < 1) {
         uploadInfo.err.push('不允许上传0字节文件')
@@ -86,7 +89,7 @@ exports.saveFile = function (req, res) {
 
     options.metadata.origin_name = file.name
     var fileName = file.fileId + '.' + extName
-    uploadInfo._id = fileName
+    uploadInfo._id = fileName + ':' + file.name
     var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
     gs.writeFile(file.path, function (err) {
         if (!err) {

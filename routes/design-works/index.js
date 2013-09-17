@@ -29,9 +29,12 @@ app.get(/\/design-works\/detail\/(\w{24})/, function (req, res) {
     }
 
     var work = new DB.mongodb.Collection(DB.Client, 'design-works')
-
     work.findOne({_id: id}, {}, function (err, docs) {
-        res.render('design-works/share/detail', {docs: docs})
+        if (docs) {
+            res.render('design-works/share/detail', {docs: docs})
+        } else {
+            res.render('invalid-group', {title: '木有资源', err: ['无法找到资源']})
+        }
     })
 
 })

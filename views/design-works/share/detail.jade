@@ -9,15 +9,18 @@ block content
             h1
                 a.avatar
                     img(src="http://dribbble.s3.amazonaws.com/users/49563/avatars/original/f7c80d46.jpg?1325837502")
-                span.title 2013年秋冬流行色
+                span.title=docs.title
+                span.category 【#{docs.category}】
                 span.date 2013年6月
 
             .main-pic-container
                 .main-pic
-                    img(src="http://localhost/read/52370733d9ef702816000061_w_790_h_geometric.png")
+                    img(src="/read/#{docs.file_id.split(':')[0]}")
                 .ps 附件下载
-                    a 原始文件
-
-
+                    -docs.ps_id.forEach(function(item,index){
+                        -item=item.split(':')
+                            a(href="/read/#{item[0]}",download="#{item[1]}") #{item[1]}
+                    -})
         .sidebar
-
+            h2 设计简介：
+            .des
