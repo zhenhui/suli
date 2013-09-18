@@ -25,10 +25,26 @@ block content
                 -else
                     .ps 该文件没有附件
         .sidebar
-            h2 设计简介：
-            .des=docs.content
-            div(data-icon!="&#xe000;",aria-hidden="true") &#xe000;
-
-            //喜欢和评论
-            div.love-comment
-
+            .des
+                h2 设计简介：
+                div=docs.content
+                div.love-comment.clearfix
+                    a.J-love.trigger
+                        span.data-icon(data-icon!="&#xe009;")
+                        span.text.J-text 喜欢
+                    a.J-love.trigger
+                        span.data-icon(data-icon!="&#xe006;")
+                        span.text.J-text 评论
+            .banner
+                h2 更多
+                p
+                    a.pic(herf="http://adfadfasdf")
+                        img(src="/global/temp1.png")
+                    a.pic(herf="#")
+                        img(src="/global/temp2.png")
+            .tag
+                h2 相关标签
+                .tag-control
+                    -docs.tag.forEach(function(item){
+                        a=item
+                    -})
