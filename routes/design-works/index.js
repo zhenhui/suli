@@ -13,7 +13,7 @@ var ObjectID = DB.mongodb.ObjectID
 /*作品共享页面*/
 app.get('/design-works/share/manage', function (req, res) {
     var share = new DB.mongodb.Collection(DB.Client, 'design-works')
-    share.find({owner: req.session._id}, {}).toArray(function (err, docs) {
+    share.find({owner: req.session._id}, {}).sort({ts: -1}).toArray(function (err, docs) {
         res.render('design-works/share/manage', {docs: docs})
     })
 })
