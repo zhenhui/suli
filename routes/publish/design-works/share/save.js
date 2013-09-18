@@ -78,6 +78,9 @@ exports.save = function (req, res) {
         case '视觉设计':
             data.category = '视觉设计'
             break;
+        case '交互设计':
+            data.category = '交互设计'
+            break;
         default:
             data.category = '未分类'
             break;
