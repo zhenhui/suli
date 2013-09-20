@@ -2,6 +2,10 @@ extends /layout
 
 block css
     link(rel="stylesheet",href="/design-works/share/detail.css")
+block js
+    script(src="http://g.tbcdn.cn/kissy/k/1.3.1/kissy-min.js")
+    script.
+        seajs.use('/design-works/share/detail')
 
 block content
     #main-container.wrapper-990.clearfix
@@ -24,6 +28,12 @@ block content
                         -})
                 -else
                     .ps 该文件没有附件
+            .J-comment-container
+                h2 3条评论
+                #comment-container.comment-container
+
+
+
         .sidebar
             .des
                 h2 设计简介：
@@ -32,13 +42,13 @@ block content
                     a.J-love.trigger
                         span.data-icon(data-icon!="&#xe009;")
                         span.text.J-text 喜欢
-                    a.J-love.trigger
-                        span.data-icon(data-icon!="&#xe006;")
+                        a.J-love.trigger
+                        span.data-icon(data-icon!="&#xe006;").
                         span.text.J-text 评论
-            .banner
-                h2 更多
-                p
-                    a.pic(herf="http://adfadfasdf")
+                        .banner
+                        h2 更多
+                        p
+                        a.pic(herf="http://adfadfasdf")
                         img(src="/global/temp1.png")
                     a.pic(herf="#")
                         img(src="/global/temp2.png")

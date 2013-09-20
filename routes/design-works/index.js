@@ -39,3 +39,13 @@ app.get(/\/design-works\/detail\/(\w{24})/, function (req, res) {
 
 })
 
+app.get('/temp', function (req, res) {
+    var page = 1;
+    var totalPage = 100
+    var a = new Array(10)
+    for (var i = 0; i < a.length; i++) {
+        a[i] = {height: parseInt(Math.random() * 500, 10)}
+    }
+    res.jsonp({stat: 'ok', page: 1, pages: 12, data: a})
+})
+
