@@ -1,4 +1,4 @@
-<div class="item-container">
+<div class="item-container J-comment-item ks-waterfall">
     <div class="container">
         <div class="user-info">
             <div class="user"><a class="avatar"><img
@@ -6,9 +6,9 @@
                     class="user-name">橘子水</span></div>
             <div class="date">2013.06.16</div>
         </div>
-        <div class="content" style="height:{height}px">
+        <div class="content J-comment-area">
             今天天气真好，空气也不错！
-            <div class="reply"><a href="#" class="J-reply">回复</a></div>
+            <div class="J-reply-trigger reply-trigger"><a href="#" class="J-reply">回复</a></div>
         </div>
         <ul>
             <li><a class="avatar"><img

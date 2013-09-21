@@ -49,3 +49,5 @@ app.get('/temp', function (req, res) {
     res.jsonp({stat: 'ok', page: 1, pages: 12, data: a})
 })
 
+//处理评论
+require('./comment')
