@@ -16,7 +16,7 @@ app.post('/design-works/comment/new', function (req, res) {
         return
     }
     var comment = new DB.mongodb.Collection(DB.Client, 'design-works-comment')
-    comment.insert({id: req.body._id, content: req.body.content, owner: req.session._id}, {safe: true}, function (err, docs) {
+    comment.insert({id: req.body._id, content: req.body.content, owner: req.session._id, ts: Date.now()}, {safe: true}, function (err, docs) {
         if (!err && docs.length > 0) {
             res.json({docs: docs[0]})
         } else {
