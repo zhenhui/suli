@@ -34,6 +34,8 @@ exports.save = function (req, res) {
         tag: req.body.tag,
         type: req.body.type,
         owner: req.session._id,
+        //状态，>0表示可用的作品，负为删除或禁用的作品
+        status: 1,
         ts: Date.now()
     }
 

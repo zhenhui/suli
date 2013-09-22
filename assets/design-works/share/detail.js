@@ -7,11 +7,18 @@
  */
 define(function (require, exports, module) {
 
+    var template = require('template')
+
+    var tpl = require('./comment.tpl')
+    var cache = template.compile(tpl)
+
+    //再render的时候便可以省去编译环节，提升渲染效率
+
+
     KISSY.use("waterfall,node,ajax", function (S, Waterfall, Node, IO) {
         var $ = Node.all;
 
-        var tpl = require('./comment.tpl'),
-            nextpage = 1;
+        nextPage = 1;
         exports.waterfall = new Waterfall.Loader({
             container: "#comment-container",
             // 窗口大小变化时的调整特效
@@ -23,31 +30,29 @@ define(function (require, exports, module) {
                 // $('#loadingPins').show();
                 IO({
                     data: {
-                        'page': nextpage,
-                        'per_page': 20,
-                        'format': 'json'
+                        id: $('#J-comment-container').attr('data-id'),
+                        'page': nextPage,
+                        'per_page': 3
                     },
-                    url: '/temp',
+                    url: '/design-works/comment/list',
                     dataType: "jsonp",
-                    success: function (d) {
+                    success: function (data) {
                         // 如果数据错误, 则立即结束
-                        if (d['stat'] !== 'ok') {
-                            alert('load data error!');
-                            end();
-                            return;
-                        }
-                        // 如果到最后一页了, 也结束加载
-                        nextpage = d.page + 1;
-                        if (nextpage > d.pages) {
+                        if (data['status'] !== 'ok') {
                             end();
                             return;
                         }
                         // 拼装每页数据
                         var items = [];
-                        S.each(d.data, function (item) {
-                            items.push(new S.Node(S.substitute(tpl, item)));
+                        S.each(data.docs, function (item) {
+                            items.push(new S.Node(template.render(cache, item)))
                         });
                         success(items);
+                        // 如果到最后一页了, 也结束加载
+                        nextPage = data.page + 1;
+                        if (nextPage > data.total_page) {
+                            end();
+                        }
                     },
                     complete: function () {
                         //  $('#loadingPins').hide();

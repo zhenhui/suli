@@ -4,19 +4,23 @@
             <div class="user"><a class="avatar"><img
                     src="http://dribbble.s3.amazonaws.com/users/49563/avatars/original/f7c80d46.jpg?1325837502"></a><span
                     class="user-name">橘子水</span></div>
-            <div class="date">2013.06.16</div>
+            <div class="date">
+                #run var date=new Date(ts)
+                #{date.getFullYear()}.#{date.getMonth()+1}.#{date.getDate()}-#{date.getHours()}:#{date.getMinutes()}:#{date.getSeconds()}
+            </div>
         </div>
         <div class="content J-comment-area">
-            今天天气真好，空气也不错！
+            #{content}
             <div class="J-reply-trigger reply-trigger"><a href="#" class="J-reply">回复</a></div>
         </div>
-        <ul>
+        <!--<ul>
             <li><a class="avatar"><img
                     src="http://dribbble.s3.amazonaws.com/users/49563/avatars/original/f7c80d46.jpg?1325837502"></a>打酱油的？
             </li>
             <li><a class="avatar"><img
                     src="http://dribbble.s3.amazonaws.com/users/49563/avatars/original/f7c80d46.jpg?1325837502"></a>打酱油的？
             </li>
-        </ul>
+        </ul>-->
     </div>
 </div>
+

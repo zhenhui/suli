@@ -28,14 +28,13 @@ block content
                         -})
                 -else
                     .ps 该文件没有附件
-            .J-comment-container
+            #J-comment-container.J-comment-container(data-id="#{docs._id}")
                 h2 3条评论
                 #comment-container.comment-container
                     .item-container.new-comment.J-new-comment.ks-waterfall
                         textarea(data-id="#{docs._id}")
                         .J-send-new-comment
                             button.J-send-new-comment-trigger.btn.btn-normal 发送
-
 
         .sidebar
             .des
