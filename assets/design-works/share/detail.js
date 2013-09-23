@@ -29,7 +29,7 @@ define(function (require, exports, module) {
                     data: {
                         id: $('#J-comment-container').attr('data-id'),
                         'page': nextPage,
-                        'per_page': 3
+                        'per_page': 10
                     },
                     url: '/design-works/comment/list',
                     dataType: "jsonp",
