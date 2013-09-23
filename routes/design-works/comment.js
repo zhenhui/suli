@@ -28,12 +28,13 @@ app.post('/design-works/comment/new', function (req, res) {
         'work_id': req.body._id,
         content: req.body.content,
         owner: req.session._id,
+        owner_name: req.session.name,
         //1表示正常状态的评论
         status: 1,
         ts: Date.now()
     }
 
-    //首先查询作品是否存在
+    //作品ID是否正确
     try {
         var id = ObjectID(data.work_id)
     } catch (e) {
@@ -118,7 +119,7 @@ app.get('/design-works/comment/list', function (req, res) {
         if (!err && count > 0) {
             comment.find(filter).sort({ts: -1}).skip((page == 1 ? 0 : (page - 1) * per_page)).limit(per_page).toArray(function (err, docs) {
                 if (!err) {
-                    if (docs && docs.length > 1) {
+                    if (docs && docs.length > 0) {
                         res.jsonp({
                             status: 'ok',
                             //总条数
