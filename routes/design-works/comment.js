@@ -116,7 +116,7 @@ app.get('/design-works/comment/list', function (req, res) {
     var filter = {work_id: _id, status: {$gte: 1}}
     comment.count(filter, function (err, count) {
         if (!err && count > 0) {
-            comment.find(filter).skip((page == 1 ? 0 : (page - 1) * per_page)).limit(per_page).toArray(function (err, docs) {
+            comment.find(filter).sort({ts: -1}).skip((page == 1 ? 0 : (page - 1) * per_page)).limit(per_page).toArray(function (err, docs) {
                 if (!err) {
                     if (docs && docs.length > 1) {
                         res.jsonp({

@@ -4,7 +4,7 @@
     <div class="wrapper">
         <div class="title">域帐号登陆</div>
         <form action="/login" method="post">
-            <input class="text" type="text" name="user-name" placeholder="用户名">
+            <input class="text" type="text" name="user-name" placeholder="用户名" id="J-login-user-name-field">
             <input class="text" type="text" name="pwd" placeholder="密码">
             <input class="btn J-login-submit-triggers" type="submit"/>
         </form>

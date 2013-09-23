@@ -16,18 +16,15 @@ define(function (require, exports, module) {
 
 
     KISSY.use("waterfall,node,ajax", function (S, Waterfall, Node, IO) {
-        var $ = Node.all;
+        var $ = Node.all
+        var nextPage = 1
 
-        nextPage = 1;
         exports.waterfall = new Waterfall.Loader({
             container: "#comment-container",
             // 窗口大小变化时的调整特效
-            adjustEffect: {
-                duration: 0.5,
-                easing: "easeInStrong"
-            },
+
             load: function (success, end) {
-                // $('#loadingPins').show();
+                // $('#loadingPins').show()
                 IO({
                     data: {
                         id: $('#J-comment-container').attr('data-id'),
@@ -39,61 +36,49 @@ define(function (require, exports, module) {
                     success: function (data) {
                         // 如果数据错误, 则立即结束
                         if (data['status'] !== 'ok') {
-                            end();
-                            return;
+                            end()
+                            return
                         }
                         // 拼装每页数据
-                        var items = [];
+                        var items = []
                         S.each(data.docs, function (item) {
                             items.push(new S.Node(template.render(cache, item)))
-                        });
-                        success(items);
+                        })
+                        success(items)
                         // 如果到最后一页了, 也结束加载
-                        nextPage = data.page + 1;
+                        nextPage = data.page + 1
                         if (nextPage > data.total_page) {
-                            end();
+                            end()
                         }
                     },
                     complete: function () {
-                        //  $('#loadingPins').hide();
+                        //  $('#loadingPins').hide()
                     }
-                });
+                })
             },
             minColCount: 2,
             colWidth: 390
-        });
-
-        $("#comment-container").delegate("click", ".grow", function (event) {
-            var w = $(event.currentTarget).parent(".ks-waterfall");
-            waterfall.adjustItem(w, {
-                effect: {
-                    easing: "easeInStrong",
-                    duration: 0.1
-                },
-                process: function () {
-                    w.append("<p>i grow height by 100</p>");
-                },
-                callback: function () {
-                    alert("调整完毕");
-                }
-            });
-        });
-    });
+        })
+    })
     var $body = $(document.body)
 
-    //留言
-
+    //发送留言
     $body.on('click', '.J-send-new-comment-trigger', function (ev) {
         var $this = $(this)
         var $parent = $this.parents('.J-new-comment')
         var $textarea = $parent.find('textarea')
         var val = $textarea.val()
-        console.log($textarea)
-        if ($.trim(val).length < 1)return
 
         $.post("/design-works/comment/new", { content: val, _id: $textarea.attr('data-id') }, function (data) {
-            console.log(data)
-        });
+            if (data.docs) {
+                $(template.render(cache, data.docs)).insertAfter($('#comment-container>div.ks-waterfall').eq(0))
+                exports.waterfall.adjust()
+            } else {
+                if (data.status == -1) {
+                    $('.J-login-triggers').trigger('click')
+                }
+            }
+        })
     })
 
     var replyTpl = '<div class="J-reply-container reply-container">' +

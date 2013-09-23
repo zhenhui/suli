@@ -11,7 +11,7 @@
 define(function (require, exports, module) {
 
     var $loginNode = $('#login-register-area')
-    var Popup = require('arale/popup/1.1.4/popup')
+    var Popup = require('arale/popup/1.1.5/popup')
     var sha3 = require('sha3')
 
     $loginNode.mouseenter(function () {
@@ -70,6 +70,10 @@ define(function (require, exports, module) {
         element: template.render(tpl, {status: '0'}),
         delegateNode: document.body,
         effect: "slide"
+    })
+
+    popup.on('animated', function () {
+        $('#J-login-user-name-field').focus()
     })
 
     new Popup({

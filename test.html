@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    KISSY.use("sizzle", function (S) {
+        var D = S.DOM
+        window.chenggong = {}
+        var marsk = D.query(".sea_mark")
+
+        window.chenggong.result = function (data) {
+            var sucss = data.succ
+            console.log(data)
+            if (sucss == 1) {
+                if (data.isLogin != 1) {
+                    alert("请登录")
+                } else {
+                    if (data.isFans == true) {
+                        D.addClass(window.chenggong.item, "sea_marked")
+                    }
+                    isGuan(marsk.shift())
+            }
+            }
+            else {
+                isGuan(marsk.shift())
+            }
+        }
+
+        isGuan(marsk.shift())
+
+        function isGuan(item) {
+            if (!item) return
+            var ownerid = D.attr(item, "ownerid")
+            window.chenggong.item = item
+            KISSY.getScript("http://dservice.pinpai.taobao.com/brandservice/brandfeed/IsVermicelli?shopOwnerId=" + ownerid + "&Jsoncallback=chenggong.result")
+        }
+    })
+</script>
+</body>
+</html>
