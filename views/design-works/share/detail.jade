@@ -32,7 +32,7 @@ block content
                 h2 3条评论
                 #comment-container.comment-container
                     .item-container.new-comment.J-new-comment.ks-waterfall
-                        textarea(data-id="#{docs._id}")
+                        textarea#J-comment-textarea(data-id="#{docs._id}")
                         .J-send-new-comment
                             button.J-send-new-comment-trigger.btn.btn-normal 发送
 
@@ -44,7 +44,7 @@ block content
                     a.J-love.trigger
                         span.data-icon(data-icon!="&#xe009;")
                         span.text.J-text 喜欢
-                    a.J-love.trigger
+                    a.J-comment-trigger.trigger
                         span.data-icon(data-icon!="&#xe006;").
                         span.text.J-text 评论
                 .banner

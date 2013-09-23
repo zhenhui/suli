@@ -44,12 +44,12 @@ define(function (require, exports, module) {
                         S.each(data.docs, function (item) {
                             items.push(new S.Node(template.render(cache, item)))
                         })
-                        success(items)
                         // 如果到最后一页了, 也结束加载
                         nextPage = data.page + 1
                         if (nextPage > data.total_page) {
                             end()
                         }
+                        success(items)
                     },
                     complete: function () {
                         //  $('#loadingPins').hide()
@@ -127,6 +127,11 @@ define(function (require, exports, module) {
                 $parent.find('.J-reply-container').remove()
             }
         })
+    })
+
+    //回复的锚点
+    $body.on('click', '.J-comment-trigger', function () {
+        $('#J-comment-textarea').focus()
     })
 
 })

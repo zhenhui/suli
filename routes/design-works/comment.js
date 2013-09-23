@@ -27,7 +27,7 @@ app.post('/design-works/comment/new', function (req, res) {
         //针对哪个作品的id
         'work_id': req.body._id,
         content: req.body.content,
-        owner: req.session._id,
+        owner_id: req.session._id,
         owner_name: req.session.name,
         //1表示正常状态的评论
         status: 1,
