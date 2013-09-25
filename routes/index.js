@@ -13,3 +13,6 @@ require('./design-works')
 
 //读取GS
 require('./read')
+
+//上传文件
+require('./upload')

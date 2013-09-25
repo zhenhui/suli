@@ -85,5 +85,5 @@ html
                 },
                 preload: ['$','text','sha3','dialog']
             });
-            seajs.use('/global/init')
+            KISSY.ready(function(){seajs.use('/global/init')})
         block js

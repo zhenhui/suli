@@ -32,6 +32,9 @@ define(function (require, expoets, module) {
         'manage-share': {
             path: './design-works/init'
         },
+        'account-setting': {
+            path: './account/init'
+        },
         'authenticate': {
 
         }
