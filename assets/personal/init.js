@@ -37,16 +37,27 @@ define(function (require, expoets, module) {
         }
     }
 
-    $('#router-trigger').on('click', 'a.link', function (ev) {
+    $trigger = $('#router-trigger')
+    $trigger.on('click', 'a.link', function (ev) {
         var action = $(this).data('action')
         if (router[action]) {
             location.href = action
         }
+        $trigger.find('a').not(this).removeClass('hover')
+        $(this).addClass('hover')
     })
 
     function checkHashChange() {
         var hash = location.hash.substring(1)
-        if (router[hash] && router[hash].path) require.async(router[hash].path)
+        if (router[hash] && router[hash].path) {
+            require.async(router[hash].path, function (obj) {
+                if (obj && obj.init) obj.init()
+            })
+        } else {
+            var $container = $('#main-js-container')
+            $container.html('未定义:' + hash)
+        }
+        $trigger.find('a[href=#' + hash + ']').addClass('hover')
     }
 
     Event.on(window, 'hashchange', checkHashChange)

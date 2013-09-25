@@ -8,6 +8,14 @@
 
 define(function (require, exports, module) {
     var template = require('template')
+    var tpl = require('./manage.tpl')
     require('./manage.css')
+    var $container = $('#main-js-container')
+
+    exports.init = function () {
+        $.getJSON('/design-works/share/list', function (data) {
+            $container.html(template.render(tpl, data))
+        })
+    }
 
 })
