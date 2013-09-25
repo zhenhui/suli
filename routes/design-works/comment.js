@@ -9,6 +9,7 @@
 var app = require('app')
 var DB = require('db')
 var ObjectID = DB.mongodb.ObjectID
+var xss = require('xss')
 
 
 app.post('/design-works/comment/new', function (req, res) {
@@ -34,6 +35,7 @@ app.post('/design-works/comment/new', function (req, res) {
         ts: Date.now()
     }
 
+
     //作品ID是否正确
     try {
         var id = ObjectID(data.work_id)
@@ -50,6 +52,8 @@ app.post('/design-works/comment/new', function (req, res) {
         res.json(result)
         return
     }
+
+    data.content = xss(data.content)
 
     var works = new DB.mongodb.Collection(DB.Client, 'design-works')
     var comment = new DB.mongodb.Collection(DB.Client, 'design-works-comment')
