@@ -1,0 +1,16 @@
+extends /layout
+
+block css
+    link(rel="stylesheet",href="/personal/personal.css")
+
+block js
+    script.
+        seajs.use('/personal/init')
+
+block content
+    #manage-container.wrapper-990.clearfix
+        .main-content
+            .container
+                h3 管理共享文件
+                .list-area
+        include /person-profile-sidebar-layout
