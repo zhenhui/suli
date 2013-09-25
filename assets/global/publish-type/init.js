@@ -13,7 +13,7 @@ define(function (require, exports, module) {
     $(window).on('keypress', function (ev) {
         var target = ev.target;
         if (ev.keyCode != 78 && ev.keyCode != 110) return
-        if (target.nodeName === 'INPUT' && /(text|password)/gmi.test(target.type)) return
+        if ((target.nodeName === 'INPUT' && /(text|password)/gmi.test(target.type)) || target.nodeName === 'TEXTAREA') return
         exports.show()
     })
 

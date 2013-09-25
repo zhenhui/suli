@@ -22,26 +22,21 @@ app.get('/publish/design-works', function (req, res) {
         return
     }
 
-    var allowGroup = '上传个人作品'
-
     helper.getGroup(req, function (group) {
-        if (group === undefined) {
-            result.title = '您似乎登陆已经失效啦'
-            result.err.push('请重新登陆')
+        if (Array.isArray(group) === false) {
+            result.title = '无法获取权限信息，请联系网站管理员'
+            result.err.push('无法获取权限信息')
             res.render('invalid-group', result)
             return
         }
-
-        if (group.length > 0 && group.indexOf('上传共享作品') > -1) {
+        if (group.indexOf('上传共享作品') > -1) {
             res.render('publish/design-works/publish', {type: 'share'})
-        }
-        else if (group.length > 0 && group.indexOf('上传个人作品') > -1) {
-            res.render('publish/design-works/publish', {type: 'my'})
+        } else if (group.indexOf('上传个人作品') > -1) {
+            res.render('publish/design-works/publish', {type: 'own'})
         } else {
             result.title = '您没有权限'
             result.err.push('您没有上传作品的权限')
             res.render('invalid-group', result)
-            return
         }
     })
 })

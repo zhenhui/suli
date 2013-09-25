@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var fs = require('fs')
 var DB = require('db')
+var helper = require('helper')
 
 exports.save = function (req, res) {
 
@@ -71,10 +71,6 @@ exports.save = function (req, res) {
         result.err.push('您必须上传主图')
     }
 
-    if (typeof data.file_id !== 'string') {
-        result.err.push('您必须上传主图')
-    }
-
     //作品分类
     switch (data.category) {
         case '视觉设计':
@@ -107,17 +103,44 @@ exports.save = function (req, res) {
     }
 
     if (result.err.length > 0) {
+        //-1     参数错误
+        result.status = -1
         res.json(result)
         return
     }
 
-    var share = new DB.mongodb.Collection(DB.Client, 'design-works')
-    share.insert(data, {safe: true}, function (err, docs) {
-        if (!err && docs.length > 0) {
-            res.json({docs: docs[0]})
-        } else {
-            res.json({err: '无法保存共享，请联系管理员'})
-        }
-    })
 
+    helper.getGroup(req, function (group) {
+        if (Array.isArray(group) === false) {
+            result.status = -2
+            result.err.push('无法获取权限信息')
+            res.json(result)
+            return
+        }
+
+        //检查是否有上传共享作品的权限
+        if (data.type === 'share' && group.indexOf('上传共享作品') < 0) {
+            result.status = -2
+            result.err.push('您没有上传共享作品的权限')
+            res.json(result)
+            return
+        }
+
+        //检查是否有上传共享作品的权限
+        if (data.type === 'own' && group.indexOf('上传个人作品') < 0) {
+            result.status = -2
+            result.err.push('您没有上传共享作品的权限')
+            res.json(result)
+            return
+        }
+
+        var share = new DB.mongodb.Collection(DB.Client, 'design-works')
+        share.insert(data, {safe: true}, function (err, docs) {
+            if (!err && docs.length > 0) {
+                res.json({status: 1, docs: docs[0]})
+            } else {
+                res.json({status: -10, err: '无法保存共享，请联系管理员'})
+            }
+        })
+    })
 }

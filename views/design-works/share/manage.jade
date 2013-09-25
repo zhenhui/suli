@@ -9,16 +9,19 @@ block content
             .container
                 h3 管理共享文件
                 .list-area
-                    ul.list
-                        -docs.forEach(function(item){
-                            li
-                                a(href="/design-works/detail/#{item._id}")
-                                    img.avatar(src="/read/#{item.thumbnails_id.split(':')[0]}",width="230",height="175")
-                                .user
-                                    a.avatar
-                                        img(src="")
-                                    span.info=item.title
-                        -})
+                    -if(docs.length>1)
+                        ul.list
+                            -docs.forEach(function(item){
+                                li
+                                    a(href="/design-works/detail/#{item._id}")
+                                        img.avatar(src="/read/#{item.thumbnails_id.split(':')[0]}",width="230",height="175")
+                                    .user
+                                        a.avatar
+                                            img(src="")
+                                        span.info=item.title
+                            -})
+                    -else
+                        p 您还没有上传过
         .sidebar
             .manage-control
                 .user-info
