@@ -32,6 +32,15 @@ var resizeParam = [
     }
 ]
 
+function deleteRequestFile(file) {
+    if (Array.isArray(file)) {
+        file.forEach(function (f) {
+            console.log('删除' + f.path)
+            unlink(f.path)
+        })
+    }
+}
+
 exports.saveFile = function (req, res) {
 
     res.header('Content-type', 'application/json;charset=utf-8')
@@ -39,6 +48,7 @@ exports.saveFile = function (req, res) {
     var uploadInfo = {
         err: []
     }
+
 
     if (!req.files || !req.files.file) {
         uploadInfo.err.push('未接收到文件')
@@ -64,17 +74,14 @@ exports.saveFile = function (req, res) {
     if (require('helper').isLogin(req) === false) {
         uploadInfo.err.push('请先登陆')
         end()
+        deleteRequestFile(file)
         return
     }
 
     if (file.length > 1) {
         uploadInfo.err.push('必须且只能上传1个文件')
         end()
-        //删除所有临时文件
-        file.forEach(function (f) {
-            console.log('删除' + f.path)
-            unlink(f.path)
-        })
+        deleteRequestFile(file)
         return
     }
 
