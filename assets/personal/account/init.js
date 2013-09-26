@@ -30,9 +30,36 @@ define(function (require, exports, module) {
                     $('#upload-avatar-id').val(data._id)
                     $('img.J-avatar-own-20').attr('src', "/avatar/" + data._id + '_20x20?r=' + Math.random())
                     $('img.J-avatar-own-80').attr('src', src)
-
                 }
             }
         }
     }
+
+    var sha3 = require('sha3')
+
+    $container.on('submit', 'form#admin-user-update-password', function (ev) {
+        ev.preventDefault()
+        var form = ev.currentTarget
+
+        var p1 = form.elements['origin-pwd'].value
+        var p2 = form.elements['new-pwd'].value
+        var p3 = form.elements['confirm-pwd'].value
+
+        if (p1 === '' || p2 !== p3) {
+            alert('参数错误')
+            return
+        }
+        p1 = sha3(p1).toString()
+        p2 = sha3(p2).toString()
+
+        $.post(form.action, {
+            p1: p1,
+            p2: p2
+        }, function (data) {
+
+            console.log(data)
+
+        }, 'json')
+    })
+
 })
