@@ -8,3 +8,5 @@
 
 //上传头像
 require('./avatar')
+
+require('./read-avatar')

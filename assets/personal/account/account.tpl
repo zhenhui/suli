@@ -8,11 +8,12 @@
                         <th>头像</th>
                         <td>
                             <div class="upload-avatar">
-                                <form target="upload-image" enctype="multipart/form-data" id="upload-image-form" method="post" action="/upload/avatar">
-                                <img src="avatar">
-                                <div style="width:0;height:0;overflow:hidden"><input type="file" name="file" onchange="this.form.submit()" id="upload-avatar"></div>
-                                <input type="hidden" name="callback" value="upload-image-form">
-                                <label for="upload-avatar">
+                                <form target="upload-image" enctype="multipart/form-data" id="upload-image-form" data-callback-id="" method="post" action="/upload/avatar">
+                                <img id="upload-image-preview">
+                                <input type="hidden" name="callback-func-name" />
+                                    <input type="hidden" id="upload-avatar-id" name="result-field">
+                                    <div style="width:0;height:0;overflow:hidden"><input type="file" name="file" onchange="this.form.submit()" id="upload-avatar"></div>
+                                <label id="upload-avatar-label" for="upload-avatar">
                                     <span><b>上传头像<br>80x80</b></span>
                                 </label>
                                 </form>

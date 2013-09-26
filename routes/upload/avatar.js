@@ -43,12 +43,9 @@ function deleteRequestFile(file) {
 
 exports.saveFile = function (req, res) {
 
-    res.header('Content-type', 'application/json;charset=utf-8')
-
     var uploadInfo = {
         err: []
     }
-
 
     if (!req.files || !req.files.file) {
         uploadInfo.err.push('未接收到文件')
@@ -185,7 +182,7 @@ exports.saveFile = function (req, res) {
                     var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
                     gs.writeFile(qualityPath, function (err) {
                         if (!err) {
-                            uploadInfo._id = fileName
+                            uploadInfo._id = ownerID
                         } else {
                             uploadInfo.err.push('无法保存优化后的图片到数据库中')
                         }
@@ -204,12 +201,16 @@ exports.saveFile = function (req, res) {
     }
 
     function end() {
+        console.log(req.body)
         if (uploadInfo.err.length < 1) {
             delete uploadInfo.err
             uploadInfo.origin_name = file.name
             uploadInfo.size = file.size
         }
-        res.end(JSON.stringify(uploadInfo, undefined, '    '))
+        res.render('upload/avatarIframeCallBack', {
+            callback: req.body['callback-func-name'],
+            result: JSON.stringify(uploadInfo)
+        })
     }
 
     //生成其他两种规格的用户头像

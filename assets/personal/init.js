@@ -60,6 +60,7 @@ define(function (require, expoets, module) {
             var $container = $('#main-js-container')
             $container.html('未定义:' + hash)
         }
+        $trigger.find('a').not(this).removeClass('hover')
         $trigger.find('a[href=#' + hash + ']').addClass('hover')
     }
 
