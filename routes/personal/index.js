@@ -19,6 +19,6 @@ app.get('/personal', function (req, res) {
         res.render('invalid-group', result)
         return
     } else {
-        res.render('personal/index', {user_id: req.session._id, user_name: req.session.name})
+        res.render('personal/index', {user_id: req.session._id, user_name: req.session.user})
     }
 })

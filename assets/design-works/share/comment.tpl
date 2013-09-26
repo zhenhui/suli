@@ -3,7 +3,7 @@
     <div class="container">
         <div class="user-info">
             <div class="user"><a class="avatar"><img src="/avatar/#{owner_id}_20x20"></a><span
-                    class="user-name">#if(typeof owner_name==='string')#{owner_name}#end</span></div>
+                    class="user-name">#if(typeof owner_user==='string')#{owner_user}#end</span></div>
             <div class="date">
                 #run var date=new Date(ts)
                 #{date.getFullYear()}.#{date.getMonth()+1}.#{date.getDate()}-#{date.getHours()}:#{date.getMinutes()}:#{date.getSeconds()}

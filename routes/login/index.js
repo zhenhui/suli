@@ -19,15 +19,15 @@ app.post('/login', function (req, res) {
     user.findOne({
         user: req.body._,
         pwd: req.body.__
-    }, {_id: 1, name: 1, ts: 1}, function (err, data) {
+    }, {_id: 1, user: 1, ts: 1}, function (err, data) {
         if (err === null && data !== null) {
             info._id = data._id
             info.status = 1
             info.msg = '登陆成功'
-            info.name = data.name;
+            info.user = data.user;
 
             req.session.login_ts = Date.now()
-            req.session.name = data.name
+            req.session.user = data.user
             req.session._id = data._id
 
         } else {
@@ -47,7 +47,7 @@ app.get('/login/is-login', function (req, res) {
         info._id = req.session._id
         info.status = 1
         info.msg = '已登陆'
-        info.name = req.session.name
+        info.user = req.session.user
         info.status = 1
     } else {
         info.status = -3

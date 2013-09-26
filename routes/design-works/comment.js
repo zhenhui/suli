@@ -29,7 +29,7 @@ app.post('/design-works/comment/new', function (req, res) {
         'work_id': req.body._id,
         content: req.body.content,
         owner_id: req.session._id,
-        owner_name: req.session.name,
+        owner_user: req.session.user,
         //1表示正常状态的评论
         status: 1,
         ts: Date.now()

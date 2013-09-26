@@ -1,5 +1,6 @@
 var app = require('app')
 var db = require('db')
+var ObjectID = db.mongodb.ObjectID
 
 app.get('/admin/user', function (req, res) {
 
@@ -17,7 +18,6 @@ app.get('/admin/user', function (req, res) {
 //保存新用户
 app.post('/admin/user/add-user', function (req, res) {
 
-    var user = new db.Collection(db.Client, 'user')
 
     var body = req.body
 
@@ -49,6 +49,7 @@ app.post('/admin/user/add-user', function (req, res) {
 
     if (body.group) new_user.group = body.group.trim().split(/\s+/)
 
+    var user = new db.Collection(db.Client, 'user')
     user.insert(new_user, {safe: true}, function (err, docs) {
         if (!err && docs) {
             info.success = true
@@ -60,4 +61,54 @@ app.post('/admin/user/add-user', function (req, res) {
         }
     })
 
+})
+
+var helper = require('helper')
+
+//更新用户组的权限
+app.post('/admin/user/update/group', function (req, res) {
+
+    //只有管理员组成员能修改权限
+
+    var result = {err: []}
+    try {
+        var id = ObjectID(req.body.id)
+        var newGroup = req.body.group.split(/\s+/)
+    } catch (e) {
+        result.status = -1
+        result.err.push('参数非法')
+        res.json(result)
+        return
+    }
+
+    //过滤掉重复的权限
+    var _g = []
+    newGroup.forEach(function (item) {
+        if (_g.indexOf(item) < 0)   _g.push(item)
+    })
+
+    helper.getGroup(req, function (group) {
+        if (Array.isArray(group) === false) {
+            result.status = -2
+            result.err.push('无法获取权限信息')
+            res.json(result)
+            return
+        }
+        if (group.indexOf('管理员') >= 0) {
+            var user = new db.Collection(db.Client, 'user')
+            user.update({_id: id}, {$set: {group: newGroup}}, {}, function (err, result) {
+                if (!err && result > 0) {
+                    result.status = 1
+                } else {
+                    result.status = -3
+                    result.err.push('更新过程中发生错误')
+                }
+                res.json(result)
+            })
+        } else {
+            result.status = -10
+            result.err.push('您没有权限')
+            res.json(result)
+        }
+    })
 })

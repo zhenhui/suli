@@ -34,23 +34,23 @@ block content
                             input.btn.btn-large(type="submit",value="添加用户")
             h1 编辑用户权限
             #edit-user
-                table
+                table(style="width:100%")
                     tr
-                        th.user-name 用户名
-                        th.group 权限(空格隔开)
+                        th(width="10%").user-name 用户名
+                        th(width="60%").group 权限(空格隔开)
                         th.st 创建时间
                         th.control 操作
                     - docs.forEach(function(user){
-                        tr
-                            td
+                        tr(data-id="#{user._id}").J-item
+                            td(align="right")
                                 span.user-name=user.user
                             td
-                                input.group(type="text",name="group",value="#{user.group}")
+                                input.group.text-field.J-group(type="text",name="group",value="#{user.group.join(' ')}")
                             td
                                 - var d = new Date(user.ts)
                                 span.ts #{d.getFullYear()}-#{d.getMonth()+1}-#{d.getDate()} #{d.toLocaleTimeString()}
                             td
-                                a(href="#",data-id="#{user._id}").J-update-user 更新权限
-                                |
-                                a(href="#",data-id="").J-delete-user 删除
+                                a(href="#").btn.J-update-user 更新权限
+                                | &nbsp
+                                a(href="#",data-id="").btn.J-delete-user 删除
                     -})

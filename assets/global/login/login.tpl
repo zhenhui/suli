@@ -17,7 +17,7 @@
     <span class="avatar">
         <img class="J-avatar-own-20" src="/avatar/#{_id}_20x20"><i></i>
     </span>
-    <span class="J-user-name">#{name}</span>
+    <span class="J-user-name">#{user}</span>
 </div>
 
 #elseif(status=="logged")

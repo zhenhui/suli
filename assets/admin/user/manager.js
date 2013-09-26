@@ -46,4 +46,22 @@ define(function (require, exports, module) {
 
     })
 
+
+    var $editUser = $('#edit-user')
+
+    $editUser.on('click', '.J-update-user', function (ev) {
+        ev.preventDefault()
+        var $this = $(this)
+        var $tr = $this.parents('tr')
+        var id = $tr.data('id')
+        var group = $tr.find('.J-group').val()
+
+        $.post('/admin/user/update/group', {
+            id: id,
+            group: group
+        }, function (data) {
+            console.log(data)
+        }, 'json');
+    })
+
 })
