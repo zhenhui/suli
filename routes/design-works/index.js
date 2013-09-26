@@ -46,11 +46,6 @@ app.get('/design-works/share/list', function (req, res) {
     })
 })
 
-
-app.get('/personal', function (req, res) {
-    res.render('personal/index')
-})
-
 //设计师作品展示页面
 app.get(/\/design-works\/detail\/(\w{24})/, function (req, res) {
 

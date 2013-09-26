@@ -28,7 +28,7 @@ define(function (require, exports, module) {
                     var src = "/avatar/" + data._id + '_80x80?' + Math.random()
                     $('#upload-image-preview')[0].src = src
                     $('#upload-avatar-id').val(data._id)
-                    $('img.J-avatar80').attr('src', src)
+                    $('img.J-avatar-own-80').attr('src', src)
                 }
             }
         }

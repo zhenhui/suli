@@ -52,6 +52,7 @@ define(function (require, exports, module) {
                     switch (data.status) {
                         case 1:
                             loginSuccess(data)
+                            window.location.reload()
                             break
                         case -1:
                             loginFail(data)

@@ -16,3 +16,6 @@ require('./read')
 
 //上传文件
 require('./upload')
+
+//个人设置页面
+require('./personal')
