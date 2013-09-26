@@ -7,6 +7,7 @@
  */
 
 define(function (require, exports, module) {
+
     var template = require('template')
     var tpl = require('./account.tpl')
     require('./account.css')
