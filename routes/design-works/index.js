@@ -40,7 +40,7 @@ app.get('/design-works/share/list', function (req, res) {
         }
 
         var share = new DB.mongodb.Collection(DB.Client, 'design-works')
-        share.find({owner: req.session._id, status: {$gte: 1}}, {}).sort({ts: -1}).toArray(function (err, docs) {
+        share.find({owner_id: req.session._id, status: {$gte: 1}}, {}).sort({ts: -1}).toArray(function (err, docs) {
             res.jsonp({status: 1, docs: docs})
         })
     })
