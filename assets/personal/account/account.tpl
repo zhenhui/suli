@@ -5,7 +5,7 @@
                 <h4>基本信息</h4>
                 <table>
                     <tr>
-                        <th>头像</th>
+                        <th style="vertical-align: top;">头像</th>
                         <td>
                             <div class="upload-avatar">
                                 <form target="upload-image" enctype="multipart/form-data" id="upload-image-form" data-callback-id="" method="post" action="/upload/avatar">
@@ -22,15 +22,7 @@
                     </tr>
                     <tr>
                         <th>昵称</th>
-                        <td><input type="text" name="nick" placeholder="6个汉字以内"></td>
-                    </tr>
-                    <tr>
-                        <th>职业</th>
-                        <td>
-                            <div class="select">
-                                <input type="text" name="job">
-                            </div>
-                        </td>
+                        <td><input type="text" class="text-field text-field-normal" name="nick" placeholder="6个汉字以内"></td>
                     </tr>
                 </table>
             </div>
@@ -39,19 +31,19 @@
                 <table>
                     <tr>
                         <th>原密码</th>
-                        <td><input name="origin-pwd" type="password"></td>
+                        <td><input name="origin-pwd" class="text-field text-field-normal" type="password"></td>
                     </tr>
                     <tr>
                         <th>新密码</th>
-                        <td><input name="new-pwd" type="password"></td>
+                        <td><input name="new-pwd" class="text-field text-field-normal" type="password"></td>
                     </tr>
                     <tr>
                         <th>确认密码</th>
-                        <td><input name="confirm-pwd" type="password"></td>
+                        <td><input name="confirm-pwd" class="text-field text-field-normal" type="password"></td>
                     </tr>
                     <tr>
                         <th></th>
-                        <td><input class="btn btn-large" value="确认修改"></td>
+                        <td><input type="button" class="btn btn-large" value="确认修改"></td>
                     </tr>
                 </table>
             </div>

@@ -47,7 +47,8 @@ define(function (require, exports, module) {
                 }
 
                 $.post("/login", {
-                    "_": sha3(user).toString() + sha3(pwd).toString()
+                    "_": user,
+                    __: sha3(pwd).toString()
                 }, function (data) {
                     switch (data.status) {
                         case 1:

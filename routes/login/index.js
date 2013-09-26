@@ -16,18 +16,9 @@ app.post('/login', function (req, res) {
 
     var info = {}
 
-    //用户名和密码应该是一个256位的效验和，前半是用户名，后半是密码
-
-    if (!/[a-z\d]{256}/.test(req.body._)) {
-        info.status = -1
-        info.msg = '用户名和密码不正确'
-        res.json(info)
-        return
-    }
-
     user.findOne({
-        user: req.body._.substring(0, 128),
-        pwd: req.body._.substring(128)
+        user: req.body._,
+        pwd: req.body.__
     }, {_id: 1, name: 1, ts: 1}, function (err, data) {
         if (err === null && data !== null) {
             info._id = data._id

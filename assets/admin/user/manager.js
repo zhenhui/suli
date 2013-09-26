@@ -9,8 +9,7 @@ define(function (require, exports, module) {
 
         ev.preventDefault();
 
-        var name = $.trim(form.elements['user-name'].value)
-        var user = name
+        var user = $.trim(form.elements['user-name'].value)
         var pwd1 = $.trim(form.elements['pwd1'].value)
         var pwd2 = $.trim(form.elements['pwd2'].value)
         var group = $.trim(form.elements['group'].value)
@@ -31,13 +30,11 @@ define(function (require, exports, module) {
             return
         }
 
-        user = sha3(user).toString()
         pwd1 = sha3(pwd1).toString()
 
-
         $.post(form.action, {
-            _: user + pwd1,
-            name: name,
+            _: user,
+            __: pwd1,
             group: group
         }, function (data) {
             if (data.success) {
