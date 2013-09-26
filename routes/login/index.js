@@ -30,6 +30,7 @@ app.post('/login', function (req, res) {
         pwd: req.body._.substring(128)
     }, {_id: 1, name: 1, ts: 1}, function (err, data) {
         if (err === null && data !== null) {
+            info._id = data._id
             info.status = 1
             info.msg = '登陆成功'
             info.name = data.name;
@@ -52,6 +53,7 @@ app.get('/login/is-login', function (req, res) {
     var info = {}
 
     if (req.session._id) {
+        info._id = req.session._id
         info.status = 1
         info.msg = '已登陆'
         info.name = req.session.name

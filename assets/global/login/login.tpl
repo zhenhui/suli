@@ -15,7 +15,7 @@
 
 <div class="login-user-info J-logged-list-triggers">
     <span class="avatar">
-        <img src="http://dribbble.s3.amazonaws.com/users/49563/avatars/original/f7c80d46.jpg?1325837502"><i></i>
+        <img class="J-avatar-own-20" src="/avatar/#{_id}_20x20"><i></i>
     </span>
     <span class="J-user-name">#{name}</span>
 </div>
