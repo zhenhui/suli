@@ -11,11 +11,21 @@
         .control
             a.btn.btn-error.btn-normal.J-publish-work(tabindex=1) +发布作品/文章
             #router-trigger.label-link
-                a.link(href="#recent-news") 最近消息
-                a.link(href="#all-works") 所有作品/文章(12)
-                a.link(href="#love-works") 喜欢的作品/文章(12)
-                a.link(href="#follow") 关注的人(12)
-                a.link(href="#rights-management") 权限管理
-                a.link(href="#account-setting") 帐户设置
-                a.link(href="#manage-share") 管理共享文件
-                a.link(href="#authenticate") 认证
+                a.link(href="#recent-news")
+                    span.data-icon(data-icon!="&#xe006;")
+                    | 最近消息
+                a.link(href="#all-works")
+                    span.data-icon(data-icon!="&#xe013;")
+                    | 所有作品/文章(12)
+                a.link(href="#love-works")
+                    span.data-icon(data-icon!="&#xe007;")
+                    | 喜欢的作品/文章(12)
+                a.link(href="#follow")
+                    span.data-icon(data-icon!="&#xe019;")
+                    | 关注的人(12)
+                a.link(href="#account-setting")
+                    span.data-icon(data-icon!="&#xe017;")
+                    | 帐户设置
+                a.link(href="#manage-share")
+                    span.data-icon(data-icon!="&#xe00b;")
+                    | 管理共享文件
