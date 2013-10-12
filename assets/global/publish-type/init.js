@@ -8,35 +8,52 @@
 
 define(function (require, exports, module) {
 
-    var $body = $(document.body)
+    KISSY.use("overlay", function (S, O) {
 
-    $(window).on('keypress', function (ev) {
-        var target = ev.target;
-        if (ev.keyCode != 78 && ev.keyCode != 110) return
-        if ((target.nodeName === 'INPUT' && /(text|password)/gmi.test(target.type)) || target.nodeName === 'TEXTAREA') return
-        exports.show()
-    })
+        var Event = S.Event, DOM = S.DOM;
 
-    var Dialog = require('dialog')
-    var tpl = require('./type.tpl')
+        var tpl = require('./type.tpl')
 
-    var dialog = new Dialog({
-        trigger: '.J-publish-work',
-        content: tpl,
-        width: 890,
-        height: 306
-    })
+        var dialog = new O.Dialog({
+            elCls: 'publish-works',
+            elStyle: {
+                position: S.UA.ie == 6 ? "absolute" : "fixed",
+                zIndex: 999
+            },
+            bodyContent: tpl,
+            mask: true,
+            align: {
+                points: ['cc', 'cc']
+            }
+        });
 
-    $body.on('click', '.J-publish-work', function () {
-        //好让那个折叠菜单隐藏掉
-        $body.trigger('click')
-        //显示出来
-        dialog.show()
-    })
+        function show() {
+            dialog.show();
+        }
 
+        function center() {
+            if (dialog.get("visible")) dialog.center();
+        }
 
-    exports.show = function () {
-        dialog.show()
-    }
+        Event.on(window, "scroll resize", center);
 
+        var $body = $(document.body)
+
+        $(window).on('keypress', function (ev) {
+            var target = ev.target;
+            if (ev.keyCode != 78 && ev.keyCode != 110) return
+            if ((target.nodeName === 'INPUT' && /(text|password)/gmi.test(target.type)) || target.nodeName === 'TEXTAREA') return
+            show()
+        })
+
+        $body.on('click', '.J-publish-work', function () {
+            //好让那个折叠菜单隐藏掉
+            $body.trigger('click')
+            //显示出来
+            show()
+        })
+        exports.show = function () {
+            show()
+        }
+    });
 })

@@ -1,2 +1,4 @@
 /assets/*.css
+!/assets/font.css
 !/assets/reset.css
+!/assets/sea-modules/*
