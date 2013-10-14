@@ -6,9 +6,11 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(function (require, expoets, module) {
+define(function (require, exports, module) {
 
     var S = KISSY, DOM = S.DOM, Event = S.Event;
+
+    require('/global/tab/init')
 
     var router = {
         'rencent-news': {
@@ -18,7 +20,7 @@ define(function (require, expoets, module) {
 
         },
         'all-works': {
-
+            path: './all-works/init'
         },
         'love-works': {
 
@@ -50,22 +52,65 @@ define(function (require, expoets, module) {
         $(this).addClass('hover')
     })
 
+    var data = {}
+    var hash = ''
+
     function checkHashChange() {
-        var hash = location.hash.substring(1)
+        var param = location.hash.lastIndexOf('{')
+        if (param < 0) {
+            hash = location.hash.substring(1)
+        } else {
+            hash = location.hash.substring(1, param)
+            try {
+                S.log('转换锚点后方的数据' + location.hash.substring(param))
+                var _data = S.JSON.parse(location.hash.substring(param))
+            } catch (e) {
+                S.log('无法转义数据')
+            }
+        }
+
+        if (_data !== undefined) data = _data
+
         if (router[hash] && router[hash].path) {
             require.async(router[hash].path, function (obj) {
-                if (obj && obj.init) obj.init()
+                if (obj && obj.init) obj.init(data, hash)
+                //高亮
+                var allBehavior = $('[data-behavior]')
+                allBehavior.removeClass('behavior-active')
+                for (var key in data) {
+                    allBehavior.filter('[href*="' + key + '=' + data[key] + '"]').addClass('behavior-active')
+                }
             })
         } else {
             var $container = $('#main-js-container')
             $container.html('未定义:' + hash)
         }
         $trigger.find('a').not(this).removeClass('hover')
-        $trigger.find('a[href=#' + hash + ']').addClass('hover')
+        $trigger.find('a[href*="#' + hash + '"]').addClass('hover')
+
     }
 
     Event.on(window, 'hashchange', checkHashChange)
 
     Event.fire(window, 'hashchange', checkHashChange)
+
+    //具体的行为
+    $(document).on('click', '[data-behavior]', function (ev) {
+        var $this = $(this)
+        ev.preventDefault()
+        var href = $this.attr('href')
+        if (typeof href !== 'string') return
+        var behaviorData = KISSY.unparam($this.attr('href').substring(1))
+        if (location.hash.indexOf('{') < 0) {
+            location.hash = location.hash + JSON.stringify(behaviorData)
+        } else {
+            if (behaviorData['full_redirect'] === 'true') {
+                delete behaviorData['full_redirect']
+                location.hash = hash + JSON.stringify(behaviorData)
+            } else {
+                location.hash = location.hash.replace(/\{(.)*/gi, JSON.stringify(KISSY.mix(data, behaviorData)))
+            }
+        }
+    })
 
 })
