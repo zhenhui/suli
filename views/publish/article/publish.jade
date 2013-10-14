@@ -1,0 +1,63 @@
+extends /layout
+
+block css
+    link(rel='stylesheet', href='/publish/article/article.css')
+    link(rel='stylesheet', href='http://g.tbcdn.cn/kissy/k/1.3.2/editor/theme/cool/editor-min.css')
+
+block js
+    script.
+        seajs.use('/publish/article/init')
+
+block content
+    #publish.wrapper
+        .wrapper-990
+            .crumbs
+                a.J-back.back(href="/personal#manage-share") 返回
+            form(name="publish",method="post",action="/publish/design-works")
+                table
+                    tr
+                        th 标题
+                        td
+                            input.title.text(type="text",name="title",placeholder="20字以内",maxlength=20)
+                            select.category(name="category",title="作品分类")
+                                option(value="视觉设计",selected="selected") 视觉设计
+                                option(value="交互设计",selected="selected") 交互设计
+                                option(value="前端技术",selected="selected") 前端技术
+                                option(value="Web开发",selected="selected") Web开发
+                    tr
+                        th 缩略图
+                        td
+                            label.btn(for="upload-thumbnails",tabindex="0") 上传
+                            input.hide#upload-thumbnails(type="file")
+                            span.success.J-thumbnails-status
+                            input#thumbnails_id(type="hidden",name="thumbnails_id")
+                            span 大小790x200
+                            img#thumbnails-preview
+                    tr
+                        th 内容
+                        td
+                            #editorEl.ks-editor
+                                textarea(name="content").ks-editor-textarea 请在这里输入文章内容
+                    tr
+                        th 标签
+                        td
+                            #tag
+                                input#tag-field(type="text",name="tag",value="活动")
+                                | 标签之间用空格隔开
+                    tr
+                        th
+                        td.publish-type
+                            label
+                                input(type="radio",value="1",name="status")
+                                | 直接发布
+                            label
+                                input(type="radio",value="-1",name="status")
+                                | 保存为草稿
+                    tr.err.hide
+                        th 错误信息
+                        td
+                            ul
+                    tr.submit
+                        td(colspan=2)
+                            button.btn.btn-large(type="submit",name="preview") 预览
+                            button.btn.btn-large(type="submit",name="publish") 发布

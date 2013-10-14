@@ -7,7 +7,7 @@
             </span>
             <span class="title">发布新作品</span>
         </a>
-        <a href="/publish/design-work">
+        <a href="/publish/article">
             <span class="bg">
                 <img src="/global/文章.png">
                 <strong><b>new<br>point</b></strong>
