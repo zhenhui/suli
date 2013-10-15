@@ -10,8 +10,6 @@ define(function (require, exports, module) {
 
     var S = KISSY, DOM = S.DOM, Event = S.Event;
 
-    require('/global/tab/init')
-
     var router = {
         'rencent-news': {
 
@@ -42,15 +40,16 @@ define(function (require, exports, module) {
         }
     }
 
-    $trigger = $('#router-trigger')
-    $trigger.on('click', 'a.link', function (ev) {
-        var action = $(this).data('action')
-        if (router[action]) {
-            location.href = action
+    //高亮当前路由所匹配的节点
+    exports.highlight = function () {
+        var allBehavior = $('[data-behavior]')
+        var currentBehavior = allBehavior.filter('[data-behavior="' + hash + '"]')
+        allBehavior.removeClass('behavior-active')
+        for (var key in data) {
+            currentBehavior.filter('[href*="' + key + '=' + data[key] + '"]').addClass('behavior-active')
         }
-        $trigger.find('a').not(this).removeClass('hover')
-        $(this).addClass('hover')
-    })
+        currentBehavior.filter('.J-behavior').addClass('behavior-active')
+    }
 
     var data = {}
     var hash = ''
@@ -80,8 +79,7 @@ define(function (require, exports, module) {
             var $container = $('#main-js-container')
             $container.html('未定义:' + hash)
         }
-        $trigger.find('a').not(this).removeClass('hover')
-        $trigger.find('a[href*="#' + hash + '"]').addClass('hover')
+        exports.highlight()
     }
 
     Event.on(window, 'hashchange', checkHashChange)
@@ -99,24 +97,23 @@ define(function (require, exports, module) {
         if (!href)  href = $this.attr('href')
         if (typeof href !== 'string') return
         var behaviorData = KISSY.unparam(href.substring(1))
+        var param
+        delete data['full_redirect']
         if (location.hash.indexOf('{') < 0) {
-            location.hash = location.hash + S.JSON.stringify(behaviorData)
+            delete behaviorData['full_redirect']
+            param = S.JSON.stringify(behaviorData)
         } else {
             if (behaviorData['full_redirect'] === 'true') {
                 delete behaviorData['full_redirect']
-                location.hash = hash + S.JSON.stringify(behaviorData)
+                param = S.JSON.stringify(behaviorData)
             } else {
-                location.hash = hash + S.JSON.stringify(KISSY.mix(data, behaviorData))
+                delete behaviorData['full_redirect']
+                param = S.JSON.stringify(KISSY.mix(data, behaviorData))
             }
         }
+        location.hash = hash + (param !== '{}' ? param : '')
+
     })
 
-    //高亮当前路由所匹配的节点
-    exports.highlight = function () {
-        var allBehavior = $('[data-behavior="all-works"][data-behavior]')
-        allBehavior.removeClass('behavior-active')
-        for (var key in data) {
-            allBehavior.filter('[href*="' + key + '=' + data[key] + '"]').addClass('behavior-active')
-        }
-    }
+
 })

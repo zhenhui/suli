@@ -11,21 +11,21 @@
         .control
             a.btn.btn-error.btn-normal.J-publish-work(tabindex=1) +发布作品/文章
             #router-trigger.label-link
-                a.link(href="#recent-news")
+                a.link.J-behavior(data-behavior="recent-news",href="full_redirect=true")
                     span.data-icon(data-icon!="&#xe006;")
                     | 最近消息
-                a.link(href="#all-works")
+                a.link.J-behavior(data-behavior="all-works",href="#view=design&full_redirect=true")
                     span.data-icon(data-icon!="&#xe013;")
                     | 所有作品/文章(12)
-                a.link(href="#love-works")
+                a.link.J-behavior(data-behavior="love-works",href="#full_redirect=true")
                     span.data-icon(data-icon!="&#xe007;")
                     | 喜欢的作品/文章(12)
-                a.link(href="#follow")
+                a.link.J-behavior(data-behavior="follow",href="#full_redirect=true")
                     span.data-icon(data-icon!="&#xe019;")
                     | 关注的人(12)
-                a.link(href="#account-setting")
+                a.link.J-behavior(data-behavior="account-setting",href="#full_redirect=true")
                     span.data-icon(data-icon!="&#xe017;")
                     | 帐户设置
-                a.link(href="#manage-share")
+                a.link.J-behavior(data-behavior="manage-share",href="#full_redirect=true")
                     span.data-icon(data-icon!="&#xe00b;")
                     | 管理共享文件
