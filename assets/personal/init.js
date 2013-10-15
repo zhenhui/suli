@@ -74,12 +74,7 @@ define(function (require, exports, module) {
         if (router[hash] && router[hash].path) {
             require.async(router[hash].path, function (obj) {
                 if (obj && obj.init) obj.init(data, hash)
-                //高亮
-                var allBehavior = $('[data-behavior]')
-                allBehavior.removeClass('behavior-active')
-                for (var key in data) {
-                    allBehavior.filter('[href*="' + key + '=' + data[key] + '"]').addClass('behavior-active')
-                }
+                exports.highlight()
             })
         } else {
             var $container = $('#main-js-container')
@@ -87,7 +82,6 @@ define(function (require, exports, module) {
         }
         $trigger.find('a').not(this).removeClass('hover')
         $trigger.find('a[href*="#' + hash + '"]').addClass('hover')
-
     }
 
     Event.on(window, 'hashchange', checkHashChange)
@@ -98,19 +92,31 @@ define(function (require, exports, module) {
     $(document).on('click', '[data-behavior]', function (ev) {
         var $this = $(this)
         ev.preventDefault()
-        var href = $this.attr('href')
+        //for ie 6
+        var href = this.getAttribute('hash')
+        var hash = $this.data('behavior')
+        //other browser
+        if (!href)  href = $this.attr('href')
         if (typeof href !== 'string') return
-        var behaviorData = KISSY.unparam($this.attr('href').substring(1))
+        var behaviorData = KISSY.unparam(href.substring(1))
         if (location.hash.indexOf('{') < 0) {
-            location.hash = location.hash + JSON.stringify(behaviorData)
+            location.hash = location.hash + S.JSON.stringify(behaviorData)
         } else {
             if (behaviorData['full_redirect'] === 'true') {
                 delete behaviorData['full_redirect']
-                location.hash = hash + JSON.stringify(behaviorData)
+                location.hash = hash + S.JSON.stringify(behaviorData)
             } else {
-                location.hash = location.hash.replace(/\{(.)*/gi, JSON.stringify(KISSY.mix(data, behaviorData)))
+                location.hash = hash + S.JSON.stringify(KISSY.mix(data, behaviorData))
             }
         }
     })
 
+    //高亮当前路由所匹配的节点
+    exports.highlight = function () {
+        var allBehavior = $('[data-behavior="all-works"][data-behavior]')
+        allBehavior.removeClass('behavior-active')
+        for (var key in data) {
+            allBehavior.filter('[href*="' + key + '=' + data[key] + '"]').addClass('behavior-active')
+        }
+    }
 })
