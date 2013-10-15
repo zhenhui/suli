@@ -18,7 +18,7 @@ block content
                     tr
                         th 标题
                         td
-                            input.title.text(type="text",name="title",placeholder="20字以内",maxlength=20)
+                            input.title.text(type="text",name="title",placeholder="100字以内",maxlength=100)
                             select.category(name="category",title="作品分类")
                                 option(value="视觉设计",selected="selected") 视觉设计
                                 option(value="交互设计",selected="selected") 交互设计
@@ -31,13 +31,13 @@ block content
                             input.hide#upload-thumbnails(type="file")
                             span.success.J-thumbnails-status
                             input#thumbnails_id(type="hidden",name="thumbnails_id")
-                            span 大小790x200
+                            span 大小770x200
                             img#thumbnails-preview
                     tr
                         th 内容
                         td
                             #editorEl.ks-editor
-                                textarea(name="content").ks-editor-textarea 请在这里输入文章内容
+                                textarea(name="content").ks-editor-textarea
                     tr
                         th 标签
                         td

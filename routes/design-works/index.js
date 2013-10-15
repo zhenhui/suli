@@ -40,9 +40,26 @@ app.get('/design-works/share/list', function (req, res) {
         }
 
         var share = new DB.mongodb.Collection(DB.Client, 'design-works')
-        share.find({owner_id: req.session._id, status: {$gte: 1}}, {}).sort({ts: -1}).toArray(function (err, docs) {
+        share.find({owner_id: req.session._id, type: 'share', status: {$gte: 1}}, {}).sort({ts: -1}).toArray(function (err, docs) {
             res.jsonp({status: 1, docs: docs})
         })
+    })
+})
+
+//私人作品接口
+app.get('/design-works/own/list', function (req, res) {
+
+    var result = {err: []}
+    if (require('helper').isLogin(req) === false) {
+        result.status = -1
+        result.err.push('未登陆')
+        res.jsonp(result)
+        return
+    }
+
+    var share = new DB.mongodb.Collection(DB.Client, 'design-works')
+    share.find({owner_id: req.session._id, type: 'own', status: {$gte: 1}}, {}).sort({ts: -1}).toArray(function (err, docs) {
+        res.jsonp({status: 1, docs: docs})
     })
 })
 

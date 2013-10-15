@@ -19,3 +19,6 @@ require('./upload')
 
 //个人设置页面
 require('./personal')
+
+//获取文章信息
+require('./article')

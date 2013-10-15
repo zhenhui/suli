@@ -113,7 +113,7 @@ exports.saveFile = function (req, res) {
 
                 //获取大小
                 gm(file.path).size(function (err, size) {
-                    if (!err && size.width === 790 && size.height === 200) {
+                    if (!err && size.width === 770 && size.height === 200) {
                         saveImageFile(file, size)
                     } else {
                         console.log('尺寸不正确', err)
