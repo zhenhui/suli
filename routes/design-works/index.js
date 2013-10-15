@@ -85,3 +85,5 @@ app.get(/\/design-works\/detail\/(\w{24})/, function (req, res) {
 })
 
 require('./comment')
+
+require('./delete')

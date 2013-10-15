@@ -17,7 +17,11 @@ define(function (require, exports, module) {
     $(document.forms['publish']).on('submit', function (ev) {
         $.post("/publish/design-works/save", $(form).serialize(), function (data) {
             if (data && data.docs) {
-                window.location.href = '/personal#manage-share'
+                if (form.elements['type'].value === 'own') {
+                    window.location.href = '/personal#all-works{"view":"design"}'
+                } else {
+                    window.location.href = '/personal#manage-share'
+                }
             } else {
                 alert('遇到错误:\r\n' + data.err.join('\r\n'))
             }

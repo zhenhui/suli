@@ -6,6 +6,8 @@ define(function (require, exports, module) {
 
     var tpl = require('./design.tpl')
 
+    require('./design.css')
+
     var template = require('template')
 
     var $container
@@ -17,4 +19,39 @@ define(function (require, exports, module) {
             $container.html(template.render(tpl, data))
         })
     }
+
+    var Popup = require('arale/popup/1.1.5/popup')
+
+    var deletePopup = new Popup({
+        trigger: '.J-delete-design-works',
+        element: '<div><div class="t">确定删除？</div><div class="control">' +
+            '<a href="javascript:void(0)"  class="J-delete-design-works-of-own-trigger" data-action="delete">删除</a>' +
+            '<a href="javascript:void(0)" class="J-cancel">取消</a>' +
+            '</div></div>',
+        id: 'delete-design-works-of-own-trigger',
+        delegateNode: '#main-js-container',
+        triggerType: 'click',
+        className: 'delete-design-work',
+        effect: 'fade',
+        align: {
+            baseXY: [-20, -20]
+        }
+    })
+
+    deletePopup.render()
+
+    deletePopup.after('show', function (ev) {
+        ev.element.find('.J-delete-design-works-of-own-trigger').data('id', ev.activeTrigger.attr('data-id'))
+    })
+
+    //删除个人作品
+    $('#' + deletePopup.get('id')).on('click', '.J-delete-design-works-of-own-trigger', function (ev) {
+        ev.preventDefault()
+        $.get('/design-works/delete', {id: $(ev.currentTarget).data('id')}, function (data) {
+            console.log(data)
+        })
+    })
+    $('#' + deletePopup.get('id')).on('click', '.J-cancel', function () {
+        deletePopup.hide()
+    })
 })
