@@ -47,8 +47,13 @@ define(function (require, exports, module) {
     //删除个人作品
     $('#' + deletePopup.get('id')).on('click', '.J-delete-design-works-of-own-trigger', function (ev) {
         ev.preventDefault()
+        var id = $(ev.currentTarget).data('id')
         $.get('/design-works/delete', {id: $(ev.currentTarget).data('id')}, function (data) {
-            console.log(data)
+            var $li = $('#J-design-works-' + id)
+            $li.fadeOut(function () {
+                $li.remove()
+            })
+            deletePopup.hide()
         })
     })
     $('#' + deletePopup.get('id')).on('click', '.J-cancel', function () {

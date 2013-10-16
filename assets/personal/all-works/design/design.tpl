@@ -1,9 +1,9 @@
 <div id="design-container">
     <div class="list-area">
         <ul class="list clearfix">
-            #if(typeof docs!=='undefined')
+            #if(docs.length>0)
             #each(item,index in docs)
-            <li><a href="/design-works/detail/#{item._id}">
+            <li id="J-design-works-#{item._id}"><a href="/design-works/detail/#{item._id}">
                 <img src="/read/#{item.thumbnails_id.split(':')[0]}"
                      alt="#{item.content.replace(/[\r\n]/gmi,'')}"
                      width="230" height="175" class="avatar"></a>
