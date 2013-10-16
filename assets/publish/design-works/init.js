@@ -15,6 +15,11 @@ define(function (require, exports, module) {
 
     var form = document.forms['publish']
     $(document.forms['publish']).on('submit', function (ev) {
+        ev.preventDefault()
+        if ($(form).find('.J-process-running').length > 0) {
+            alert('请稍等，文件正在上传')
+            return;
+        }
         $.post("/publish/design-works/save", $(form).serialize(), function (data) {
             if (data && data.docs) {
                 if (form.elements['type'].value === 'own') {
@@ -26,7 +31,6 @@ define(function (require, exports, module) {
                 alert('遇到错误:\r\n' + data.err.join('\r\n'))
             }
         });
-        ev.preventDefault()
     })
 
 })
