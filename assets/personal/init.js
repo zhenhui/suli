@@ -37,6 +37,9 @@ define(function (require, exports, module) {
         },
         'authenticate': {
 
+        },
+        'publish-pic': {
+            path: './public-pic/init'
         }
     }
 

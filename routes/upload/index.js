@@ -10,3 +10,6 @@
 require('./avatar')
 
 require('./read-avatar')
+
+//上传到图床的文件
+require('./tuchuang')

@@ -84,9 +84,6 @@ exports.saveFile = function (req, res) {
 
     file = file[0]
 
-    //移除冒号，因为冒号作为_id和fileName的分隔符
-    file.name = file.name.replace(':', '')
-
     if (file.size < 1) {
         uploadInfo.err.push('不允许上传0字节文件')
         end()

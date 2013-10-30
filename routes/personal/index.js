@@ -8,7 +8,7 @@
 
 var app = require('app')
 var helper = require('helper')
-var db = require('DB')
+var db = require('db')
 
 app.get('/personal', function (req, res) {
     var result = {err: []}

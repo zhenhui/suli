@@ -3,7 +3,7 @@
  */
 
 var app = require('app')
-var DB = require('DB')
+var DB = require('db')
 
 app.get('/personal/article/list', function (req, res) {
     var result = {err: []}

@@ -12,6 +12,8 @@ define(function (require, exports, module) {
     var tpl = require('./account.tpl')
     require('./account.css')
     var $container = $('#main-js-container')
+
+    //生成一个回调函数名
     var callback = module.id + '_uploadCallBack'
 
     exports.init = function () {

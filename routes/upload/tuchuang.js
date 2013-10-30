@@ -1,10 +1,11 @@
 /**
  * Created with JetBrains WebStorm.
  * User: 松松
- * Date: 13-9-10
- * Time: 20:41
+ * Date: 13-10-30
+ * Time: 下午16:38
  * To change this template use File | Settings | File Templates.
  */
+
 
 
 var fs = require('fs')
@@ -13,9 +14,9 @@ var path = require('path')
 var GridStore = DB.mongodb.GridStore
 var ObjectID = DB.mongodb.ObjectID
 var gm = require('gm')
+var app = require('app')
 
-
-var fileSize = 10 * 1024 * 1000
+var fileSize = 800 * 1024
 
 function deleteRequestFile(file) {
     if (Array.isArray(file)) {
@@ -63,16 +64,11 @@ exports.saveFile = function (req, res) {
     if (file.length > 1) {
         uploadInfo.err.push('必须且只能上传1个文件')
         end()
-        //删除所有临时文件
         deleteRequestFile(file)
         return
     }
 
     file = file[0]
-
-    //移除冒号，如果用户上传的文件名中，包含:号，则会在以后客户端解析的时候遇到麻烦
-    //因为:号在数据库中作为文件ID和真实文件名的分隔符
-    file.name = file.name.replace(':', '')
 
     if (file.size < 1) {
         uploadInfo.err.push('不允许上传0字节文件')
@@ -83,10 +79,13 @@ exports.saveFile = function (req, res) {
     //生成一一对应的文件ID
     file.fileId = new ObjectID()
 
+    var ownerID = req.session._id
+
     var options = {
         chunk_size: 102400,
         metadata: {
-            owner: req.session._id
+            owner: ownerID,
+            type: 'tuchuang'
         }
     }
 
@@ -99,6 +98,7 @@ exports.saveFile = function (req, res) {
     if (allowFile[extName]) {
         //检查是否为有效图片
         console.log('开始对' + file.name + '文件进行合法性效验')
+        console.log(file.path)
         gm(file.path).format(function (err, format) {
             //如果是允许上传的图片文件
             if (!err && allowFile[format.toLowerCase()]) {
@@ -108,21 +108,47 @@ exports.saveFile = function (req, res) {
                 if (format === 'jpg' || format === 'jpeg') format = 'jpg'
 
                 file.format = format
-
                 console.log('图片格式为' + format, '开始获取文件大小')
 
-                //获取大小
-                gm(file.path).size(function (err, size) {
-                    if (!err && size.width === 770 && size.height === 200) {
-                        saveImageFile(file, size)
-                    } else {
-                        console.log('尺寸不正确', err)
-                        uploadInfo.err.push('尺寸不正确')
+                var fileName = file.fileId + '.' + format
+
+                var noProfilePath = file.path + '_noProfile'
+                gm(file.path).noProfile().write(noProfilePath, function (err) {
+                    if (err) {
+                        uploadInfo.err.push('无法生成优化后的图片')
                         end()
                         unlink(file.path)
+                        unlink(noProfilePath)
+                        return
                     }
-                })
+                    var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
+                    gs.writeFile(noProfilePath, function (err) {
+                        if (!err) {
+                            uploadInfo._id = fileName
+                        } else {
+                            uploadInfo.err.push('无法保存优化后的图片到数据库中')
+                            end()
+                            unlink(file.path)
+                            unlink(noProfilePath)
+                            return
+                        }
+                        //Save preview 138
+                        gm(file.path).noProfile().resize(138).write(noProfilePath, function () {
 
+                            options.metadata.type = "tuchuang_preview"
+
+                            var gs = new GridStore(DB.dbServer, fileName + '_preview', fileName + '_preview', "w", options)
+                            gs.writeFile(noProfilePath, function (err) {
+                                if (err) {
+                                    uploadInfo.err.push('无法保存缩略图')
+                                }
+                                unlink(noProfilePath)
+                                unlink(file.path)
+                                end()
+                            })
+                        })
+                    })
+                })
             } else {
                 console.log('文件看起来不是一个图像格式', err)
                 uploadInfo.err.push('文件看起来不是一个图像格式')
@@ -137,52 +163,23 @@ exports.saveFile = function (req, res) {
         end()
     }
 
-    //保存图片的原始数据
-    function saveImageFile(file, size) {
-        var _gm
-        var qualityPath
-        switch (file.format) {
-            //对于jpeg，提供一个原比例90压缩率的版本
-            case 'jpg':
-                qualityPath = file.path + '_quality90'
-                _gm = gm(file.path).noProfile().quality(90)
-                break;
-            //对于gif，不优化直接进行压缩
-            case 'gif':
-                qualityPath = file.path + '_quality'
-                _gm = gm(file.path).noProfile()
-                break;
-            //直接进行尺寸压缩，不进行任何优化
-            case 'png':
-                qualityPath = file.path + '_quality'
-                _gm = gm(file.path).noProfile()
-                break;
-        }
-
-        _gm.write(qualityPath, function (err) {
-            var fileName = file.fileId + '_quality' + '_w' + size.width + '_h' + size.height + '.' + file.format
-            var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
-            gs.writeFile(qualityPath, function (err) {
-                if (!err) {
-                    uploadInfo._id = fileName + ':' + file.name
-                } else {
-                    uploadInfo.err.push('无法保存优化后的图片')
-                }
-                end()
-                unlink(qualityPath)
-                unlink(file.path)
-            })
-        })
-
-    }
-
     function end() {
         if (uploadInfo.err.length < 1) {
             delete uploadInfo.err
             uploadInfo.origin_name = file.name
             uploadInfo.size = file.size
         }
-        res.end(JSON.stringify(uploadInfo, undefined, '    '))
+        res.header('content-type', 'text/html;charset=utf-8')
+
+        console.log(req.body, {
+            callback: req.body['callback-func-name'],
+            result: JSON.stringify(uploadInfo)
+        })
+
+        res.render('upload/tuchuangIframeCallBack', {
+            callback: req.body['callback-func-name'],
+            result: JSON.stringify(uploadInfo)
+        })
     }
 }
 
@@ -212,3 +209,26 @@ function unlink(file) {
         }
     })
 }
+
+app.post('/upload/tuchuang', exports.saveFile)
+
+
+//Find tuchuang list for current user
+app.get('/tuchuang/list', function (req, res) {
+    var result = {err: []}
+    if (require('helper').isLogin(req) === false) {
+        result.err.push('请先登陆')
+        res.json(result)
+        return
+    }
+    var file = new DB.mongodb.Collection(DB.Client, 'fs.files')
+    file.find({"metadata.owner": req.session._id, "metadata.type": "tuchuang"}, {id: 1}).sort({uploadDate: -1}).toArray(function (err, docs) {
+        if (!err) {
+            delete result.err
+            result.data = docs
+        } else {
+            result.err.push('Find tuchuang list fail')
+        }
+        res.json(result)
+    })
+})

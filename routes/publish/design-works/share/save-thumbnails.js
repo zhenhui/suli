@@ -70,7 +70,8 @@ exports.saveFile = function (req, res) {
 
     file = file[0]
 
-    //移除冒号，因为冒号作为_id和fileName的分隔符
+    //移除冒号，如果用户上传的文件名中，包含:号，则会在以后客户端解析的时候遇到麻烦
+    //因为:号在数据库中作为文件ID和真实文件名的分隔符
     file.name = file.name.replace(':', '')
 
     if (file.size < 1) {
