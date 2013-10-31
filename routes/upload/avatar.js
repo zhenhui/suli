@@ -47,26 +47,22 @@ exports.saveFile = function (req, res) {
         err: []
     }
 
-    if (!req.files || !req.files.file) {
+    if (!req.files || !req.files.file || req.files.file.size < 1 || !req.files.file.name) {
         uploadInfo.err.push('未接收到文件')
+        //删除这个0字节的文件
+        if (req.files.file.path) unlink(req.files.file.path)
         end()
         return
     }
 
     var file = Array.isArray(req.files.file) ? req.files.file : [req.files.file]
 
-    //虽然本方法每次“只接收”一个文件，但expressjs仍然会接收所有文件放入临时文件夹中
-    file = file.filter(function (f) {
-        if (f.size <= fileSize) {
-            return true
-        } else {
-            //大于fileSize的文件，直接删除
-            fs.unlink(f.path)
-            uploadInfo.err.push('不能上传大于' + fileSize + '的文件')
-            end()
-            return false
-        }
-    })
+    if (file.length > 1) {
+        deleteRequestFile(file)
+        uploadInfo.err.push('一次只允许上传一个文件，您可以分批上传哦。')
+        end()
+        return
+    }
 
     if (require('helper').isLogin(req) === false) {
         uploadInfo.err.push('请先登陆')
@@ -75,17 +71,10 @@ exports.saveFile = function (req, res) {
         return
     }
 
-    if (file.length > 1) {
-        uploadInfo.err.push('必须且只能上传1个文件')
-        end()
-        deleteRequestFile(file)
-        return
-    }
-
     file = file[0]
 
-    if (file.size < 1) {
-        uploadInfo.err.push('不允许上传0字节文件')
+    if (file.size < 1 || file.size > fileSize) {
+        uploadInfo.err.push('上传文件的大小不对，上限为' + (fileSize / 1024) + 'Kb')
         end()
         return
     }
