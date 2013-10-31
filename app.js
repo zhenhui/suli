@@ -9,6 +9,8 @@ require('db')
 
 var app = express()
 
+global.assetsDir = path.join(__dirname, 'assets')
+
 // all environments
 app.set('port', process.env.PORT || 80)
 app.set('views', __dirname + '/views')

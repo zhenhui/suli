@@ -2,10 +2,10 @@ doctype 5
 html
     head
         title= title
-        link(rel='stylesheet', href='#{assetsCDN}/reset.css')
-        link(rel='stylesheet', href='#{assetsCDN}/global.css')
-        link(rel='stylesheet', href='#{assetsCDN}/font.css')
-        | <!--[if lte IE 7]><script src="#{assetsCDN}/fonts/lte-ie7.js"></script><![endif]-->
+        link(rel='stylesheet', href='#{assetsCDN}/s/reset.css')
+        link(rel='stylesheet', href='#{assetsCDN}/s/global.css')
+        link(rel='stylesheet', href='#{assetsCDN}/s/font.css')
+        | <!--[if lte IE 7]><script src="#{assetsCDN}/s/fonts/lte-ie7.js"></script><![endif]-->
         block css
     body
         #navigation
@@ -67,9 +67,8 @@ html
                 .wrapper-990
                     | 版权信息
 
-        script(src="http://g.tbcdn.cn/kissy/k/1.3.2/kissy-min.js")
-        script(id="seajsnode",src="/sea.js")
-        script(src="#{assetsCDN}/sea-modules/seajs/seajs-text/1.0.3/seajs-text.js")
+        script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js")
+        script(id="seajsnode",src="#{assetsCDN}/s/sea.js")
         script.
             if(!window.console){
                 window.console={
@@ -79,21 +78,24 @@ html
                 }
             }
             seajs.config({
-                base :"#{assetsCDN}/sea-modules/",
+                base :"#{assetsCDN}/s/sea-modules/",
                 vars: {
                     locale: 'zh-cn'
                 },
-                plugins: ['text'],
+                paths:{
+                    s : "#{assetsCDN}/s",
+                    sea:"#{assetsCDN}/s/sea-modules"
+                },
                 alias: {
-                    "$": '/global/jquery',
-                    template: 'xiongsongsong/template/1.1.0/template',
-                    'sha3':'/global/crypto/sha3',
-                    'popup':'arale/popup/1.1.5/popup'
+                    "$": 's/global/jquery',
+                    'sha3':'s/global/crypto/sha3',
+                    template: 'sea/xiongsongsong/template/1.1.0/template',
+                    'popup':'sea/arale/popup/1.1.5/popup'
                 },
                 preload: ['$','sha3']
             });
             window['imgCDN']='#{imgCDN}'
             KISSY.ready(function(){
-                seajs.use('/global/init')
+                seajs.use('s/global/init')
             })
         block js

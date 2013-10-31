@@ -1,11 +1,11 @@
 extends /layout
 
 block css
-    link(rel="stylesheet",href="/personal/personal.css")
+    link(rel="stylesheet",href="#{assetsCDN}/s/personal/personal.css")
 
 block js
     script.
-        seajs.use('/personal/init')
+        seajs.use('s/personal/init')
 
 block content
     #manage-container.wrapper-990.clearfix

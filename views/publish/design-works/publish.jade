@@ -1,11 +1,11 @@
 extends /layout
 
 block css
-    link(rel='stylesheet', href='/publish/design-works/publish.css')
+    link(rel='stylesheet', href='#{assetsCDN}/s/publish/design-works/publish.css')
 
 block js
     script.
-        seajs.use('/publish/design-works/init')
+        seajs.use('s/publish/design-works/init')
 
 block content
     #publish.wrapper

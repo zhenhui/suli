@@ -1,10 +1,10 @@
 extends /layout
 
 block css
-    link(rel="stylesheet",href="/design-works/share/detail.css")
+    link(rel="stylesheet",href="#{assetsCDN}/s/design-works/share/detail.css")
 block js
     script.
-        seajs.use('/design-works/share/detail')
+        seajs.use('s/design-works/share/detail')
 
 block content
     #main-container.wrapper-990.clearfix
@@ -50,9 +50,9 @@ block content
                     h2 更多
                     p
                         a.pic(herf="http://adfadfasdf")
-                            img(src="/global/temp1.png")
+                            img(src="#{assetsCDN}/s/global/temp1.png")
                         a.pic(herf="#")
-                            img(src="/global/temp2.png")
+                            img(src="#{assetsCDN}/s/global/temp2.png")
             .tag
                 h2 相关标签
                 .tag-control

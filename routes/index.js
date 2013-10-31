@@ -22,3 +22,6 @@ require('./personal')
 
 //获取文章信息
 require('./article')
+
+//由于同源策略限制，此处用
+require('./tpl')
