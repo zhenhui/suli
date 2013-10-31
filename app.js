@@ -15,6 +15,7 @@ app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
 app.locals.basedir = './views'
 app.use(express.favicon())
+
 app.use(express.logger('dev'))
 
 app.use(express.bodyParser({keepExtensions: false, uploadDir: __dirname + '/temp'}));

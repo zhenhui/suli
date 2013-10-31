@@ -28,7 +28,7 @@ define(function (require, exports, module) {
                 if (data.err) {
                     alert(data.err.join('\r\n'))
                 } else {
-                    var src = "/avatar/" + data._id + '_80x80?r=' + Math.random()
+                    var src = window.imgCDN + "/avatar/" + data._id + '_80x80?r=' + Math.random()
                     $('#upload-image-preview')[0].src = src
                     $('#upload-avatar-id').val(data._id)
                     $('img.J-avatar-own-20').attr('src', "/avatar/" + data._id + '_20x20?r=' + Math.random())

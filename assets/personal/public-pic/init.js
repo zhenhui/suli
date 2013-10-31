@@ -27,10 +27,10 @@ define(function (require, exports, module) {
             var li = ''
             if (docs.data) {
                 KISSY.each(docs.data, function (arr) {
-                    li += '<li class="J-image-preview"><a href="//' + location.host + '/read/' + arr._id + '" target="_blank">' +
-                        '<img src="//' + location.host + '/read/' + arr._id + '_preview">' +
+                    li += '<li class="J-image-preview"><a href="' + window.imgCDN + '/read/' + arr._id + '" target="_blank">' +
+                        '<img src="' + window.imgCDN + '/read/' + arr._id + '_preview">' +
                         '</a>' +
-                        '<textarea class="J-image-preview-url">' + location.host + '/read/' + arr._id + '</textarea>' +
+                        '<textarea class="J-image-preview-url" readonly>' +  window.imgCDN + '/read/' + arr._id + '</textarea>' +
                         '</li>'
                 })
                 $('#show-tuchuang-preview-trigger').html(li)
@@ -39,6 +39,7 @@ define(function (require, exports, module) {
     }
 
     $container.on('mouseenter', '.J-image-preview-url', function (ev) {
+        this.focus()
         this.select()
     })
 

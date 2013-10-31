@@ -4,7 +4,7 @@
             #if(docs.length>0)
             #each(item,index in docs)
             <li id="J-design-works-#{item._id}"><a href="/design-works/detail/#{item._id}">
-                <img src="/read/#{item.thumbnails_id.split(':')[0]}"
+                <img src="#{imgCDN}/read/#{item.thumbnails_id.split(':')[0]}"
                      alt="#{item.content.replace(/[\r\n]/gmi,'')}"
                      width="230" height="175" class="avatar"></a>
                 <div class="control">

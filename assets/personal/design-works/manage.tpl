@@ -6,11 +6,11 @@
                 #if(typeof docs!=='undefined')
                 #each(item,index in docs)
                 <li><a href="/design-works/detail/#{item._id}"><img
-                        src="/read/#{item.thumbnails_id.split(':')[0]}" alt="#{item.content.replace(/[\r\n]/gmi,'')}"
+                        src="#{imgCDN}/read/#{item.thumbnails_id.split(':')[0]}" alt="#{item.content.replace(/[\r\n]/gmi,'')}"
                         width="230" height="175"
                         class="avatar"></a>
 
-                    <div class="user"><a class="avatar"><img src="/avatar/#{item.owner_id}_20x20"></a><span class="info">#{item.title}</span></div>
+                    <div class="user"><a class="avatar"><img src="#{imgCDN}/avatar/#{item.owner_id}_20x20"></a><span class="info">#{item.title}</span></div>
                 </li>
                 #end
                 #else

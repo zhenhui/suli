@@ -35,7 +35,7 @@ define(function (require, exports, module) {
                     if (serverInfo._id && !serverInfo.err) {
                         $('#thumbnails_id').val(serverInfo._id)
                         $tip.addClass('text-success').removeClass('text-error').html('上传成功')
-                        $('#thumbnails-preview').attr('src', '/read/' + serverInfo._id.split(':')[0]).addClass('block')
+                        $('#thumbnails-preview').attr('src', window.imgCDN + '#{imgCDN}/read/' + serverInfo._id.split(':')[0]).addClass('block')
                     } else {
                         $tip.addClass('text-error').removeClass('text-success').html('上传失败：' + serverInfo.err)
                     }

@@ -20,7 +20,7 @@ define(function (require, exports, module) {
         })
     }
 
-    var Popup = require('arale/popup/1.1.5/popup')
+    var Popup = require('popup')
 
     var deletePopup = new Popup({
         trigger: '.J-delete-design-works',

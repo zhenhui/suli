@@ -12,7 +12,7 @@ define(function (require, exports, module) {
 
     $(function () {
         var $loginNode = $('#login-register-area')
-        var Popup = require('arale/popup/1.1.5/popup')
+        var Popup = require('popup')
         var sha3 = require('sha3')
 
         $loginNode.mouseenter(function () {
@@ -23,9 +23,7 @@ define(function (require, exports, module) {
             })
 
         var tpl = require('./login.tpl')
-
         var template = require('template')
-
 
         //如果是登陆的FORM
         $(document).on('submit', 'form', function (ev) {

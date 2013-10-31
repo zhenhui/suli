@@ -11,19 +11,19 @@ block content
         .main-content
             h1
                 a.avatar
-                    img(src="/avatar/#{docs.owner_id}_80x80")
+                    img(src="#{imgCDN}/avatar/#{docs.owner_id}_80x80")
                 span.title=docs.title
                 span.category 【#{docs.category}】
                 span.date 2013年6月
 
             .main-pic-container
                 .main-pic
-                    img(src="/read/#{docs.file_id.split(':')[0]}")
+                    img(src="#{imgCDN}/read/#{docs.file_id.split(':')[0]}")
                 -if(docs.ps_id.length>0)
                     .ps 附件下载
                         -docs.ps_id.forEach(function(item,index){
                             -item=item.split(':')
-                                a(href="/read/#{item[0]}",download="#{item[1]}") #{item[1]}
+                                a(href="#{imgCDN}/read/#{item[0]}",download="#{item[1]}") #{item[1]}
                         -})
                 -else
                     .ps 该文件没有附件
