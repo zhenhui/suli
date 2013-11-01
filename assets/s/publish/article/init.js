@@ -13,13 +13,12 @@ define(function (require, exports, module) {
 
 
     var form = document.forms['publish']
-    $(document.forms['publish']).on('submit', function (ev) {
+    $(form).on('submit', function (ev) {
 
         ev.preventDefault()
 
         if (Editor && Editor.editor) {
-            console.log('完成了同步')
-            Editor.editor.sync()
+            form.elements['content'].value = Editor.editor.getData()
         }
 
         $.post("/publish/article/save", $(form).serialize(), function (data) {
@@ -30,6 +29,4 @@ define(function (require, exports, module) {
             }
         });
     })
-
-
 })
