@@ -8,9 +8,7 @@
 
 define(function (require, exports, module) {
 
-    KISSY.use("overlay", function (S, O) {
-
-        var Event = S.Event, DOM = S.DOM;
+    KISSY.use("overlay,event,dom", function (S, O, Event, DOM) {
 
         var tpl = require('./type.tpl')
 
@@ -26,6 +24,14 @@ define(function (require, exports, module) {
                 points: ['cc', 'cc']
             }
         });
+
+        dialog.on('afterRenderUI', function () {
+            if (dialog.get('isBindRenderUI__')) return
+            dialog.set('isBindRenderUI__', true)
+            Event.delegate(dialog.get('el'), 'click', '.ks-overlay-close', function (ev) {
+                dialog.hide()
+            })
+        })
 
         function show() {
             dialog.show();
@@ -45,6 +51,7 @@ define(function (require, exports, module) {
             if ((target.nodeName === 'INPUT' && /(text|password)/gmi.test(target.type)) || target.nodeName === 'TEXTAREA') return
             show()
         })
+
 
         $body.on('click', '.J-publish-work', function () {
             //好让那个折叠菜单隐藏掉

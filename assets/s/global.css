@@ -332,14 +332,16 @@ a:hover {
 .publish-works {
   background: #fff;
   border: solid 1px #ccc;
+  width: 886px;
 }
-.publish-works a.ks-ext-close {
+.publish-works a.ks-dialog-close {
   position: absolute;
   right: 0;
   top: 0;
   background: #ff3b35;
   color: #fff;
-  padding: 3px 6px;
+  padding: 6px;
+  z-index: 3;
 }
 .tab .J-tab-trigger {
   font-size: 14px;
