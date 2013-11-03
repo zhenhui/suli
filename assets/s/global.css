@@ -51,6 +51,10 @@ a:hover {
   padding: 2px 7px;
   border: solid 1px #ccc;
 }
+.btn:hover {
+  background: #ff3b35;
+  color: #fff;
+}
 .w100 {
   width: 100%;
 }

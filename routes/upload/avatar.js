@@ -26,6 +26,11 @@ var resizeParam = [
         quality: 90
     },
     {
+        width: 55,
+        height: 55,
+        quality: 90
+    },
+    {
         width: 20,
         height: 20,
         quality: 90

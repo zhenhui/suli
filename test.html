@@ -53,17 +53,102 @@
         overflow: hidden;
         margin: 0 auto;
         position: relative;
+        text-align: center;
     }
 
     #switch-main-banner a {
         display: block;
         height: 300px;
-        overflow: hidden;
+        width: 1200px;
     }
 
     #switch-main-banner a img {
+        height: 300px;
+        vertical-align: top;
         display: block;
     }
+
+    #switch-main-banner .ks-switchable-nav {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        bottom: 22px;
+        height: 0;
+        z-index: 10;
+        text-align: center;
+        display: inline-block;
+    }
+
+    #switch-main-banner .ks-switchable-nav li {
+        display: inline-block;
+        background: url(http://img.sulicdn.com/read/527476ac98bff5641600000f.png) -16px 0 no-repeat;
+        width: 11px;
+        height: 11px;
+        overflow: hidden;
+        text-indent: -9999em;
+        margin: 0 3px;
+    }
+
+    #switch-main-banner .ks-switchable-nav li.ks-active {
+        background-position: 0 0;
+    }
+
+    /*热门作品和最新作品*/
+    .J-design-works {
+        margin: 23px auto 16px auto;
+        font-size: 12px;
+    }
+
+    .J-design-works a {
+        margin-right: 12px;
+        cursor: pointer;
+    }
+
+    .J-design-works a.active {
+        font-size: 18px;
+    }
+
+    .J-design-works-container {
+        overflow: hidden;
+    }
+
+    .J-design-works-container .control {
+        text-align: center;
+    }
+
+    .J-design-works-container .control a {
+        margin: 0 8px;
+    }
+
+    .J-design-works-container ul {
+        width: 1200px;
+    }
+
+    .J-design-works-container li {
+        width: 230px;
+        height: 240px;
+        position: relative;
+        float: left;
+        margin-right: 23px;
+    }
+
+    .J-design-works-container li .avatar {
+        position: absolute;
+        left: 0;
+        top: 180px;
+    }
+
+    .J-design-works-container li .avatar img {
+        border-radius: 2px;
+    }
+
+    .J-design-works-container li .info {
+        position: absolute;
+        right: 0;
+        top: 180px;
+        color: #999;
+    }
+
 
 </style>
 <div id="switch-main-banner" class="ks-scroll-view">
@@ -79,11 +164,399 @@
 
     KISSY.use('switchable', function (S, Switchable) {
         new Switchable.Slide('#switch-main-banner', {
-            effect: 'scrolly',
-            easing: 'easeOutStrong'
+            effect: 'fade',
+            easing: 'easeOutStrong',
+            interval: 3,
+            autoPlay: false,
+            duration: 1
         });
     });
 </script>
+
+
+<div class="wrapper">
+<div class="wrapper-990">
+<div class="tab J-design-works">
+    <a class="active J-latest-works">最新作品</a>
+    <a class="J-hot-design">热门作品</a>
+</div>
+<div class="J-design-works-container">
+<div class="list">
+<ul class="clearfix">
+<li>
+    <a href="#">
+        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
+    </a>
+
+    <div class="avatar">
+        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
+    </div>
+    <div class="info">
+                            <span class="view">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                33
+                            </span>
+                            <span class="love">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                44
+                            </span>
+                            <span class="comment">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                55
+                            </span>
+    </div>
+</li>
+<li>
+    <a href="#">
+        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
+    </a>
+
+    <div class="avatar">
+        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
+    </div>
+    <div class="info">
+                            <span class="view">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                33
+                            </span>
+                            <span class="love">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                44
+                            </span>
+                            <span class="comment">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                55
+                            </span>
+    </div>
+</li>
+<li>
+    <a href="#">
+        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
+    </a>
+
+    <div class="avatar">
+        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
+    </div>
+    <div class="info">
+                            <span class="view">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                33
+                            </span>
+                            <span class="love">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                44
+                            </span>
+                            <span class="comment">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                55
+                            </span>
+    </div>
+</li>
+<li>
+    <a href="#">
+        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
+    </a>
+
+    <div class="avatar">
+        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
+    </div>
+    <div class="info">
+                            <span class="view">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                33
+                            </span>
+                            <span class="love">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                44
+                            </span>
+                            <span class="comment">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                55
+                            </span>
+    </div>
+</li>
+<li>
+    <a href="#">
+        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
+    </a>
+
+    <div class="avatar">
+        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
+    </div>
+    <div class="info">
+                            <span class="view">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                33
+                            </span>
+                            <span class="love">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                44
+                            </span>
+                            <span class="comment">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                55
+                            </span>
+    </div>
+</li>
+<li>
+    <a href="#">
+        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
+    </a>
+
+    <div class="avatar">
+        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
+    </div>
+    <div class="info">
+                            <span class="view">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                33
+                            </span>
+                            <span class="love">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                44
+                            </span>
+                            <span class="comment">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                55
+                            </span>
+    </div>
+</li>
+<li>
+    <a href="#">
+        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
+    </a>
+
+    <div class="avatar">
+        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
+    </div>
+    <div class="info">
+                            <span class="view">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                33
+                            </span>
+                            <span class="love">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                44
+                            </span>
+                            <span class="comment">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                55
+                            </span>
+    </div>
+</li>
+<li>
+    <a href="#">
+        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
+    </a>
+
+    <div class="avatar">
+        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
+    </div>
+    <div class="info">
+                            <span class="view">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                33
+                            </span>
+                            <span class="love">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                44
+                            </span>
+                            <span class="comment">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                55
+                            </span>
+    </div>
+</li>
+<li>
+    <a href="#">
+        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
+    </a>
+
+    <div class="avatar">
+        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
+    </div>
+    <div class="info">
+                            <span class="view">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                33
+                            </span>
+                            <span class="love">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                44
+                            </span>
+                            <span class="comment">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                55
+                            </span>
+    </div>
+</li>
+</ul>
+</div>
+<div class="control">
+    <a href="#" class="btn btn-large">上一页</a>
+    <a href="#" class="btn btn-large">下一页</a>
+</div>
+</div>
+</div>
+</div>
+
+
+<style>
+    #hot-user h2 {
+        font-size: 18px;
+        margin: 23px auto 12px auto;
+    }
+
+    #hot-user ul {
+        width: 1014px;
+    }
+
+    #hot-user li {
+        width: 230px;
+        height: 210px;
+        position: relative;
+        background: #fff;
+        float: left;
+        margin-right: 23px;
+        margin-bottom: 12px;
+    }
+
+    #hot-user li a.big-avatar {
+        position: absolute;
+        left: 5px;
+        top: 6px;
+    }
+
+    #hot-user li a.big-avatar img {
+        border-radius: 2px;
+    }
+
+    #hot-user .info {
+        top: 12px;
+        left: 94px;
+        position: absolute;
+    }
+
+    #hot-user p.array {
+        position: absolute;
+        top: 95px;
+        left: 5px;
+    }
+
+    #hot-user p.array a {
+        float: left;
+        background: #fff;
+    }
+
+    #hot-user p.array a img {
+        display: block;
+        opacity: .8;
+    }
+</style>
+<div class="wrapper">
+    <div class="wrapper-990" id="hot-user">
+        <div class="title"><h2>狂热分子</h2></div>
+        <div class="user-container">
+            <div class="item">
+                <ul class="clearfix">
+                    <li>
+                        <div class="info">
+                            <h3>Jakon</h3>
+
+                            <div class="address">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                杭州
+                            </div>
+                            <div class="jobs">界面设计师</div>
+                        </div>
+                        <a href="#" class="big-avatar"><img
+                                src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_80x80"></a>
+
+                        <p class="array">
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                        </p>
+                    </li>
+                    <li>
+                        <div class="info">
+                            <h3>Jakon</h3>
+
+                            <div class="address">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                杭州
+                            </div>
+                            <div class="jobs">界面设计师</div>
+                        </div>
+                        <a href="#" class="big-avatar"><img
+                                src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_80x80"></a>
+
+                        <p class="array">
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                        </p>
+                    </li>
+                    <li>
+                        <div class="info">
+                            <h3>Jakon</h3>
+
+                            <div class="address">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                杭州
+                            </div>
+                            <div class="jobs">界面设计师</div>
+                        </div>
+                        <a href="#" class="big-avatar"><img
+                                src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_80x80"></a>
+
+                        <p class="array">
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                        </p>
+                    </li>
+                    <li>
+                        <div class="info">
+                            <h3>Jakon</h3>
+
+                            <div class="address">
+                                <b class="data-icon" data-icon="&#xe009;"></b>
+                                杭州
+                            </div>
+                            <div class="jobs">界面设计师</div>
+                        </div>
+                        <a href="#" class="big-avatar"><img
+                                src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_80x80"></a>
+
+                        <p class="array">
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 
 <div class="wrapper-990"></div>
@@ -141,6 +614,7 @@ seajs.config({
 window['imgCDN'] = 'http://img.sulicdn.com'
 KISSY.ready(function () {
     seajs.use('s/global/init')
-})</script>
+})
+</script>
 </body>
 </html>
