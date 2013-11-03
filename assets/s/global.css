@@ -337,6 +337,7 @@ a:hover {
   background: #fff;
   border: solid 1px #ccc;
   width: 886px;
+  z-index: 9999;
 }
 .publish-works a.ks-dialog-close {
   position: absolute;
