@@ -25,3 +25,5 @@ require('./article')
 
 //由于同源策略限制，此处用
 require('./tpl')
+
+//活动页面

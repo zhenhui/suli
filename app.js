@@ -19,7 +19,7 @@ app.locals.basedir = './views'
 app.use(express.favicon())
 
 app.use(express.logger('dev'))
-
+app.use(express.compress())
 app.use(express.bodyParser({keepExtensions: false, uploadDir: __dirname + '/temp'}));
 
 //req.body实体大小为110M（大多数文件为100M，多余的10M预留给req.body参数）
