@@ -1,0 +1,37 @@
+doctype 5
+html
+    head
+        title= title
+        script(src='#{assetsCDN}/s/global/jquery.js')
+    body
+        block content
+    script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js")
+    script(id="seajsnode",src="#{assetsCDN}/s/sea.js")
+    script.
+        KISSY.config({
+            modules: {
+                'sizzle': { alias: ['node'] },
+                'ajax': { alias: ['io'] },
+                'calendar': { alias: ['gallery/calendar-deprecated/1.0/']  },
+                'datalazyload': {  alias: ['gallery/datalazyload/1.0/'] },
+                'switchable': { alias: ['gallery/switchable/1.3.1/'] },
+                'imagezoom': { alias: ['gallery/imagezoom/1.0/'] },
+                'waterfall': { alias: ['gallery/waterfall/1.0/'] },
+                'flash': { alias: ['gallery/flash/1.0/'] }
+            }
+        });
+        seajs.config({
+            base :"#{assetsCDN}/s/sea-modules/",
+            vars: {
+                locale: 'zh-cn'
+            },
+            paths:{
+                s : "#{assetsCDN}/s",
+                sea:"#{assetsCDN}/s/sea-modules"
+            },
+            alias:{
+                template: 'sea/xiongsongsong/template/1.1.0/template',
+            }
+        });
+        window['imgCDN']='#{imgCDN}'
+    block js

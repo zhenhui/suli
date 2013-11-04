@@ -1,616 +1,544 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head><title>Hello suli!</title>
-    <link rel="stylesheet" href="http://a.sulicdn.com/s/reset.css">
-    <link rel="stylesheet" href="http://a.sulicdn.com/s/global.css">
-    <link rel="stylesheet" href="http://a.sulicdn.com/s/font.css">
-    <!--[if lte IE 7]>
-    <script src="http://a.sulicdn.com/s/fonts/lte-ie7.js"></script><![endif]-->
-    <link rel="stylesheet" href="http://a.sulicdn.com/s/home/home.css">
-    <script src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js" data-config="{combine:true}"></script>
-    <script>
-        KISSY.config({
-            modules: {
-                'sizzle': { alias: ['node'] },
-                'ajax': { alias: ['io'] },
-                'calendar': { alias: ['gallery/calendar-deprecated/1.0/']  },
-                'datalazyload': {  alias: ['gallery/datalazyload/1.0/'] },
-                'switchable': { alias: ['gallery/switchable/1.3.1/'] },
-                'imagezoom': { alias: ['gallery/imagezoom/1.0/'] },
-                'waterfall': { alias: ['gallery/waterfall/1.0/'] },
-                'flash': { alias: ['gallery/flash/1.0/'] }
-            }
-        });
-    </script>
+<head>
+    <meta charset="utf-8">
+    <title>博彦科技UED -- 专注互联网视觉设计外包</title>
+    <link rel="stylesheet" href="/global/reset.css">
+    <link rel="stylesheet" href="/global/global.css?new">
+    <link rel="stylesheet" href="/home/home.css?new">
 </head>
 <body>
-<div id="navigation">
-    <div class="wrapper">
-        <div class="wrapper-990"><h1>Logo</h1>
-            <ul>
-                <li><a>作品展</a></li>
-                <li><a>文章</a></li>
-                <li><a>关于我们</a></li>
-                <li><a>招聘</a></li>
-                <li>
-                    <div id="login-register-area">
-                        <!--#user-info<span><img src="http://dribbble.s3.amazonaws.com/users/49563/avatars/original/f7c80d46.jpg?1325837502"></span><span class="user_name">Jakon</span><div class="list"><a>信息</a><a /publish/design-works>发布作品</a><a>设置帐号</a><a>退出</a></div>-->
-                        <div class="J-login-register-triggers"><a href="javascript:void(0)"
-                                                                  class="J-login-triggers">登陆</a><span
-                                class="J-spector spector">/</span><a href="#">注册</a></div>
-                    </div>
-                </li>
-            </ul>
+<div id="browser-tips" class="item">
+    <h1>您的浏览器过于陈旧</h1>
+
+    <p>请升级您的浏览器，以便正常使用该页面。之后，您的上网体验、速度、安全性将得到提高！这几乎是一劳永逸的事情！</p>
+    <p>您可以从以下三种浏览器中选择一款！</p>
+
+    <p><a href="http://www.google.com.hk/chrome">Google Chrome</a>、<a href="http://firefox.com.cn/">Firefox</a>、<a
+            href="http://windows.microsoft.com/zh-CN/windows/upgrade-your-browser">Internet Explorer</a>、</p>
+</div>
+<div id="header">
+    <img class="logo" src="/global/images/logo.png?new" alt="杰杰设计">
+
+    <p>
+        <a href="#about" id="about-nav">关于我们</a>
+        <a href="#what-we-do" id="wedo-nav">我们能做</a>
+        <a href="#portfolio" id="portfolio-nav">设计作品</a>
+        <a href="#show" id="design-nav">设计师</a>
+        <a href="#copy-right" class="notify-contact" id="contact-nav">联系我们</a>
+    </p>
+</div>
+
+<div id="banner">
+    <div id="banner-container">
+        <div id="banner-switch" class="s-demo scrollable">
+            <div class="prev-and-next">
+                <span id="scroller-prev-banner" class="prev disable">&lsaquo; 上一页</span>
+                <span id="scroller-next-banner" class="next">下一页 &rsaquo;</span>
+            </div>
+
+            <div class="scroller">
+                <div class="ks-switchable-content contact">
+                    <div class="banner"
+                         style="background-image: url(/file/50f519f6b50db78e7a002e03)"><p><a
+                            href="javascript:void(0)" onclick="document.getElementById('copy-right').scrollIntoView()">关于我们</a></p></div>
+                    <div class="banner"
+                         style="background-image: url(/file/50f5256fb50db78e7a005efc)"><p><a
+                            href="#portfolio" style="left:52px;top:246px;">portfolio</a></p></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<style>
 
-    #switch-main-banner {
-        width: 1200px;
-        height: 300px;
-        overflow: hidden;
-        margin: 0 auto;
-        position: relative;
-        text-align: center;
-    }
-
-    #switch-main-banner a {
-        display: block;
-        height: 300px;
-        width: 1200px;
-    }
-
-    #switch-main-banner a img {
-        height: 300px;
-        vertical-align: top;
-        display: block;
-    }
-
-    #switch-main-banner .ks-switchable-nav {
-        position: absolute;
-        left: 0;
-        width: 100%;
-        bottom: 22px;
-        height: 0;
-        z-index: 10;
-        text-align: center;
-        display: inline-block;
-    }
-
-    #switch-main-banner .ks-switchable-nav li {
-        display: inline-block;
-        background: url(http://img.sulicdn.com/read/527476ac98bff5641600000f.png) -16px 0 no-repeat;
-        width: 11px;
-        height: 11px;
-        overflow: hidden;
-        text-indent: -9999em;
-        margin: 0 3px;
-    }
-
-    #switch-main-banner .ks-switchable-nav li.ks-active {
-        background-position: 0 0;
-    }
-
-    /*热门作品和最新作品*/
-    .J-design-works {
-        margin: 23px auto 16px auto;
-        font-size: 12px;
-    }
-
-    .J-design-works a {
-        margin-right: 12px;
-        cursor: pointer;
-    }
-
-    .J-design-works a.active {
-        font-size: 18px;
-    }
-
-    .J-design-works-container {
-        overflow: hidden;
-    }
-
-    .J-design-works-container .control {
-        text-align: center;
-    }
-
-    .J-design-works-container .control a {
-        margin: 0 8px;
-    }
-
-    .J-design-works-container ul {
-        width: 1200px;
-    }
-
-    .J-design-works-container li {
-        width: 230px;
-        height: 240px;
-        position: relative;
-        float: left;
-        margin-right: 23px;
-    }
-
-    .J-design-works-container li .avatar {
-        position: absolute;
-        left: 0;
-        top: 180px;
-    }
-
-    .J-design-works-container li .avatar img {
-        border-radius: 2px;
-    }
-
-    .J-design-works-container li .info {
-        position: absolute;
-        right: 0;
-        top: 180px;
-        color: #999;
-    }
-
-
-</style>
-<div id="switch-main-banner" class="ks-scroll-view">
-    <div class="ks-switchable-content">
-        <a href="#1"><img src="http://img.sulicdn.com/read/5271c3b70419de800900000a.png"/></a>
-        <a href="#2"><img src="http://img.sulicdn.com/read/5271c3ba0419de8009000011.png"/></a>
-        <a href="#3"><img src="http://img.sulicdn.com/read/5271c3be0419de8009000018.png"/></a>
-        <a href="#4"><img src="http://img.sulicdn.com/read/5271c3c20419de800900001f.png"/></a>
-        <a href="#4"><img src="http://img.sulicdn.com/read/5271c3c60419de8009000026.png"/></a>
+<div id="nav-container">
+    <div id="nav">
+        <div id="nav-content">
+            <div id="point">
+                <a class="home" href="#"></a>
+                <a class="active" href="#about"></a>
+                <a href="#what-we-do"></a>
+                <a href="#portfolio"></a>
+                <a href="#show"></a>
+                <a class="notify-contact" href="#copy-right"></a>
+            </div>
+        </div>
     </div>
 </div>
-<script>
 
-    KISSY.use('switchable', function (S, Switchable) {
-        new Switchable.Slide('#switch-main-banner', {
+<div id="about" class="item">
+    <div id="team">
+        <div id="team-container" class="s-demo scrollable">
+            <div class="scroller">
+                <div class="ks-switchable-content">
+                    <a href="http://www.youku.com/playlist_show/id_18828723.html" target="_blank"><img
+                            src="/file/50f423ffb6826b0576000017"></a>
+                    <a href="/file/50f3dfd18b5c18c166000c56" target="_blank"><img
+                            src="/file/50f3dfd18b5c18c166000c56_310"></a>
+                    <a href="/file/50f3dfc18b5c18c166000a31" target="_blank"><img
+                            src="/file/50f3dfc18b5c18c166000a31_310"></a>
+                    <a href="/file/50f3dfae8b5c18c16600072b" target="_blank"><img
+                            src="/file/50f3dfae8b5c18c16600072b_310"></a>
+                    <a href="/file/50f3df9c8b5c18c166000486" target="_blank"><img
+                            src="/file/50f3df9c8b5c18c166000486_310"></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="what-we-do" class="item">
+
+</div>
+
+
+<div id="portfolio" class="item">
+    <img src="/global/images/portfolio.png">
+
+    <div class="nav-bar" id="nav-field">
+        <b id="category-field" class="category" data-field="category">按类型</b>
+        <b id="color-field" class="color" data-field="color">按色系</b>
+        <b id="date-field" class="date" data-field="date">按年份</b>
+        <b id="series-field" class="series" data-field="series">按系列</b>
+    </div>
+    <div id="filter-waterfall" class="clearfix">
+        <div class="active">
+            <b data-value="活动页" style="width: 165px;">活动页</b>
+            <b data-value="Banner" style="width: 165px;">Banner</b>
+            <b data-value="WEB" style="width: 165px;">WEB</b>
+            <b data-value="EDM" style="width: 165px;">EDM</b>
+            <b data-value="手机端" style="width: 165px;">手机端</b>
+            <b data-value="其他" style="width: 165px;">其他</b>
+        </div>
+        <div class="color">
+            <b data-value="蓝色" style="width: 82px;border-bottom-color:#0065FE;">蓝色</b>
+            <b data-value="橙色" style="width: 82px;border-bottom-color:#FE6C00;">橙色</b>
+            <b data-value="红色" style="width: 82px;border-bottom-color: red">红色</b>
+            <b data-value="粉色" style="width: 82px;border-bottom-color: #D744BA;">粉色</b>
+            <b data-value="绿色" style="width: 82px;border-bottom-color:#59A725;">绿色</b>
+            <b data-value="青色" style="width: 82px;border-bottom-color:#06B7C8;">青色</b>
+            <b data-value="黄色" style="width: 82px;border-bottom-color:#FEBF00;">黄色</b>
+            <b data-value="棕色" style="width: 82px;border-bottom-color:#733413;">棕色</b>
+            <b data-value="黑色" style="width: 82px;border-bottom-color:black;">黑色</b>
+            <b data-value="紫色" style="width: 82px;border-bottom-color:#892BCF;">紫色</b>
+            <b data-value="白色" style="width: 88px;border-bottom-color:white;">白色</b>
+            <b data-value="配色" style="width: 82px;border-bottom-color: #df6053;">配色</b>
+        </div>
+        <div>
+            <b data-value="2013" style="width: 165px;">2013</b>
+            <b data-value="2012" style="width: 165px;">2012</b>
+            <b data-value="2011" style="width: 165px;">2011</b>
+            <b data-value="2010" style="width: 165px;">2010</b>
+            <b data-value="2009" style="width: 165px;">2009</b>
+            <b data-value="2008" style="width: 165px;">2008</b>
+        </div>
+        <div>
+            <b data-value="清爽系" style="width: 198px;">清爽系</b>
+            <b data-value="深色系" style="width: 198px;">深色系</b>
+            <b data-value="双11" style="width: 198px;">双11</b>
+            <b data-value="中国风" style="width: 198px;">中国风</b>
+            <b data-value="绝密档案活动页" style="width: 198px;">绝密档案活动页</b>
+        </div>
+    </div>
+    <div id="portfolio-container">
+
+    </div>
+    <div id="p" class="pagination clearfix"><b class="prev">上一页</b> <b class="next">下一页</b></div>
+</div>
+
+<div id="show" class="item">
+    <img src="/global/images/mien.png">
+
+    <div id="container" style="position: relative;">
+
+    </div>
+    <div id="water-pagination" class="pagination clearfix"><b class="prev">上一页</b> <b class="next">下一页</b></div>
+</div>
+
+
+<script src="http://a.tbcdn.cn/s/kissy/1.3.0/seed-min.js"></script>
+<script type="text/javascript">
+    KISSY.use("event,dom,switchable,datalazyload,ajax", function (S, Event, DOM, Switchable) {
+        var Carousel = Switchable.Carousel;
+
+
+        var banner = new Switchable.Slide('#banner-switch', {
             effect: 'fade',
             easing: 'easeOutStrong',
-            interval: 3,
-            autoPlay: false,
-            duration: 1
+            triggerType: 'mouse',
+            delay: 0,
+            autoplay: true
         });
+
+        var team = new Switchable.Slide('#team-container', {
+            effect: 'fade',
+            easing: 'easeOutStrong',
+            autoplay: true,
+            triggerType: 'mouse',
+            interval: 2.3,
+            delay: 0
+        });
+
+        Event.on('#scroller-prev-banner', 'mousedown', function () {
+            banner.prev();
+        });
+
+        Event.on('#scroller-next-banner', 'mousedown', function () {
+            banner.next();
+        });
+
+
     });
 </script>
 
-
-<div class="wrapper">
-<div class="wrapper-990">
-<div class="tab J-design-works">
-    <a class="active J-latest-works">最新作品</a>
-    <a class="J-hot-design">热门作品</a>
-</div>
-<div class="J-design-works-container">
-<div class="list">
-<ul class="clearfix">
-<li>
-    <a href="#">
-        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
-    </a>
-
-    <div class="avatar">
-        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
-    </div>
-    <div class="info">
-                            <span class="view">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                33
-                            </span>
-                            <span class="love">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                44
-                            </span>
-                            <span class="comment">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                55
-                            </span>
-    </div>
-</li>
-<li>
-    <a href="#">
-        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
-    </a>
-
-    <div class="avatar">
-        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
-    </div>
-    <div class="info">
-                            <span class="view">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                33
-                            </span>
-                            <span class="love">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                44
-                            </span>
-                            <span class="comment">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                55
-                            </span>
-    </div>
-</li>
-<li>
-    <a href="#">
-        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
-    </a>
-
-    <div class="avatar">
-        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
-    </div>
-    <div class="info">
-                            <span class="view">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                33
-                            </span>
-                            <span class="love">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                44
-                            </span>
-                            <span class="comment">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                55
-                            </span>
-    </div>
-</li>
-<li>
-    <a href="#">
-        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
-    </a>
-
-    <div class="avatar">
-        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
-    </div>
-    <div class="info">
-                            <span class="view">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                33
-                            </span>
-                            <span class="love">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                44
-                            </span>
-                            <span class="comment">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                55
-                            </span>
-    </div>
-</li>
-<li>
-    <a href="#">
-        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
-    </a>
-
-    <div class="avatar">
-        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
-    </div>
-    <div class="info">
-                            <span class="view">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                33
-                            </span>
-                            <span class="love">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                44
-                            </span>
-                            <span class="comment">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                55
-                            </span>
-    </div>
-</li>
-<li>
-    <a href="#">
-        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
-    </a>
-
-    <div class="avatar">
-        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
-    </div>
-    <div class="info">
-                            <span class="view">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                33
-                            </span>
-                            <span class="love">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                44
-                            </span>
-                            <span class="comment">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                55
-                            </span>
-    </div>
-</li>
-<li>
-    <a href="#">
-        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
-    </a>
-
-    <div class="avatar">
-        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
-    </div>
-    <div class="info">
-                            <span class="view">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                33
-                            </span>
-                            <span class="love">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                44
-                            </span>
-                            <span class="comment">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                55
-                            </span>
-    </div>
-</li>
-<li>
-    <a href="#">
-        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
-    </a>
-
-    <div class="avatar">
-        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
-    </div>
-    <div class="info">
-                            <span class="view">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                33
-                            </span>
-                            <span class="love">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                44
-                            </span>
-                            <span class="comment">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                55
-                            </span>
-    </div>
-</li>
-<li>
-    <a href="#">
-        <img src="http://img.sulicdn.com/read/5242da474f7386581500000d_quality_w230_h175.png">
-    </a>
-
-    <div class="avatar">
-        <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_20x20"></a>
-    </div>
-    <div class="info">
-                            <span class="view">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                33
-                            </span>
-                            <span class="love">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                44
-                            </span>
-                            <span class="comment">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                55
-                            </span>
-    </div>
-</li>
-</ul>
-</div>
-<div class="control">
-    <a href="#" class="btn btn-large">上一页</a>
-    <a href="#" class="btn btn-large">下一页</a>
-</div>
-</div>
-</div>
-</div>
-
-
-<style>
-    #hot-user h2 {
-        font-size: 18px;
-        margin: 23px auto 12px auto;
-    }
-
-    #hot-user ul {
-        width: 1014px;
-    }
-
-    #hot-user li {
-        width: 230px;
-        height: 210px;
-        position: relative;
-        background: #fff;
-        float: left;
-        margin-right: 23px;
-        margin-bottom: 12px;
-    }
-
-    #hot-user li a.big-avatar {
-        position: absolute;
-        left: 5px;
-        top: 6px;
-    }
-
-    #hot-user li a.big-avatar img {
-        border-radius: 2px;
-    }
-
-    #hot-user .info {
-        top: 12px;
-        left: 94px;
-        position: absolute;
-    }
-
-    #hot-user p.array {
-        position: absolute;
-        top: 95px;
-        left: 5px;
-    }
-
-    #hot-user p.array a {
-        float: left;
-        background: #fff;
-    }
-
-    #hot-user p.array a img {
-        display: block;
-        opacity: .8;
-    }
-</style>
-<div class="wrapper">
-    <div class="wrapper-990" id="hot-user">
-        <div class="title"><h2>狂热分子</h2></div>
-        <div class="user-container">
-            <div class="item">
-                <ul class="clearfix">
-                    <li>
-                        <div class="info">
-                            <h3>Jakon</h3>
-
-                            <div class="address">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                杭州
-                            </div>
-                            <div class="jobs">界面设计师</div>
-                        </div>
-                        <a href="#" class="big-avatar"><img
-                                src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_80x80"></a>
-
-                        <p class="array">
-                            #each{group:首屏轮播,title:图片和链接,href:链接:url,img:图片:img,row:10,defaultRow:3,id:1e5a5ed248ab099ae9b3aa9dc58890bc42329f58}
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            #end
-                        </p>
-                    </li>
-                    <li>
-                        <div class="info">
-                            <h3>Jakon</h3>
-
-                            <div class="address">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                杭州
-                            </div>
-                            <div class="jobs">界面设计师</div>
-                        </div>
-                        <a href="#" class="big-avatar"><img
-                                src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_80x80"></a>
-
-                        <p class="array">
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                        </p>
-                    </li>
-                    <li>
-                        <div class="info">
-                            <h3>Jakon</h3>
-
-                            <div class="address">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                杭州
-                            </div>
-                            <div class="jobs">界面设计师</div>
-                        </div>
-                        <a href="#" class="big-avatar"><img
-                                src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_80x80"></a>
-
-                        <p class="array">
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                        </p>
-                    </li>
-                    <li>
-                        <div class="info">
-                            <h3>Jakon</h3>
-
-                            <div class="address">
-                                <b class="data-icon" data-icon="&#xe009;"></b>
-                                杭州
-                            </div>
-                            <div class="jobs">界面设计师</div>
-                        </div>
-                        <a href="#" class="big-avatar"><img
-                                src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_80x80"></a>
-
-                        <p class="array">
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                            <a href="#"><img src="http://img.sulicdn.com/avatar/523411d2a95cdde822000001_55x55"/></a>
-                        </p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<div class="wrapper-990"></div>
-<div id="footer">
-    <div class="main-wrapper">
-        <div class="wrapper-990"><h2>LOGO</h2>
-
-            <p class="des">XXUX是用户体验部门。负责广告和无线，以及一淘网的用户体验工作。致力于为用户打造跨平台的统一的优良产品体验。</p>
-
-            <div class="job"><h3>最新招聘</h3>
-                <ul class="list">
-                    <li><a>[杭州] 杭州UX正在照片：视觉设计师</a></li>
-                    <li><a>[杭州] 杭州UX正在照片：视觉设计师</a></li>
-                    <li><a>[杭州] 杭州UX正在照片：视觉设计师</a></li>
-                </ul>
-            </div>
-            <div class="article"><h3>设计资讯</h3>
-                <ul class="list">
-                    <li><a>扁平化设计新趋势</a></li>
-                    <li><a>[Web页面中的“们”-web端登陆页面的设计]</a></li>
-                    <li><a>界面设计俗称【淘宝UDC】</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="copyright">
-        <div class="wrapper-990">版权信息</div>
-    </div>
-</div>
-<script id="seajsnode" src="http://a.sulicdn.com/s/sea.js"></script>
-<script>if (!window.console) {
-    window.console = {
-        log: function (str) {
-            document.status = str
-        }
-    }
-}
-seajs.config({
-    base: "http://a.sulicdn.com/s/sea-modules/",
-    vars: {
-        locale: 'zh-cn'
-    },
-    paths: {
-        s: "http://a.sulicdn.com/s",
-        sea: "http://a.sulicdn.com/s/sea-modules"
-    },
-    alias: {
-        "$": 's/global/jquery',
-        'sha3': 's/global/crypto/sha3',
-        template: 'sea/xiongsongsong/template/1.1.0/template',
-        'popup': 'sea/arale/popup/1.1.5/popup'
-    },
-    preload: ['$', 'sha3']
-});
-window['imgCDN'] = 'http://img.sulicdn.com'
-KISSY.ready(function () {
-    seajs.use('s/global/init')
-})
+<script type="tpl" id="tpl">
+    {{#each docs as item index}}
+    <b class="pic-container" data-id="{{item._id}}"><span class="pic"
+                                                          style="background-image:url(/file/{{item._id}}_170)"></span></b>
+    {{/each}}
 </script>
+
+
+<script type="text/tpl" id="water-tpl">
+    {{#each docs as item index}}
+    <div class="ks-waterfall">
+        <span><img src="/file/{{item._id}}"><s class="mask"></s></span>
+
+        <div class="content">
+            <h2>{{item.title}}</h2>
+
+            <p>{{item.describe}}</p>
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<div id="copy-right">
+    <div class="item">
+        <p class="copyright">Copyright &copy; 2013 beyondsoft. All rights reserved.</p>
+
+        <p class="contact">
+            <span class="phone"><s></s>0571-88838528-886</span>
+            <a class="email" href="mailto:maomao@beyondsoft.com"><s></s>maomao@beyondsoft.com</a>
+        </p>
+    </div>
+</div>
+
+<script type="text/javascript">
+KISSY.use("ua,gallery/template/1.0/,dom,event,ajax,anim", function (S, UA, Template, DOM, Event, io) {
+    if (KISSY.UA.ie && KISSY.UA.ie < 8) {
+        DOM.show('#browser-tips');
+    }
+
+    var waterFall = DOM.get('#filter-waterfall');
+
+
+    Event.delegate('#nav-field', 'mousedown', 'b', function (ev) {
+        var target = ev.currentTarget;
+        var field = DOM.attr(target, 'data-field');
+        var bNavObj = DOM.query('#nav-field b');
+        var div = DOM.query('#filter-waterfall div');
+        var index = S.indexOf(target, bNavObj);
+
+        DOM.removeClass(div, 'active');
+        DOM.addClass(div[index], 'active');
+
+        DOM.removeClass(DOM.siblings(target), 'checked');
+        DOM.addClass(target, 'checked');
+
+        var waterFall = DOM.get('#filter-waterfall .active');
+
+        var bObj = (DOM.query('b', waterFall));
+        DOM.addClass(DOM.get('b', waterFall), 'checked');
+        Event.fire(bObj[0], 'mousedown');
+        var b = DOM.query('b', waterFall);
+        var width = parseInt(990 / bObj.length, 10);
+        DOM.css(b, {
+            width: width
+        });
+
+        DOM.css(b[b.length - 1], {
+            width: 990 - width * (bObj.length - 1)
+        });
+
+    });
+
+    Event.delegate('#filter-waterfall', 'mousedown', 'b', function (ev) {
+        var target = ev.currentTarget;
+        var value = DOM.attr(target, 'data-value');
+        DOM.removeClass(DOM.siblings(target), 'checked');
+        DOM.addClass(target, 'checked');
+        findFile();
+    });
+
+    Event.fire(DOM.get('b', '#nav-field'), 'mousedown');
+
+    var currentData = [];
+
+
+    function P(id, tpl, num) {
+
+        this.data = [];
+        var self = this;
+        self.idx = 1;
+        self.num = num;
+
+        function go() {
+            var curDate;
+            if (self.data.length > self.num) {
+                curDate = self.data.slice((self.idx - 1) * self.num, (self.idx - 1) * self.num + self.num);
+            } else {
+                curDate = self.data;
+            }
+            DOM.get(id).innerHTML = Template(tpl).render({docs: curDate})
+        }
+
+        this.render = function (data) {
+            self.totalPage = Math.ceil(data.docs.length / self.num);
+            self.data = data.docs;
+            go();
+        };
+
+        this.next = function () {
+
+            self.idx++;
+            if (self.idx > self.totalPage) {
+                self.idx = self.totalPage;
+            }
+            go();
+        };
+
+        this.prev = function () {
+            self.idx--;
+            if (self.idx < 1) {
+                self.idx = 1;
+            }
+            go();
+        }
+
+    }
+
+    var p = new P('#portfolio-container', DOM.get('#tpl').innerHTML, 15);
+
+    Event.delegate('#p', 'mousedown', 'b', function (ev) {
+        var target = ev.target;
+        p[target.className]();
+    });
+
+    Event.delegate('#portfolio-container', 'mouseenter mouseleave', 'b.pic-container', function (ev) {
+        var target = ev.currentTarget;
+        if (ev.type === 'mouseenter') {
+            DOM.append(DOM.create('<u class="icon"></u>'), target)
+        } else {
+            DOM.remove(DOM.get('u.icon', target));
+        }
+    });
+
+
+    function findFile() {
+        var category = DOM.get('b.checked', '#nav-field');
+        var data = {};
+        data[DOM.attr(category, 'data-field')] = DOM.attr(DOM.get('b.checked', '#filter-waterfall div.active'), 'data-value');
+        KISSY.io({
+            url: "/filter",
+            type: "get",
+            dataType: "json",
+            data: data,
+            success: function (data) {
+                data.docs = S.filter(data.docs, function (item) {
+                    return item.width > 250 && item.height > 250;
+                });
+                currentData = data.docs;
+                p.idx = 1;
+                p.render(data);
+
+            }
+        })
+    }
+
+    KISSY.use("ua,event,node,overlay", function (S, UA, Event, Node, O) {
+        var dialog = new O.Dialog({
+            width: 670,
+            elCls: 'my',
+            aria: false,
+            highlighted: false,
+            focused: false,
+            elStyle: {
+                position: UA.ie == 6 ? "absolute" : "fixed",
+                zIndex: 999999
+            },
+            bodyContent: '',
+            mask: true,
+            align: {
+                points: ['cc', 'cc']
+            }
+        });
+
+        function show() {
+            dialog.show();
+            var mask = DOM.get('div.ks-ext-mask');
+            if (mask) mask.style.zIndex = '999998';
+        }
+
+
+        function center() {
+            S.log("ie center");
+            if (dialog.get("visible")) {
+                dialog.center();
+            }
+        }
+
+        var index = 0;
+        Event.delegate('#portfolio-container', 'mousedown', '.pic-container', function (ev) {
+            var target = ev.currentTarget;
+            var id = DOM.attr(target, 'data-id');
+            S.each(currentData, function (item, i) {
+                if (item._id === id) {
+                    index = i;
+                    return false;
+                }
+            });
+
+            render()
+
+        });
+
+        function render() {
+            var cur = currentData[index];
+            dialog.set('bodyContent', '<div id="fixed-image"><b class="prev-image"></b><b class="next-image"></b><i></i><span><a href="/file/' + cur._id + '" target="_blank"><img src="/file/' + cur._id + (cur.width >= 670 ? '_670' : '') + '"></a></span></div> ');
+
+            show();
+        }
+
+        Event.on(document, 'keydown', function (ev) {
+            var c = ev.keyCode;
+            if (c === 27) dialog.hide();
+            if (dialog.get("visible") && c === 39 || c === 40 || c == 37 || c == 38) {
+                if (c === 39 || c === 40) {
+                    next();
+                } else if (ev.keyCode == 37 || ev.keyCode == 38) {
+                    prev();
+                }
+                ev.preventDefault();
+            }
+        });
+
+
+        function next() {
+            index++;
+            if (index > currentData.length - 1) index = currentData.length - 1;
+            render();
+
+        }
+
+        function prev() {
+            index--;
+            if (index < 0) index = 0;
+            render();
+        }
+
+        Event.delegate(document.body, 'mousedown', '.prev-image', function (ev) {
+            prev();
+        });
+
+        Event.delegate(document.body, 'mousedown', '.next-image', function (ev) {
+            next();
+        });
+
+
+        Event.on(window, 'resize scroll', center);
+
+
+    });
+
+    KISSY.ready(function (S) {
+        var DOM = S.DOM, Event = S.Event;
+        var nav = DOM.get('#nav-container');
+        var isIE6 = KISSY.UA.ie === 6;
+        var cls = isIE6 ? 'fixed-ie6' : 'fixed';
+        var top = DOM.offset('#nav-container').top;
+
+        Event.on(window, 'scroll', function () {
+            var scrollTop = DOM.scrollTop();
+            scrollTop >= top ? DOM.addClass(nav, cls) : DOM.removeClass(nav, cls);
+            if (isIE6 && scrollTop >= top) {
+                DOM.css(nav, {top: scrollTop + 'px'});
+            } else {
+                DOM.css(nav, {top: '0px'});
+            }
+        });
+
+        //默认执行一次
+        Event.fire(window, 'scroll');
+
+
+    });
+
+    var copyRight = DOM.get('#copy-right');
+    Event.delegate(document.body, 'click', '.notify-contact', function (ev) {
+        ev.halt();
+        copyRight.scrollIntoView();
+        var color = DOM.css(copyRight, 'background-color');
+        var index = 0;
+
+        function anim() {
+            S.Anim.stop(copyRight, false);
+            S.Anim(copyRight, {'background-color': index % 2 === 0 ? '#c9c9c9' : '#dcdcdc'}, .1, 'easeNone',function () {
+                index++;
+                if (index < 6) anim();
+            }).run()
+        }
+
+        anim();
+
+    });
+
+    Event.delegate('#point', 'mousedown', 'a', function (ev) {
+        var target = ev.target;
+        DOM.removeClass(DOM.siblings(target), 'active');
+        DOM.addClass(target, 'active');
+    });
+
+
+    KISSY.io({
+        url: '/filter',
+        type: 'get',
+        dataType: 'json',
+        data: {
+            category: '风采秀'
+        },
+        success: function (data) {
+            KISSY.use("waterfall", function (S, Waterfall) {
+                var p = new P('#container', DOM.get('#water-tpl').innerHTML, 10);
+                p.render(data);
+                render();
+
+                /* Event.delegate('#p', 'mousedown', 'b', function (ev) {
+                 var target = ev.target;
+                 p[target.className]();
+                 });*/
+                Event.delegate('#water-pagination', 'mousedown', 'b', function (ev) {
+                    var target = ev.target;
+                    p[target.className]();
+                    render();
+                });
+
+                function render() {
+                    new Waterfall({
+                        container: "#container",    //节点容器
+                        minColCount: 5,             //最小列数
+                        colWidth: 203               //每列的宽度
+                    });
+                }
+            });
+        }
+    });
+});
+
+</script>
+
+
 </body>
 </html>

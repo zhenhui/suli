@@ -23,7 +23,8 @@ require('./personal')
 //获取文章信息
 require('./article')
 
-//由于同源策略限制，此处用
+//用来加载tpl模板
 require('./tpl')
 
-//活动页面
+//CMS系统
+require('./cms')

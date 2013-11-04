@@ -1,0 +1,182 @@
+h2, ul, li, p {
+    margin: 0;
+    padding: 0;
+}
+
+#tab-area li {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 28px;
+}
+
+#tab-area li.active {
+    background: #cfc;
+}
+
+.unit {
+    border: solid 1px #000;
+    border-radius: 3px;
+    padding: 12px;
+    margin: 12px;
+}
+
+.unit h2 {
+    font-size: 16px;
+    background: #cfc;
+    padding: 12px;
+    font-weight: bold;
+}
+
+ul.field {
+    white-space: nowrap;
+    height: 100%;
+    overflow: hidden;
+}
+
+ul.field li span {
+    display: inline-block;
+    line-height: 38px;
+    height: 38px;
+    width: 100%;
+    padding: 0 2px;
+    background: #eee;
+}
+
+ul.field li s {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    border-right: solid 1px #ccc;
+}
+
+ul.field li:last-child s {
+    display: none;
+}
+
+ul.field li {
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    height: 100%;
+}
+
+.J-row {
+    height: 30px;
+    border-bottom: solid 1px #ccc;
+    overflow: hidden;
+    position: relative
+}
+
+.excel {
+    position: relative;
+    padding-top: 38px;
+    border: solid 1px #ccc;
+    border-bottom: none;
+    font-family: simsun, sans-serif;
+}
+
+.excel-field {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.excel-wrapper {
+    position: relative;
+    border-bottom: none;
+}
+
+.excel-trigger-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background: url(http://img01.taobaocdn.com/tps/i1/T1FeW3XXNfXXXXXXXX-36-36.gif) -99999em -99999em no-repeat;
+}
+
+.J-input {
+    position: absolute;
+    left: -999em;
+    top: -999em;
+    border: solid 2px green;
+    margin-left: -2px;
+    margin-top: -2px;
+    box-shadow: inset 0 0 3px #050;
+    z-index: 10;
+    background: #fff;
+}
+
+.J-input p {
+    position: absolute;
+    right: 0;
+    bottom: -20px;
+    background: rgba(255, 255, 255, .9);
+    color: blue;
+    padding: 12px;
+    font-size: 12px;
+    border: solid 1px #aaa;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+}
+
+.J-input p a {
+    color: blue;
+}
+
+.J-input textarea {
+    display: block;
+    width: 100%;
+    background: #fff;
+    border: none;
+    margin: 0;
+    outline: none;
+    box-shadow: 0 0 5px green;
+    height: 100%;
+    resize: none;
+}
+
+.J-cell {
+    position: absolute;
+    height: 100%;
+    resize: none;
+    border: none;
+    padding: 3px 0 0 3px;
+    background: transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    z-index: 0;
+    outline: none;
+}
+
+/*添加删除行*/
+.J-add-remove {
+    position: absolute;
+    width: 40px;
+}
+
+.J-add-delete-row {
+    position: absolute;
+    left: -30px;
+    top: -99999em;
+    width: 30px;
+    background: #008800;
+    text-align: center;
+    z-index: 9;
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: default;
+}
+
+.J-add-delete-row span {
+    display: block;
+    color: #fff;
+    height: 49%;
+}
+
+.J-add-delete-row span:hover {
+    background: #050;
+}
