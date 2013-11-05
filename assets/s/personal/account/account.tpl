@@ -52,5 +52,37 @@
                 </table>
             </form>
         </div>
+        <div class="item">
+            <h2>个人信息</h2>
+
+            <form action="/admin/user/update/information" method="post" id="admin-user-information">
+                <table>
+                    <tr>
+                        <th>隐私性</th>
+                        <td>以下信息对所有用户可见哦，如果您对隐私有任何顾虑，则请不要填写。</td>
+                    </tr>
+                    <tr>
+                        <th>城市或地区</th>
+                        <td><input name="address" class="text-field text-field-normal" type="text"></td>
+                    </tr>
+                    <tr>
+                        <th>职业</th>
+                        <td><input name="job" class="text-field text-field-normal" type="text"></td>
+                    </tr>
+                    <tr>
+                        <th>QQ</th>
+                        <td><input name="qq" class="text-field text-field-normal" type="password"></td>
+                    </tr>
+                    <tr>
+                        <th>微博地址或个人网址</th>
+                        <td><input name="zone_url" class="text-field text-field-normal" type="password"></td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td><input type="submit" class="btn btn-large" value="确认修改"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
 </div>

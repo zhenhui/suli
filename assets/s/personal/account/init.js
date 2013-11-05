@@ -40,6 +40,7 @@ define(function (require, exports, module) {
 
     var sha3 = require('sha3')
 
+    //更新密码
     $container.on('submit', 'form#admin-user-update-password', function (ev) {
         ev.preventDefault()
         var form = ev.currentTarget
@@ -62,6 +63,15 @@ define(function (require, exports, module) {
 
             console.log(data)
 
+        }, 'json')
+    })
+
+    //更新个人信息
+    $container.on('submit', 'form#admin-user-information', function (ev) {
+        ev.preventDefault()
+        var form = ev.currentTarget
+        $.post(form.action, $(ev.currentTarget).serialize(), function (data) {
+            console.log(data)
         }, 'json')
     })
 

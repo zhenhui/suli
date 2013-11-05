@@ -2,6 +2,7 @@ var app = require('app')
 var db = require('db')
 var ObjectID = db.mongodb.ObjectID
 var helper = require('helper')
+var xss = require('xss')
 
 app.get('/admin/user', function (req, res) {
 
@@ -190,3 +191,43 @@ app.post('/admin/user/update/password', function (req, res) {
         res.json(result)
     })
 })
+
+
+//更新个人信息
+var allowKey = ['address', 'job', 'qq', 'zone_url']
+
+app.post('/admin/user/update/information', function (req, res) {
+    var data = Object.create(null)
+    var result = {err: []}
+
+    if (require('helper').isLogin(req) === false) {
+        result.status = -1
+        result.err.push('未登陆或登陆失效')
+        res.json(result)
+        return
+    }
+
+    try {
+        var id = ObjectID(req.session._id)
+    } catch (e) {
+        result.status = -5
+        result.err.push('无法验证用户')
+        res.json(result)
+        return
+    }
+
+
+    Object.keys(req.body).forEach(function (key) {
+        if (allowKey.indexOf(key) > -1 && req.body[key].length > 0) {
+            data[key] = xss(req.body[key])
+        }
+    })
+
+    console.log(data)
+
+    var user = new db.Collection(db.Client, 'user')
+    user.update({_id: id}, {$set: data}, {}, function (err, _result) {
+
+    })
+})
+
