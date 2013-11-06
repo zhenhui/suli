@@ -8,6 +8,43 @@ html
         | <!--[if lte IE 7]><script src="#{assetsCDN}/s/fonts/lte-ie7.js"></script><![endif]-->
         script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js",data-config="{combine:true}")
         block css
+        script.
+            window['hostDOMAIN']='#{hostDOMAIN}'
+            window['assetsCDN']='#{assetsCDN}'
+            window['imgCDN']='#{imgCDN}'
+        script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js")
+        script(id="seajsnode",src="#{assetsCDN}/s/sea.js")
+        script.
+            KISSY.config({
+                modules: {
+                    'sizzle': { alias: ['node'] },
+                    'ajax': { alias: ['io'] },
+                    'calendar': { alias: ['gallery/calendar-deprecated/1.0/']  },
+                    'datalazyload': {  alias: ['gallery/datalazyload/1.0/'] },
+                    'switchable': { alias: ['gallery/switchable/1.3.1/'] },
+                    'imagezoom': { alias: ['gallery/imagezoom/1.0/'] },
+                    'waterfall': { alias: ['gallery/waterfall/1.0/'] },
+                    'flash': { alias: ['gallery/flash/1.0/'] }
+                }
+            });
+            seajs.config({
+                base :"#{assetsCDN}/s/sea-modules/",
+                vars: {
+                    locale: 'zh-cn'
+                },
+                paths:{
+                    s : "#{assetsCDN}/s",
+                    sea:"#{assetsCDN}/s/sea-modules"
+                },
+                alias: {
+                    "$": 's/global/jquery',
+                    'sha3':'s/global/crypto/sha3',
+                    template: 'sea/xiongsongsong/template/1.1.0/template',
+                    'popup':'sea/arale/popup/1.1.5/popup'
+                },
+                preload: ['$']
+            });
+            seajs.use('s/global/init')
     body
         #navigation
             .wrapper
@@ -69,39 +106,4 @@ html
                 .wrapper-990
                     | 版权信息
 
-        script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js")
-        script(id="seajsnode",src="#{assetsCDN}/s/sea.js")
-        script.
-            KISSY.config({
-                modules: {
-                    'sizzle': { alias: ['node'] },
-                    'ajax': { alias: ['io'] },
-                    'calendar': { alias: ['gallery/calendar-deprecated/1.0/']  },
-                    'datalazyload': {  alias: ['gallery/datalazyload/1.0/'] },
-                    'switchable': { alias: ['gallery/switchable/1.3.1/'] },
-                    'imagezoom': { alias: ['gallery/imagezoom/1.0/'] },
-                    'waterfall': { alias: ['gallery/waterfall/1.0/'] },
-                    'flash': { alias: ['gallery/flash/1.0/'] }
-                }
-            });
-            seajs.config({
-                base :"#{assetsCDN}/s/sea-modules/",
-                vars: {
-                    locale: 'zh-cn'
-                },
-                paths:{
-                    s : "#{assetsCDN}/s",
-                    sea:"#{assetsCDN}/s/sea-modules"
-                },
-                alias: {
-                    "$": 's/global/jquery',
-                    'sha3':'s/global/crypto/sha3',
-                    template: 'sea/xiongsongsong/template/1.1.0/template',
-                    'popup':'sea/arale/popup/1.1.5/popup'
-                },
-                preload: ['$','sha3']
-            });
-            window['hostDomain']='#{assetsCDN}'
-            window['imgCDN']='#{imgCDN}'
-            seajs.use('s/global/init')
         block js

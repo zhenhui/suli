@@ -12,7 +12,7 @@ var ObjectID = db.mongodb.ObjectID
 //如果是登陆用户，则可以返回QQ或微博地址
 
 // /design-works/list?users=arr1,arr2,...&count=10
-app.get('/design-works/list', function (req, res) {
+app.get('/design-works/hot/list', function (req, res) {
 
     var userArr = []
     var count = parseInt(req.query.count, 10)
@@ -84,3 +84,38 @@ app.get('/design-works/list', function (req, res) {
         })
     })
 })
+
+
+//查询最近的50个作品
+app.get('/design-works/latest/list', function (req, res) {
+
+    var design = new db.mongodb.Collection(db.Client, 'design-works')
+    var defaultFindParam = {/*type: 'own',*/ status: {$gte: 1}}
+
+    design.count(defaultFindParam, function (err, count) {
+
+        //todo：应该只返回own类型的页面
+        //每一页的数据量，默认显示5条
+        var pageCount = parseInt(req.query.count, 10)
+        pageCount = !isNaN(pageCount) && pageCount <= 10 && pageCount > 0 ? pageCount : 5
+
+
+        var result = {
+            pageCount: pageCount,
+            sumPage: Math.ceil(count / pageCount)
+        }
+
+        //当前页码
+        var page = parseInt(req.query.page, 10)
+        page = isNaN(page) || page > result.sumPage || page < 1 ? 1 : page
+
+        result.page = page
+
+        design.find(defaultFindParam, {_id: 1, thumbnails_id: 1, owner_id: 1, index: 1}).sort({ts: -1}).
+            skip((page - 1) * pageCount).limit(pageCount).toArray(function (err, docs) {
+                result.data = docs
+                res.jsonp(result)
+            })
+    })
+})
+

@@ -8,7 +8,9 @@
 
 
 define(function (require, exports, module) {
-    require('./login/login')
-    require('./publish-type/init')
+    KISSY.ready(function () {
+        require('./login/login')
+        require('./publish-type/init')
+    })
 })
 

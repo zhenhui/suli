@@ -30,6 +30,13 @@ exports.save = function (req, res) {
         thumbnails_id: req.body.thumbnails_id,
         file_id: req.body['mail-file_id'],
         ps_id: req.body.ps_id,
+        //指标，喜欢数量，回复数量
+        //喜欢和回复有单独的集合，在这里存储是为了增加冗余后提高查询性能
+        index: {
+            view: 0,
+            love: 0,
+            comment: 0
+        },
         category: req.body.category,
         tag: req.body.tag,
         type: req.body.type,
