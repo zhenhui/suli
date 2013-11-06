@@ -15,7 +15,9 @@ var ObjectID = db.mongodb.ObjectID
 app.get('/design-works/list', function (req, res) {
 
     var userArr = []
-    var count = req.query.count
+    var count = parseInt(req.query.count, 10)
+    var maxCount = 8
+    var maxUser = 10
 
     if (req.query.user) {
         req.query.user.split(',').forEach(function (id) {
@@ -27,8 +29,8 @@ app.get('/design-works/list', function (req, res) {
         })
     }
 
-    if (userArr.length > 10) {
-        res.jsonp({ err: ['最多仅支持10个用户同时查询']})
+    if (userArr.length > maxUser || isNaN(count) || count > maxCount) {
+        res.jsonp({ err: ['最多仅支持' + maxUser + '个用户同时查询的' + maxCount + '个最新作品']})
         return
     }
 
