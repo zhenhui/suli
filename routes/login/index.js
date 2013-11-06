@@ -64,3 +64,6 @@ app.get('/login/login-out', function (req, res) {
     req.session.destroy();
     res.redirect('/');
 })
+
+
+//获取个人基本信息

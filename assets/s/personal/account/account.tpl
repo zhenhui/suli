@@ -11,7 +11,7 @@
                         <th style="vertical-align: top;">头像</th>
                         <td>
                             <div class="upload-avatar">
-                                <img id="upload-image-preview">
+                                <img id="upload-image-preview" src="#{imgCDN}/avatar/#{data._id}_80x80">
                                 <input type="hidden" name="callback-func-name"/>
                                 <input type="hidden" id="upload-avatar-id" name="result-field">
 
@@ -47,7 +47,7 @@
                     </tr>
                     <tr>
                         <th></th>
-                        <td><input type="submit" class="btn btn-large" value="确认修改"></td>
+                        <td><input type="submit" class="btn btn-large" value="更新"></td>
                     </tr>
                 </table>
             </form>
@@ -55,31 +55,32 @@
         <div class="item">
             <h2>个人信息</h2>
 
+            #run var info = data.privacy_information ? data.privacy_information : {}
             <form action="/admin/user/update/information" method="post" id="admin-user-information">
                 <table>
                     <tr>
                         <th>隐私性</th>
-                        <td>以下信息对所有用户可见哦，如果您对隐私有任何顾虑，则请不要填写。</td>
+                        <td>以下信息对登陆用户可见，如有所顾虑，请清空对应信息并更新。</td>
                     </tr>
                     <tr>
                         <th>城市或地区</th>
-                        <td><input name="address" class="text-field text-field-normal" type="text"></td>
+                        <td><input name="address" class="text-field text-field-normal" type="text" value="#if(info.address)#{info.address.value}#end"></td>
                     </tr>
                     <tr>
                         <th>职业</th>
-                        <td><input name="job" class="text-field text-field-normal" type="text"></td>
+                        <td><input name="job" class="text-field text-field-normal" type="text" value="#if(info.job)#{info.job.value}#end"></td>
                     </tr>
                     <tr>
                         <th>QQ</th>
-                        <td><input name="qq" class="text-field text-field-normal" type="password"></td>
+                        <td><input name="qq" class="text-field text-field-normal" type="text" value="#if(info.qq)#{info.qq.value}#end"></td>
                     </tr>
                     <tr>
                         <th>微博地址或个人网址</th>
-                        <td><input name="zone_url" class="text-field text-field-normal" type="password"></td>
+                        <td><input name="zone_url" placeholder="http://示例.com" class="text-field text-field-normal" type="text" value="#if(info.zone_url)#{info.zone_url.value}#end"></td>
                     </tr>
                     <tr>
                         <th></th>
-                        <td><input type="submit" class="btn btn-large" value="确认修改"></td>
+                        <td><input type="submit" class="btn btn-large" value="更新"></td>
                     </tr>
                 </table>
             </form>

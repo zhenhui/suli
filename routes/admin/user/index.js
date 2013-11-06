@@ -197,7 +197,9 @@ app.post('/admin/user/update/password', function (req, res) {
 var allowKey = ['address', 'job', 'qq', 'zone_url']
 
 app.post('/admin/user/update/information', function (req, res) {
-    var data = Object.create(null)
+    var data = {
+        privacy_information: {}
+    }
     var result = {err: []}
 
     if (require('helper').isLogin(req) === false) {
@@ -219,15 +221,50 @@ app.post('/admin/user/update/information', function (req, res) {
 
     Object.keys(req.body).forEach(function (key) {
         if (allowKey.indexOf(key) > -1 && req.body[key].length > 0) {
-            data[key] = xss(req.body[key])
+            //code 10 表示全站公开,0 表示仅个人可见
+            //目前默认为10
+            data.privacy_information[key] = {
+                code: 10,
+                value: xss(req.body[key])
+            }
         }
     })
 
-    console.log(data)
-
     var user = new db.Collection(db.Client, 'user')
-    user.update({_id: id}, {$set: data}, {}, function (err, _result) {
+    user.update({_id: id}, {$set: data}, {}, function (err, _docs) {
+        if (!err && _docs > 0) {
+            result.status = 1
+            result.msg = '成功更新了数据'
+        } else {
+            result.status = -1
+            result.msg = '无法更新数据'
+        }
+        res.json(result)
+    })
+})
 
+//获取自己的信息
+app.get('/admin/user/get/personal-information', function (req, res) {
+    var result = {err: []}
+    try {
+        var id = ObjectID(req.session._id)
+    } catch (e) {
+        result.status = -5
+        result.err.push('无法验证用户')
+        res.json(result)
+        return
+    }
+    var user = new db.Collection(db.Client, 'user')
+    user.findOne({_id: id}, {_id: 1, user: 1, group: 1, privacy_information: 1, ts: 1}, function (err, docs) {
+        if (docs) {
+            result.status = 1
+            result.data = docs
+            delete result.err
+        } else {
+            result.status = -4
+            result.err.push('无法查询到当前用户的信息，您是否已经登陆？')
+        }
+        res.json(result)
     })
 })
 
