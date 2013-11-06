@@ -20,7 +20,9 @@
                     #each(val in window.cf[item.id].data)
                         <div class="J-row">
                             #each(_val,_index in val)
+                            #if(_index < item.fields.length )
                             <textarea class="J-cell" data-col-index="#{_index}" readonly="">#{_val}</textarea>
+                            #end
                             #end
                         </div>
                     #end
