@@ -119,3 +119,32 @@ app.get('/design-works/latest/list', function (req, res) {
     })
 })
 
+
+//根据作品id返回作品的相关数据
+app.get('/design-works/fromid/list', function (req, res) {
+
+    if (!req.query.id_arr) {
+        res.jsonp({err: ['参数无效']})
+        return
+    }
+
+    var arr = []
+    req.query.id_arr.split(',').filter(function (id) {
+        try {
+            //检测是否为合法的ID
+            arr.push(ObjectID(id))
+        } catch (e) {
+
+        }
+    })
+
+    if (arr.length > 20 || arr.length < 1) {
+        res.jsonp({err: ['仅支持1~20个批量查询']})
+        return
+    }
+
+    var design = new db.mongodb.Collection(db.Client, 'design-works')
+    design.find({_id: {$in: arr}}, {_id: 1, thumbnails_id: 1, owner_id: 1, index: 1}).toArray(function (err, docs) {
+        res.jsonp({data: docs})
+    })
+})

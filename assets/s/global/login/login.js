@@ -71,7 +71,25 @@ define(function (require, exports, module) {
             triggerType: 'click',
             element: template.render(tpl, {status: '0'}),
             delegateNode: document.body,
-            effect: "slide"
+            effect: "slide",
+            align: {
+                baseXY: [-120, -20]
+            }
+        })
+
+        popup.render()
+        //当点击登陆触点的时候
+        $('#login-trigger').on('click', '.trigger', function (ev) {
+            ev.preventDefault()
+            var $this = $(this)
+            $this.siblings().animate({opacity: 0}, 200)
+            setTimeout(function () {
+                $this.siblings().animate({ width: 0}, 300, function () {
+                    $('div.login-small-dialog form').fadeIn(200, function (ev) {
+                        $('#J-login-user-name-field').focus()
+                    })
+                })
+            }, 100)
         })
 
         popup.on('animated', function () {
@@ -94,12 +112,9 @@ define(function (require, exports, module) {
             var html = template.render(tpl, data)
             $loginNode.append($(html))
 
-            $('.J-login-register-triggers').animate({
-                marginTop: -19
-            }, 100, function () {
-                $('.login-user-info').animate({top: 0}, 100)
-                $('.login-user-info img').css('opacity', 0).animate({width: 20, height: 20, opacity: 1})
-            })
+            $('.J-login-register-triggers').css({ marginTop: -19 })
+            $('.login-user-info').css({top: 0})
+            $('.login-user-info img').css({width: 20, height: 20, opacity: 1})
         }
 
 

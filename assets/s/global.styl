@@ -129,35 +129,79 @@ a:hover
   font-size: 20px
 
 //登陆
+
 #login-register-area .J-spector
   margin: 0 1px
 
 .login-small-dialog
-  width: 118px
-  background: #e9e9e9
-  border-radius: 2px
-  margin-top: 5px
-  box-shadow: box-shadow
+  background #fff
+  width 225px
+  border solid 1px #eee
+  box-shadow 0 3px 6px rgba(0, 0, 0, .5)
+  padding 12px 0 43px 12px
+  border-radius 5px
 
-.login-small-dialog div.title
-  color: hover-color
-  border-bottom: solid 1px border-color
-  text-align: center
-  padding-bottom: 7px
-  margin-bottom: 8px
+.login-small-dialog h2
+  text-align left
+  text-indent 12px
+  padding-bottom 12px
 
-.login-small-dialog .wrapper
-  width: 92px
-  padding: 8px 0 12px 0
-  margin: 0 auto
+.login-small-dialog form
+  position absolute
+  left 80px
+  top 33px
+  width 122px
+  text-align right
 
-.login-small-dialog input.text
-  width: 86px
-  height: 16px
-  margin-bottom: 5px
-  border: solid 1px border-color
-  font-size: 12px
-  padding-left: 4px
+.login-small-dialog form input[type=text],
+.login-small-dialog form input[type=password]
+  width 122px
+  height 21px
+  margin-bottom 12px
+  text-indent 3px
+
+/*登陆类型选择触点*/
+#login-trigger .trigger
+  float left
+  width 75px
+  text-align center
+
+#domain-login,
+#email-login,
+#weibo-login
+  background url(http://img.sulicdn.com/read/527b424c6519de3008000004.png)
+  display inline-block
+  width 49px
+  height 48px
+  position relative
+  margin-right 12px
+
+#domain-login span,
+#email-login span,
+#weibo-login span
+  position absolute
+  left -8px
+  bottom -23px
+  width 70px
+  text-align center
+
+#email-login
+  background-position -70px 0
+
+#weibo-login
+  background-position -147px 0
+
+#domain-login:hover
+  background-position  0 -48px
+
+#email-login:hover
+  background-position  -70px -48px
+
+#weibo-login:hover
+  background-position -147px -48px
+
+#login-register-area .J-login-register-triggers
+  overflow: hidden
 
 #login-register-area
   height: 22px
@@ -166,9 +210,7 @@ a:hover
   width: 80px
   overflow: hidden
 
-#login-register-area .J-login-register-triggers
-  overflow: hidden
-
+//登陆后的用户信息
 .login-user-info
   position: absolute
   top: 20px
