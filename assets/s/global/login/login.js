@@ -73,7 +73,7 @@ define(function (require, exports, module) {
             delegateNode: document.body,
             effect: "slide",
             align: {
-                baseXY: [-120, -20]
+                baseXY: [-180, -20]
             }
         })
 
