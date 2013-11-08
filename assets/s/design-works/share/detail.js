@@ -73,7 +73,11 @@ define(function (require, exports, module) {
         var $textarea = $parent.find('textarea')
         var val = $textarea.val()
 
-        $.post("/design-works/comment/new", { content: val, _id: $textarea.attr('data-id') }, function (data) {
+        $.post("/design-works/comment/new", {
+            content: val,
+            _csrf: window._csrf_token_,
+            _id: $textarea.attr('data-id')
+        }, function (data) {
             if (data.docs) {
                 $(template.render(cache, data.docs)).insertAfter($('#comment-container>div.ks-waterfall').eq(0))
                 exports.waterfall.adjust()
