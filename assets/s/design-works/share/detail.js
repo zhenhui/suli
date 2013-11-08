@@ -12,6 +12,9 @@ define(function (require, exports, module) {
     var tpl = require('./comment.tpl')
     var cache = template.compile(tpl)
 
+    //加载喜欢组件
+    require('s/global/like/init')
+
     //再render的时候便可以省去编译环节，提升渲染效率
 
 

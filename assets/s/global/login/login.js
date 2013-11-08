@@ -47,7 +47,8 @@ define(function (require, exports, module) {
 
                 $.post("/login", {
                     "_": user,
-                    __: sha3(pwd).toString()
+                    __: sha3(pwd).toString(),
+                    _csrf: window._csrf_token_
                 }, function (data) {
                     switch (data.status) {
                         case 1:

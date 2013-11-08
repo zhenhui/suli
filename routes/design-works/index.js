@@ -7,8 +7,8 @@
  */
 
 var app = require('app')
-var DB = require('db')
-var ObjectID = DB.mongodb.ObjectID
+var db = require('db')
+var ObjectID = db.mongodb.ObjectID
 var helper = require('helper')
 
 //作品共享接口
@@ -39,7 +39,7 @@ app.get('/design-works/share/list', function (req, res) {
             return
         }
 
-        var share = new DB.mongodb.Collection(DB.Client, 'design-works')
+        var share = new db.mongodb.Collection(db.Client, 'design-works')
         share.find({owner_id: req.session._id, type: 'share', status: {$gte: 1}}, {}).sort({ts: -1}).toArray(function (err, docs) {
             res.jsonp({status: 1, docs: docs})
         })
@@ -57,14 +57,14 @@ app.get('/design-works/own/list', function (req, res) {
         return
     }
 
-    var share = new DB.mongodb.Collection(DB.Client, 'design-works')
+    var share = new db.mongodb.Collection(db.Client, 'design-works')
     share.find({owner_id: req.session._id, type: 'own', status: {$gte: 1}}, {}).sort({ts: -1}).toArray(function (err, docs) {
         res.jsonp({status: 1, docs: docs})
     })
 })
 
 //设计师作品展示页面
-app.get(/\/design-works\/detail\/(\w{24})/, function (req, res) {
+app.get(/\/design-works\/detail\/(\w{24})/, helper.csrf, function (req, res) {
 
     try {
         var id = ObjectID(req.params[0])
@@ -73,7 +73,7 @@ app.get(/\/design-works\/detail\/(\w{24})/, function (req, res) {
         return
     }
 
-    var work = new DB.mongodb.Collection(DB.Client, 'design-works')
+    var work = new db.mongodb.Collection(db.Client, 'design-works')
     work.findOne({_id: id}, {}, function (err, docs) {
         if (docs) {
             res.render('design-works/share/detail', {docs: docs})
@@ -89,3 +89,7 @@ require('./comment')
 require('./delete')
 
 require('./list')
+
+require('./like')
+
+require('./views')

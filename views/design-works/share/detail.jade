@@ -4,6 +4,7 @@ block css
     link(rel="stylesheet",href="#{assetsCDN}/s/design-works/share/detail.css")
 block js
     script.
+        var designWorksId="#{docs._id}"
         seajs.use('s/design-works/share/detail')
 
 block content
@@ -40,10 +41,10 @@ block content
                 h2 设计简介：
                 div=docs.content
                 div.love-comment.clearfix
-                    a.J-love.trigger
+                    a.J-like.trigger(data-id="#{docs._id}")
                         span.data-icon(data-icon!="&#xe009;")
                         span.text.J-text 喜欢
-                    a.J-comment-trigger.trigger
+                    a.J-comment-trigger.trigger(data-id="#{docs._id}")
                         span.data-icon(data-icon!="&#xe006;").
                         span.text.J-text 评论
                 .banner

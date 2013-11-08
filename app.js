@@ -28,6 +28,7 @@ app.use(express.limit(110 * 1024 * 1000));
 app.use(express.methodOverride())
 app.use(express.cookieParser('your secret here'))
 app.use(express.session())
+app.use(express.csrf());
 app.use(app.router)
 app.use(require('stylus').middleware(__dirname + '/assets'))
 app.use(express.static(path.join(__dirname, 'assets')))
