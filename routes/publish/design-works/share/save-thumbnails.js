@@ -15,7 +15,7 @@ var ObjectID = DB.mongodb.ObjectID
 var gm = require('gm')
 
 
-var fileSize = 10 * 1024 * 1000
+var fileSize = 1024 * 1024
 
 function deleteRequestFile(file) {
     if (Array.isArray(file)) {
@@ -171,7 +171,8 @@ exports.saveFile = function (req, res) {
             uploadInfo.origin_name = file.name
             uploadInfo.size = file.size
         }
-        res.end(JSON.stringify(uploadInfo, undefined, '    '))
+        res.header('content-type', 'text/text;charset=utf-8')
+        res.end(JSON.stringify(uploadInfo))
     }
 }
 

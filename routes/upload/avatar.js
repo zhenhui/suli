@@ -52,6 +52,8 @@ exports.saveFile = function (req, res) {
         err: []
     }
 
+    return
+
     if (!req.files || !req.files.file || req.files.file.size < 1 || !req.files.file.name) {
         uploadInfo.err.push('未接收到文件')
         //删除这个0字节的文件

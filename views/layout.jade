@@ -12,6 +12,7 @@ html
             window['hostDOMAIN']='#{hostDOMAIN}'
             window['assetsCDN']='#{assetsCDN}'
             window['imgCDN']='#{imgCDN}'
+            if(!window.console)window.console=function(){}
         script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js")
         script(id="seajsnode",src="#{assetsCDN}/s/sea.js")
         script.
