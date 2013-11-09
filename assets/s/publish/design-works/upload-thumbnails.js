@@ -34,8 +34,4 @@ define(function (require, exports, module) {
                 alert('服务器出错')
             }
         });
-
-    $('#submit').click(function () {
-        uploader.submit();
-    });
 })
