@@ -106,9 +106,9 @@ exports.saveFile = function (req, res) {
             uploadInfo.origin_name = file.name
             uploadInfo.size = file.size
         }
-        res.end(JSON.stringify(uploadInfo, undefined, '    '))
+        res.header('content-type', 'text/text;charset=utf-8')
+        res.end(JSON.stringify(uploadInfo))
     }
-
 }
 
 /*

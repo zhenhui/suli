@@ -13,6 +13,7 @@ block content
             .crumbs
                 a.J-back.back(href="/personal#manage-share") 返回
             form(name="publish",method="post",action="/publish/design-works")
+                input(type="hidden",name="_csrf",value="#{token}")
                 table
                     tr
                         th 标题
@@ -37,7 +38,7 @@ block content
                         th 设计作品
                         td
                             | jpg或者gif格式文件
-                            .J-upload-file-triggers
+                            #J-upload-file-triggers.J-upload-file-triggers
                                 img#main-file-preview
                                 input#main-file-field.opacity-0(type="file",name="main-file")
                                 input#main-file_id(type="hidden",name="mail-file_id")
@@ -48,9 +49,9 @@ block content
                     tr
                         th 附件
                         td
-                            label.btn(for="upload-ps",tabindex="0") 上传
+                            label#upload-ps.btn(for="upload-ps",tabindex="0") 上传
+                            | (如果有多个附件，请打包压缩后上传，上限100Mb)
                             input.hide#upload-ps(type="file",multiple)
-                            | 最多上传3个
                             textarea#ps_id.hide(name="ps_id",readonly='readonly')
                             #ps-list
                     tr
