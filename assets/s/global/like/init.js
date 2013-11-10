@@ -28,6 +28,6 @@ define(function (require, exports, module) {
             _csrf: window._csrf_token_
         }
     ).done(function (data) {
-            console.log(data)
+
         })
 })

@@ -60,7 +60,6 @@ define(function (require, exports, module) {
             id: id,
             group: group
         }, function (data) {
-            console.log(data)
         }, 'json');
     })
 

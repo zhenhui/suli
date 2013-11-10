@@ -19,7 +19,6 @@ define(function (require, exports, module) {
     exports.init = function () {
         $.getJSON('/admin/user/get/personal-information?r' + Math.random(), function (docs) {
             if (docs.status > 0) {
-                console.log(docs)
                 $container.html(template.render(tpl, docs))
                 var form = document.forms['upload-image-form']
                 form.elements['callback-func-name'].value = callback

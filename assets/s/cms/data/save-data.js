@@ -12,7 +12,7 @@ define(function (require, exports, module) {
         $(form).on('submit', function (ev) {
             editExcel.updateAll()
             $.post('/save-data', {data: JSON.stringify(getFormData()), _csrf: window._csrf_token_}, function (result) {
-                console.log(result)
+                alert('保存完毕' + JSON.stringify(result))
             })
             ev.preventDefault()
         })
