@@ -69,3 +69,15 @@ app.get('/personal/article/list', function (req, res) {
         res.jsonp({status: 1, docs: docs})
     })
 })
+
+
+//文章详情页
+app.get(/^\/article\/(.+)/, function (req, res) {
+    var title = req.params[0]
+    var article = new db.mongodb.Collection(db.Client, 'article')
+    article.findOne({title: title, status: {$gte: 1}}, function (err, result) {
+        //删除空余的P标签
+        result.content = result.content.replace(/<p>\s*?&nbsp;\s*?<\/p>/gmi, '')
+        res.render('article/detail', result)
+    })
+})
