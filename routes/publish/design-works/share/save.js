@@ -8,6 +8,11 @@
 
 var DB = require('db')
 var helper = require('helper')
+var xss = require('xss')
+
+function _xss(val) {
+    return typeof val === 'string' ? xss(val) : val;
+}
 
 exports.save = function (req, res) {
 
@@ -25,11 +30,11 @@ exports.save = function (req, res) {
     }
 
     var data = {
-        title: req.body.title,
-        content: req.body.content,
-        thumbnails_id: req.body.thumbnails_id,
-        file_id: req.body['mail-file_id'],
-        ps_id: req.body.ps_id,
+        title: _xss(req.body.title),
+        content: _xss(req.body.content),
+        thumbnails_id: _xss(req.body.thumbnails_id),
+        file_id: _xss(req.body['mail-file_id']),
+        ps_id: _xss(req.body.ps_id),
         //指标，喜欢数量，回复数量
         //喜欢和回复有单独的集合，在这里存储是为了增加冗余后提高查询性能
         index: {
@@ -37,9 +42,9 @@ exports.save = function (req, res) {
             love: 0,
             comment: 0
         },
-        category: req.body.category,
-        tag: req.body.tag,
-        type: req.body.type,
+        category: _xss(req.body.category),
+        tag: _xss(req.body.tag),
+        type: _xss(req.body.type),
         owner_id: req.session._id,
         //状态，>0表示可用的作品，负为删除或禁用的作品
         status: 1,
