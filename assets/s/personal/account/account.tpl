@@ -6,6 +6,7 @@
 
             <form target="upload-image" enctype="multipart/form-data" id="upload-image-form" data-callback-id=""
                   method="post" action="/upload/avatar">
+                <input type="hidden" name="_csrf" value="#{window._csrf_token_}" />
                 <table>
                     <tr>
                         <th style="vertical-align: top;">头像</th>
@@ -57,6 +58,7 @@
 
             #run var info = data.privacy_information ? data.privacy_information : {}
             <form action="/admin/user/update/information" method="post" id="admin-user-information">
+                <input type="hidden" name="_csrf" value="#{window._csrf_token_}" />
                 <table>
                     <tr>
                         <th>隐私性</th>

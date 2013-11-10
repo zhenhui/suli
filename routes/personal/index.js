@@ -10,7 +10,7 @@ var app = require('app')
 var helper = require('helper')
 var db = require('db')
 
-app.get('/personal', function (req, res) {
+app.get('/personal', helper.csrf, function (req, res) {
     var result = {err: []}
     if (require('helper').isLogin(req) === false) {
         result.title = '您没有登陆'

@@ -3,6 +3,7 @@
 
         <form target="upload-image" enctype="multipart/form-data" id="upload-image-form" data-callback-id=""
               method="post" action="/upload/tuchuang">
+            <input type="hidden" name="_csrf" value="#{window._csrf_token_}" />
             <input type="file" class="btn btn-large" name="file">
             <input type="hidden" name="callback-func-name"/>
             <input type="hidden" id="upload-avatar-id" name="result-field">

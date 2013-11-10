@@ -65,7 +65,8 @@ define(function (require, exports, module) {
 
         $.post(form.action, {
             p1: p1,
-            p2: p2
+            p2: p2,
+            _csrf: window._csrf_token_
         }, function (data) {
 
             console.log(data)
