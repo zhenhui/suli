@@ -7,7 +7,7 @@
 
         <p class="banner"><img width="770" height="200" src="#{imgCDN}/read/#{item.thumbnails_id.split(':')[0]}"></p>
 
-        <div class="content">#{item.content.replace(/(?:<.*?>|&nbsp;)/gmi,'').substring(0,100)}...</div>
+        <div class="content">#{item.content}...</div>
     </div>
     #end
     #end

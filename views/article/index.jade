@@ -1,0 +1,28 @@
+extends /layout
+block css
+    link(rel="stylesheet",href="#{assetsCDN}/s/article/article.css")
+block js
+    script.
+        seajs.use('s/article/init')
+block content
+    .wrapper
+        .wrapper-990.clearfix
+            #article-container
+                -data.forEach(function(item){
+                    .article
+                        h2
+                            img.avatar(src="#{imgCDN}/avatar/#{item.owner_id}_30x30")
+                            span.title
+                                a(href="/article/#{item.title}")=item.title
+                            span.tag 【#{item.tag.join(',')}】
+                            -var date=new Date(item.ts)
+                            span.date #{date.getFullYear()}年#{date.getMonth()+1}月
+                        p.banner
+                            a(href="/article/#{item.title}")
+                                img(width="770",height="200",src="#{imgCDN}/read/#{item.thumbnails_id.split(':')[0]}")
+                        .content=item.content
+
+                -})
+            #sidebar
+                h2 分类
+                #category-container
