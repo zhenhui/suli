@@ -30,8 +30,7 @@ define(function (require, exports, module) {
             try {
                 var serverInfo = $.parseJSON(response)
                 if (serverInfo._id && !serverInfo.err) {
-                    $ps.data('id', serverInfo._id)
-                    console.log($ps)
+                    $ps.addClass('J-success').data('id', serverInfo._id)
                     $ps.find('.J-process').html(' 上传成功')
                     $ps.find('.J-process-running').removeClass('J-process-running')
                     getPsList()
@@ -41,7 +40,7 @@ define(function (require, exports, module) {
             } catch (e) {
                 $ps.find('.J-process').html('服务器异常' + response)
             }
-        }).error(function(err){
+        }).error(function (err) {
             $ps.find('.J-process').html('上传失败，请确认文件小于100Mb')
         });
 

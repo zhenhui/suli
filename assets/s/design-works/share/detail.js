@@ -12,6 +12,8 @@ define(function (require, exports, module) {
     var tpl = require('./comment.tpl')
     var cache = template.compile(tpl)
 
+    var login = require('s/global/login/login')
+
     //加载喜欢组件
     require('s/global/like/init')
 
@@ -83,7 +85,7 @@ define(function (require, exports, module) {
                 exports.waterfall.adjust()
             } else {
                 if (data.status == -1) {
-                    $('.J-login-triggers').trigger('click')
+                    login.login()
                 }
             }
         })

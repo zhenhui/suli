@@ -3,6 +3,9 @@
  */
 
 define(function (require, exports, module) {
+
+    var login = require('s/global/login/login')
+
     $(document.body).on('click', '.J-like', function (ev) {
         ev.preventDefault()
         var $target = $(ev.currentTarget)
@@ -12,7 +15,9 @@ define(function (require, exports, module) {
                     _csrf: window._csrf_token_
                 }
             ).done(function (data) {
-                    console.log(data)
+                    if (data.status === -1) {
+                        login.login()
+                    }
                 })
         }
     })

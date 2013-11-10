@@ -78,7 +78,10 @@ define(function (require, exports, module) {
             }
         })
 
-        popup.render()
+        exports.login = function () {
+            $('.J-login-triggers').eq(0).trigger('click')
+        }
+
         //当点击登陆触点的时候
         $('#login-trigger').on('click', '.trigger', function (ev) {
             ev.preventDefault()
