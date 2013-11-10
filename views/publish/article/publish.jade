@@ -1,7 +1,8 @@
 extends /layout
 
 block css
-    link(rel='stylesheet', href='#{assetsCDN}/s/publish/article/article.css')
+    link(rel="stylesheet",href="#{assetsCDN}/s/reset.css")
+    link(rel='stylesheet',href='#{assetsCDN}/s/publish/article/article.css')
     link(rel='stylesheet',href='http://g.tbcdn.cn/kissy/k/1.4.0/??css/dpl/base-min.css,editor/theme/cool/editor-min.css')
 
 block js
@@ -14,6 +15,7 @@ block content
             .crumbs
                 a.J-back.back(href="/personal#manage-share") 返回
             form(name="publish",method="post",action="/publish/design-works")
+                input(type="hidden",name="_csrf",value="#{token}")
                 table
                     tr
                         th 标题
@@ -27,8 +29,7 @@ block content
                     tr
                         th 缩略图
                         td
-                            label.btn(for="upload-thumbnails",tabindex="0") 上传
-                            input.hide#upload-thumbnails(type="file")
+                            label#upload_thumbnails.btn(tabindex="0") 上传
                             span.success.J-thumbnails-status
                             input#thumbnails_id(type="hidden",name="thumbnails_id")
                             span 大小770x200
