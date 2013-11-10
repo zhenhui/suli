@@ -111,7 +111,7 @@ app.get('/design-works/latest/list', function (req, res) {
 
         result.page = page
 
-        design.find(defaultFindParam, {_id: 1, thumbnails_id: 1, owner_id: 1, index: 1}).sort({ts: -1}).
+        design.find(defaultFindParam, {_id: 1, title: 1, content: 1, thumbnails_id: 1, owner_id: 1, index: 1}).sort({ts: -1}).
             skip((page - 1) * pageCount).limit(pageCount).toArray(function (err, docs) {
                 result.data = docs
                 res.jsonp(result)

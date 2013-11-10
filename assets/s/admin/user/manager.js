@@ -35,7 +35,8 @@ define(function (require, exports, module) {
         $.post(form.action, {
             _: user,
             __: pwd1,
-            group: group
+            group: group,
+            _csrf: window._csrf_token_
         }, function (data) {
             if (data.success) {
                 window.location.reload()
@@ -58,7 +59,8 @@ define(function (require, exports, module) {
 
         $.post('/admin/user/update/group', {
             id: id,
-            group: group
+            group: group,
+            _csrf: window._csrf_token_
         }, function (data) {
         }, 'json');
     })
