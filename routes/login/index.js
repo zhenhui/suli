@@ -54,6 +54,8 @@ app.get('/login/is-login', function (req, res) {
         info.msg = '当前未登陆'
     }
 
+    info._csrf_token_ = req.session._csrf
+
     res.jsonp(info)
 
 })

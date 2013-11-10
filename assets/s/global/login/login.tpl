@@ -9,16 +9,16 @@
             <div class="trigger">
                 <a id="domain-login" href=""><span>域帐号</span></a>
             </div>
-            <div class="trigger">
+            <!--<div class="trigger">
                 <a id="email-login" href=""><span>邮箱登陆</span></a>
-            </div>
+            </div>-->
             <!--<div class="trigger">
                 <a id="weibo-login" href=""><span>微博登陆</span></a>
             </div>-->
 
         </div>
 
-        <form action="/login" method="post" class="hide">
+        <form action="/login" method="post">
             <input class="text" type="text" name="user-name" placeholder="用户名" id="J-login-user-name-field">
             <input class="text" type="password" name="pwd" placeholder="密码">
             <input class="btn J-login-submit-triggers" type="submit" value="登陆" />

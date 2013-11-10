@@ -27,7 +27,7 @@ define(function (require, exports, module) {
         var template = require('template')
 
         //如果是登陆的FORM
-        $(document).on('submit', 'form', function (ev) {
+        function loginFormSubmitFn(ev) {
 
             if (this.action.indexOf('/login') > -1) {
                 ev.preventDefault();
@@ -65,7 +65,7 @@ define(function (require, exports, module) {
                 }, 'json')
             }
 
-        })
+        }
 
         var popup = new Popup({
             trigger: '.J-login-triggers',
@@ -124,6 +124,8 @@ define(function (require, exports, module) {
         }
 
         KISSY.jsonp(location.protocol + '//' + location.host + '/login/is-login', {}, function (data) {
+            window._csrf_token_ = data._csrf_token_
+            $(document).on('submit', 'form', loginFormSubmitFn)
             if (data.status == 1) {
                 loginSuccess(data)
             } else {
