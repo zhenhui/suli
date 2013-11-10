@@ -23,7 +23,7 @@ define(function (require, exports, module) {
 
         $.post("/publish/article/save", $(form).serialize(), function (data) {
             if (data && data.docs) {
-                window.location.href = '/personal#all-works'
+                window.location.href = '/personal#all-works{"view":"article"}'
             } else {
                 alert('遇到错误:\r\n' + data.err.join('\r\n'))
             }
