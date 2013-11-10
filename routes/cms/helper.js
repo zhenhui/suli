@@ -11,6 +11,11 @@ var maxNum = 6000
 var path = require('path')
 exports.staticBaseDir = path.join('D:', 'static')
 
+exports.csrf = function (req, res, next) {
+    res.locals.token = req.session._csrf;
+    next();
+}
+
 exports.tagRe = tagRe
 exports.idRe = idRe
 exports.fieldRe = fieldRe

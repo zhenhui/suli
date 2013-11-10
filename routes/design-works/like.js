@@ -49,5 +49,19 @@ app.post('/design-works/index/add-like', helper.csrf, function (req, res) {
                 result.err.push('无法喜欢')
             }
             res.json(result)
+
+            //将喜欢的数量汇总到design-works集合中
+            var designWorks = new db.mongodb.Collection(db.Client, 'design-works')
+
+            like.count({work_id: id.toString()}, function (err, count) {
+                if (!err && count > 0) {
+                    designWorks.update({_id: id}, {$set: {'index.love': count}}, {w: 1}, function () {
+                        console.log('更新作品' + id.toString() + '的喜欢到：' + count, Date.now())
+                    })
+                } else {
+                    console.log('更新喜欢时出错：' + id.toString(), err, Date.now())
+                }
+            })
+
         })
 })

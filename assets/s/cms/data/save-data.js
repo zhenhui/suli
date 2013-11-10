@@ -11,7 +11,7 @@ define(function (require, exports, module) {
 
         $(form).on('submit', function (ev) {
             editExcel.updateAll()
-            $.post('/save-data', {data: S.JSON.stringify(getFormData())}, function (result) {
+            $.post('/save-data', {data: JSON.stringify(getFormData()), _csrf: window._csrf_token_}, function (result) {
                 console.log(result)
             })
             ev.preventDefault()

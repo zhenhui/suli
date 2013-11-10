@@ -4,6 +4,7 @@
 
 
 var app = require('app')
+var helper = require('helper')
 
 //新建模板
 require('./new')
@@ -23,13 +24,9 @@ require('./publish')
 //展示
 require('./go')
 
-exports.index = function (req, res) {
-    res.render('index', { title: 'Express' });
-};
-
 var db = require('db')
 
-app.get('/cms', function (req, res) {
+app.get('/cms', helper.csrf, function (req, res) {
     var tpl = new db.Collection(db.Client, 'cms-tpl')
     tpl.find({status: 1}, {}).sort({ts: -1}).toArray(function (err, docs) {
         res.render('cms/cms', {docs: docs})

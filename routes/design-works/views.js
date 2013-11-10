@@ -54,6 +54,19 @@ app.post('/design-works/index/add-view', helper.csrf, function (req, res) {
         w: 1,
         upsert: true
     }, function (err, docs) {
-        console.log(err, docs)
+
+        //更新
+        if (!err) {
+            var designWorks = new db.mongodb.Collection(db.Client, 'design-works')
+            view.count({work_id: id.toString()}, function (err, view) {
+                if (!err && view > 0) {
+                    designWorks.update({_id: id}, {$set: {'index.view': view}}, {w: 1}, function () {
+                        console.log('更新作品' + id.toString() + '的浏览量到：' + view, Date.now())
+                    })
+                } else {
+                    console.log('更新浏览量时出错：' + id.toString(), err, Date.now())
+                }
+            })
+        }
     })
 })
