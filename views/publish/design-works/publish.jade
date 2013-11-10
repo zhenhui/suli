@@ -35,9 +35,9 @@ block content
                             span#submit  大小230x175的 jpg，png或gif，不能超过1Mb
                             img#thumbnails-preview
                     tr
-                        th 设计作品
+                        th 高清图
                         td
-                            | jpg或者gif格式文件
+                            | 50Mb内，支持jpg、png、gif，
                             #J-upload-file-triggers.J-upload-file-triggers
                                 img#main-file-preview
                                 input#main-file-field.opacity-0(type="file",name="main-file")
@@ -50,7 +50,7 @@ block content
                         th 附件
                         td
                             label#upload-ps.btn(for="upload-ps",tabindex="0") 上传
-                            | (如果有多个附件，请打包压缩后上传，上限100Mb)
+                            | 可以上传源文件如PSD，但不能超过100Mb，否则请压缩或减少文件体积。
                             input.hide#upload-ps(type="file",multiple)
                             textarea#ps_id.hide(name="ps_id",readonly='readonly')
                             #ps-list

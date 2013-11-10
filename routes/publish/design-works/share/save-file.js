@@ -15,7 +15,7 @@ var ObjectID = DB.mongodb.ObjectID
 var gm = require('gm')
 
 
-var fileSize = 100 * 1024 * 1000
+var fileSize = 50 * 1024 * 1000
 
 var allowFile = {
     'jpg': {
@@ -191,6 +191,8 @@ exports.saveFile = function (req, res) {
 
         options.metadata.origin_name = file.name.substring(0, file.name.lastIndexOf('.') + 1) + file.format
 
+        options.metadata.type = "原图"
+
         //保存原始文件,原图的标志为：_origin
         var fileName = file.fileId + '_origin' + '_w' + size.width + '_h' + size.height + '.' + file.format
         uploadInfo._id = fileName + ':' + file.name
@@ -247,6 +249,9 @@ exports.saveFile = function (req, res) {
                         file.path = dstPath
                         file.format = 'jpg'
                         var fileName = file.fileId + '_quality' + '_w' + file.width + '_h' + file.height + '.' + file.format
+
+                        options.metadata.type = "优化过的原图"
+
                         var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
                         gs.writeFile(dstPath, function (err) {
                             if (!err) {
@@ -363,6 +368,7 @@ exports.saveFile = function (req, res) {
                             height: size.height
                         }
                     }
+                    options.metadata.type = "缩略图"
                     var gs = new GridStore(DB.dbServer, fileName, fileName, "w", option)
                     gs.writeFile(path, function (err) {
                         if (!err) {

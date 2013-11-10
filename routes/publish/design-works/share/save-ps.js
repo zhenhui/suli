@@ -93,6 +93,8 @@ exports.saveFile = function (req, res) {
     options.metadata.origin_name = file.name
     var fileName = file.fileId + '.' + extName
     uploadInfo._id = fileName + ':' + file.name
+    options.metadata.type = "附件"
+
     var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
     gs.writeFile(file.path, function (err) {
         if (!err) {

@@ -156,6 +156,7 @@ exports.saveFile = function (req, res) {
 
         _gm.write(qualityPath, function (err) {
             var fileName = file.fileId + '_quality' + '_w' + size.width + '_h' + size.height + '.' + file.format
+            options.metadata.type = '预览图'
             var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
             gs.writeFile(qualityPath, function (err) {
                 if (!err) {
@@ -168,7 +169,6 @@ exports.saveFile = function (req, res) {
                 unlink(file.path)
             })
         })
-
     }
 
     function end() {
