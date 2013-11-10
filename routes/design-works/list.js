@@ -144,7 +144,7 @@ app.get('/design-works/fromid/list', function (req, res) {
     }
 
     var design = new db.mongodb.Collection(db.Client, 'design-works')
-    design.find({_id: {$in: arr}}, {_id: 1, thumbnails_id: 1, owner_id: 1, index: 1}).toArray(function (err, docs) {
+    design.find({_id: {$in: arr}}, {_id: 1, title: 1, content: 1, thumbnails_id: 1, owner_id: 1, index: 1}).toArray(function (err, docs) {
         res.jsonp({data: docs})
     })
 })
