@@ -1,0 +1,13 @@
+extends /layout
+block css
+    link(rel="stylesheet",href="#{assetsCDN}/s/u/index.css")
+block js
+    script.
+block content
+    #user-panel
+        a.avatar
+            img(src="#{imgCDN}/avatar/#{uid}_80x80")
+        .info
+            h2.nick=user
+            .jobs=jobs
+

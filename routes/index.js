@@ -28,3 +28,6 @@ require('./tpl')
 
 //CMS系统
 require('./cms')
+
+//个人空间
+require('./u')

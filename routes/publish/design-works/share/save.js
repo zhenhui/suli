@@ -9,13 +9,13 @@
 var DB = require('db')
 var helper = require('helper')
 var xss = require('xss')
+var userIndicators = require('user-indicators')
 
 function _xss(val) {
     return typeof val === 'string' ? xss(val) : val;
 }
 
 exports.save = function (req, res) {
-
 
     var result = {
         err: []
@@ -150,6 +150,9 @@ exports.save = function (req, res) {
         share.insert(data, {safe: true}, function (err, docs) {
             if (!err && docs.length > 0) {
                 res.json({status: 1, docs: docs[0]})
+
+                //更新作品
+                userIndicators.update(req.session._id, 'design-works')
             } else {
                 res.json({status: -10, err: '无法保存共享，请联系管理员'})
             }

@@ -5,6 +5,7 @@
 var DB = require('db')
 var helper = require('helper')
 var xss = require('xss')
+var userIndicators = require('user-indicators')
 
 function trim(str) {
     return typeof str === 'string' ? str.trim() : ''
@@ -87,6 +88,9 @@ exports.save = function (req, res) {
         article.insert(data, {safe: true}, function (err, docs) {
             if (!err && docs.length > 0) {
                 res.json({status: 1, docs: docs[0]})
+
+                userIndicators.update(req.session._id, 'article')
+
             } else {
                 res.json({status: -10, err: '无法保存共享，请联系管理员'})
             }
