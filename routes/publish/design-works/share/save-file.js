@@ -194,7 +194,7 @@ exports.saveFile = function (req, res) {
         options.metadata.type = "原图"
 
         //保存原始文件,原图的标志为：_origin
-        var fileName = file.fileId + '_origin' + '_w' + size.width + '_h' + size.height + '.' + file.format
+        var fileName = file.fileId + '_origin' + '_' + size.width + 'x' + size.height + '.' + file.format
         uploadInfo._id = fileName + ':' + file.name
         console.log('保存原始文件' + fileName)
 
@@ -222,8 +222,8 @@ exports.saveFile = function (req, res) {
             //对于jpeg，提供一个原比例90压缩率的版本
             case 'jpg':
                 var qualityPath = file.path + '_quality80'
-                gm(file.path).noProfile().quality(80).write(qualityPath, function (err) {
-                    var fileName = file.fileId + '_quality' + '_w' + file.width + '_h' + file.height + '.' + file.format
+                gm(file.path).interlace('Line').noProfile().quality(80).write(qualityPath, function (err) {
+                    var fileName = file.fileId + '_quality' + '_' + file.width + 'x' + file.height + '.' + file.format
                     var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
                     gs.writeFile(qualityPath, function (err) {
                         if (!err) {
@@ -243,12 +243,12 @@ exports.saveFile = function (req, res) {
             case 'psd':
                 var dstPath = file.path + '_psd_to_jpg.jpg'
                 console.log('开始预处理PSD', file.path)
-                gm.subClass({ imageMagick: true })(file.path + '[0]').setFormat('jpg').quality(90).write(dstPath, function (err) {
+                gm.subClass({ imageMagick: true })(file.path + '[0]').setFormat('jpg').interlace('Line').quality(90).write(dstPath, function (err) {
                     if (!err) {
                         unlink(file.path)
                         file.path = dstPath
                         file.format = 'jpg'
-                        var fileName = file.fileId + '_quality' + '_w' + file.width + '_h' + file.height + '.' + file.format
+                        var fileName = file.fileId + '_quality' + '_' + file.width + 'x' + file.height + '.' + file.format
 
                         options.metadata.type = "优化过的原图"
 
@@ -305,7 +305,7 @@ exports.saveFile = function (req, res) {
             cur = _resizeParam.shift()
 
             //生成缩略图并存入库中
-            var fileName = file.fileId + '_w_' + cur.width + '_h_' + (cur.height ? cur.height : 'geometric')
+            var fileName = file.fileId + '_' + cur.width + 'x' + (cur.height ? cur.height : 'geometric')
 
             //转换后的图片路径
             var dstSrc = path.join(path.dirname(file.path), fileName).toString() + '.' + file.format
@@ -317,7 +317,7 @@ exports.saveFile = function (req, res) {
             switch (file.format) {
                 //PSD因为压缩后会生成jpg，所以其实是case 'jpg|psd''
                 case 'jpg':
-                    gm(file.path).resize(cur.width, (cur.height ? cur.height : null)).noProfile().quality(cur.quality).write(dstSrc, function (err) {
+                    gm(file.path).interlace('Line').resize(cur.width, (cur.height ? cur.height : null)).noProfile().quality(cur.quality).write(dstSrc, function (err) {
                         if (!err) {
                             save(fileName, dstSrc)
                         } else {
@@ -342,7 +342,7 @@ exports.saveFile = function (req, res) {
                     })
                     break;
                 case 'png':
-                    gm(file.path).resize(cur.width, (cur.height ? cur.height : null)).write(dstSrc, function (err) {
+                    gm(file.path).interlace('Line').resize(cur.width, (cur.height ? cur.height : null)).write(dstSrc, function (err) {
                         if (!err) {
                             save(fileName, dstSrc)
                         } else {
