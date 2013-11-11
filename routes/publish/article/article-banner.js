@@ -74,7 +74,8 @@ exports.saveFile = function (req, res) {
     var options = {
         chunk_size: 102400,
         metadata: {
-            owner: req.session._id
+            owner: req.session._id,
+            type : '文章首部Banner'
         }
     }
 

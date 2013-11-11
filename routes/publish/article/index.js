@@ -33,4 +33,4 @@ app.get('/publish/article', helper.csrf, function (req, res) {
 app.post('/publish/article/save', require('./save').save)
 
 //保存缩略图
-app.post('/publish/article/save-thumbnails', require('./save-thumbnails').saveFile)
+app.post('/publish/article/save-article-banner', require('./article-banner').saveFile)

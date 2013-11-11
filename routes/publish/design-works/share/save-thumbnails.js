@@ -90,7 +90,7 @@ exports.saveFile = function (req, res) {
         chunk_size: 102400,
         metadata: {
             owner: ownerID,
-            type: 'avatar'
+            type: '作品缩略图'
         }
     }
 
@@ -274,7 +274,8 @@ exports.saveFile = function (req, res) {
                         metadata: {
                             owner: ownerID,
                             width: size.width,
-                            height: size.height
+                            height: size.height,
+                            type: "作品缩略图"
                         }
                     }
                     var gs = new GridStore(DB.dbServer, fileName, fileName, "w", option)
