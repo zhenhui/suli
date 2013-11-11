@@ -133,7 +133,7 @@ exports.saveFile = function (req, res) {
             //对于jpeg，提供一个原比例90压缩率的版本
             case 'jpg':
                 qualityPath = file.path + '_quality90'
-                _gm = gm(file.path).noProfile().quality(90)
+                _gm = gm(file.path).interlace('Line').noProfile().quality(90)
                 break;
             //对于gif，不优化直接进行压缩
             case 'gif':
@@ -143,7 +143,7 @@ exports.saveFile = function (req, res) {
             //直接进行尺寸压缩，不进行任何优化
             case 'png':
                 qualityPath = file.path + '_quality'
-                _gm = gm(file.path).noProfile()
+                _gm = gm(file.path).interlace('Line').noProfile()
                 break;
         }
 
