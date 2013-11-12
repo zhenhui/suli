@@ -18,7 +18,6 @@ define(function (require, exports, module) {
                 },
                 dataType: 'jsonp'
             }).done(function (data) {
-                    console.log(data)
                     $('#main-container-wrapper').html(template.render(tpl, {data: data}))
                 })
         }

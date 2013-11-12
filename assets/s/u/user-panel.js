@@ -3,7 +3,6 @@
  */
 define(function (require, exports, module) {
 
-    console.log('加载用户视图')
     var tpl = require('./user-panel.tpl')
     var template = require('template')
 
@@ -17,8 +16,9 @@ define(function (require, exports, module) {
             },
             dataType: 'jsonp'
         }).done(function (data) {
-                console.log(data)
-                $('#user-panel').html(template.render(tpl, data[id]))
+                if (data[id]) {
+                    $('#user-panel').html(template.render(tpl, data[id]))
+                }
             })
     }
 })
