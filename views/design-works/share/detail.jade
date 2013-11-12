@@ -1,11 +1,11 @@
 extends /layout
 
 block css
-    link(rel="stylesheet",href="#{assetsCDN}/s/design-works/share/detail.css")
+    link(rel="stylesheet",href="#{assetsCDN}/s/design-works/detail.css")
 block js
     script.
         var designWorksId="#{docs._id}"
-        seajs.use('s/design-works/share/detail')
+        seajs.use('s/design-works/detail')
 
 block content
     #main-container.wrapper-990.clearfix
@@ -15,7 +15,8 @@ block content
                     img(src="#{imgCDN}/avatar/#{docs.owner_id}_80x80")
                 span.title=docs.title
                 span.category 【#{docs.category}】
-                span.date 2013年6月
+                - var date=new Date(docs.ts)
+                    span.date #{date.getFullYear()}年#{date.getMonth()+1}月#{date.getDate()}日 #{date.getHours()} : #{date.getMinutes()}
 
             .main-pic-container
                 .main-pic

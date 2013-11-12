@@ -19,11 +19,13 @@ define(function (require, exports, module) {
 
     //再render的时候便可以省去编译环节，提升渲染效率
 
+    var $h2 = $('#J-comment-container h2')
 
     KISSY.use("gallery/waterfall/1.0/,node,ajax,dom,event", function (S, Waterfall, Node, IO) {
 
         var $ = Node.all
         var nextPage = 1
+        var first = true
 
         exports.waterfall = new Waterfall.Loader({
             container: "#comment-container",
@@ -40,12 +42,16 @@ define(function (require, exports, module) {
                     url: '/design-works/comment/list',
                     dataType: "jsonp",
                     success: function (data) {
-                        $('#J-comment-container h2').html(data.total_count > 0 ? (data.total_count + '条评论') : '暂无评论')
+                        if (first && data.total_count > 0) {
+                            $h2.html(data.total_count > 0 ? ('<span class="J-count">' + data.total_count + '</span>条评论') : '暂无评论')
+                            first = false
+                        }
                         // 如果数据错误, 则立即结束
                         if (data['status'] !== 'ok') {
                             end()
                             return
                         }
+
                         // 拼装每页数据
                         var items = []
                         S.each(data.docs, function (item) {
@@ -84,6 +90,8 @@ define(function (require, exports, module) {
             if (data.docs) {
                 $(template.render(cache, data.docs)).insertAfter($('#comment-container>div.ks-waterfall').eq(0))
                 exports.waterfall.adjust()
+                var count = parseInt($h2.find('span.J-count').html(), 10)
+                $h2.find('span.J-count').html(count+1)
             } else {
                 if (data.status == -1) {
                     login.login()
