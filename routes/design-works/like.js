@@ -66,6 +66,46 @@ app.post('/design-works/index/add-like', helper.csrf, function (req, res) {
         })
 })
 
+
+//自己喜欢的列表
+app.get('/design-works/index/like/json/list', function (req, res) {
+
+    var like = new db.mongodb.Collection(db.Client, 'design-works-index-like')
+    if (require('helper').isLogin(req) === false) {
+        res.jsonp(false)
+        return
+    }
+
+    like.find({owner_id: req.session._id}, {_id: 1, work_id: 1}).toArray(function (err, docs) {
+        var idArr = []
+        docs.forEach(function (doc) {
+            idArr.push(ObjectID(doc.work_id))
+        })
+        var designWorks = new db.mongodb.Collection(db.Client, 'design-works')
+        designWorks.find({_id: {$in: idArr}}, {_id: 1, thumbnails_id: 1}).sort({ts: -1}).toArray(function (err, doc) {
+            res.jsonp(doc)
+        })
+    })
+})
+
+//取消喜欢
+app.get('/design-works/index/unlike', function (req, res) {
+
+    res.end()
+
+    if (require('helper').isLogin(req) === false) {
+        return
+    }
+
+    var like = new db.mongodb.Collection(db.Client, 'design-works-index-like')
+    var fields = {work_id: req.query.id, owner_id: req.session._id}
+
+    like.remove(fields, {w: 1}, function (err, docs) {
+        if (err) console.log('取消喜欢失败，文档为：', fields, Date.now())
+    })
+
+})
+
 //检测自己是否已经喜欢过
 app.get('/design-works/index/liked', function (req, res) {
     if (require('helper').isLogin(req) === false) {

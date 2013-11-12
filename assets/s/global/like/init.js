@@ -10,17 +10,26 @@ define(function (require, exports, module) {
         ev.preventDefault()
         var $target = $(ev.currentTarget)
         if (location.href.indexOf('/design-works/detail')) {
-            $.post('/design-works/index/add-like', {
-                    id: $target.data('id'),
-                    _csrf: window._csrf_token_
-                }
-            ).done(function (data) {
-                    if (data.status === -1) {
-                        login.login()
-                    } else {
-                        $('.J-like').addClass('active').find('.J-text').html('已喜欢')
+            if ($target.hasClass('active')) {
+                $.get('/design-works/index/unlike', {
+                        id: $target.data('id')
                     }
-                })
+                ).done(function () {
+                        $('.J-like').removeClass('active').find('.J-text').html('不爱了')
+                    })
+            } else {
+                $.post('/design-works/index/add-like', {
+                        id: $target.data('id'),
+                        _csrf: window._csrf_token_
+                    }
+                ).done(function (data) {
+                        if (data.status === -1) {
+                            login.login()
+                        } else {
+                            $('.J-like').addClass('active').find('.J-text').html('已喜欢')
+                        }
+                    })
+            }
         }
     })
 

@@ -18,8 +18,8 @@ define(function (require, exports, module) {
         'all-works': {
             path: './all-works/init'
         },
-        'love-works': {
-
+        'love': {
+            path: './love/init'
         },
         'follow': {
 
