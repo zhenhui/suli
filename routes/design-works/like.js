@@ -65,3 +65,20 @@ app.post('/design-works/index/add-like', helper.csrf, function (req, res) {
 
         })
 })
+
+//检测自己是否已经喜欢过
+app.get('/design-works/index/liked', function (req, res) {
+    if (require('helper').isLogin(req) === false) {
+        res.jsonp(false)
+        return
+    }
+
+    var like = new db.mongodb.Collection(db.Client, 'design-works-index-like')
+
+    console.log({work_id: req.query.id, owner_id: req.session._id})
+
+    like.findOne({work_id: req.query.id, owner_id: req.session._id}, {_id: 1}, function (err, docs) {
+        res.jsonp(docs ? true : false)
+    })
+
+})

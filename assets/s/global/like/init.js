@@ -17,6 +17,8 @@ define(function (require, exports, module) {
             ).done(function (data) {
                     if (data.status === -1) {
                         login.login()
+                    } else {
+                        $('.J-like').addClass('active').find('.J-text').html('已喜欢')
                     }
                 })
         }
@@ -30,4 +32,13 @@ define(function (require, exports, module) {
     ).done(function (data) {
 
         })
+
+    //检测是否喜欢过
+
+    $.get('/design-works/index/liked?id=' + window.designWorksId, function (boolean) {
+        if (boolean) {
+            $('.J-like').addClass('active').find('.J-text').html('已喜欢')
+        }
+    })
+
 })

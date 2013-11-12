@@ -49,6 +49,10 @@ define(function (require, exports, module) {
                         // 如果数据错误, 则立即结束
                         if (data['status'] !== 'ok') {
                             end()
+                            if (first) {
+                                $h2.html('<span class="J-count">0</span>条评论')
+                                first = false
+                            }
                             return
                         }
 
@@ -91,7 +95,7 @@ define(function (require, exports, module) {
                 $(template.render(cache, data.docs)).insertAfter($('#comment-container>div.ks-waterfall').eq(0))
                 exports.waterfall.adjust()
                 var count = parseInt($h2.find('span.J-count').html(), 10)
-                $h2.find('span.J-count').html(count+1)
+                $h2.find('span.J-count').html(count + 1)
             } else {
                 if (data.status == -1) {
                     login.login()
