@@ -75,7 +75,7 @@ exports.saveFile = function (req, res) {
         chunk_size: 102400,
         metadata: {
             owner: req.session._id,
-            type : '文章首部Banner'
+            type: '文章首部Banner'
         }
     }
 
@@ -149,11 +149,11 @@ exports.saveFile = function (req, res) {
         }
 
         _gm.write(qualityPath, function (err) {
-            var fileName = file.fileId + '_quality' + '_w' + size.width + '_h' + size.height + '.' + file.format
+            var fileName = file.fileId + '_' + '_' + size.width + 'x' + size.height + '.' + file.format
             var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
             gs.writeFile(qualityPath, function (err) {
                 if (!err) {
-                    uploadInfo._id = fileName + ':' + file.name
+                    uploadInfo._id = fileName
                 } else {
                     uploadInfo.err.push('无法保存优化后的图片')
                 }

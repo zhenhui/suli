@@ -14,7 +14,7 @@ block content
                             img.avatar(src="#{imgCDN}/avatar/#{owner_id}_30x30")
                             =title
                     #article-img
-                        img(width="770",height="200",src="#{imgCDN}/read/#{thumbnails_id.substring(0,thumbnails_id.indexOf(':'))}")
+                        img(width="770",height="200",src="#{imgCDN}/read/#{thumbnails_id}")
                     #content-wrapper !{content}
             -else
                 | Nothing
