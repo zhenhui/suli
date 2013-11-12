@@ -40,6 +40,7 @@ define(function (require, exports, module) {
                     url: '/design-works/comment/list',
                     dataType: "jsonp",
                     success: function (data) {
+                        $('#J-comment-container h2').html(data.total_count > 0 ? (data.total_count + '条评论') : '暂无评论')
                         // 如果数据错误, 则立即结束
                         if (data['status'] !== 'ok') {
                             end()
