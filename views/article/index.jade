@@ -11,7 +11,8 @@ block content
                 -data.forEach(function(item){
                     .article
                         h2
-                            img.avatar(src="#{imgCDN}/avatar/#{item.owner_id}_30x30")
+                            a(href="/u/#{item.owner_id}")
+                                img.avatar(src="#{imgCDN}/avatar/#{item.owner_id}_30x30")
                             span.title
                                 a(href="/article/#{item.title}")=item.title
                             span.tag 【#{item.tag.join(',')}】

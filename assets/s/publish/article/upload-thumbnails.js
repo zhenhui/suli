@@ -8,7 +8,7 @@
 
 define(function (require, exports, module) {
 
-    var url = '/publish/article/save-thumbnails'
+    var url = '/publish/article/save-article-banner'
 
     var Uploader = require('sea/upload/upload')
 

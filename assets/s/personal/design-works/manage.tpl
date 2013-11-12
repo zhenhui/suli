@@ -10,7 +10,7 @@
                         width="230" height="175"
                         class="avatar"></a>
 
-                    <div class="user"><a class="avatar"><img src="#{imgCDN}/avatar/#{item.owner_id}_20x20"></a><span class="info">#{item.title}</span></div>
+                    <div class="user"><a class="avatar" href="/u/#{item.owner_id}"><img src="#{imgCDN}/avatar/#{item.owner_id}_20x20"></a><span class="info">#{item.title}</span></div>
                 </li>
                 #end
                 #else

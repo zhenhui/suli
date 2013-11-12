@@ -11,7 +11,7 @@ block content
     #main-container.wrapper-990.clearfix
         .main-content
             h1
-                a.avatar
+                a.avatar(href="/u/#{docs.owner_id}")
                     img(src="#{imgCDN}/avatar/#{docs.owner_id}_80x80")
                 span.title=docs.title
                 span.category 【#{docs.category}】

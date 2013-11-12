@@ -16,7 +16,7 @@ app.get(/^\/u\/([0-9a-z]{24})/, function (req, res) {
         return
     }
     var user = new db.mongodb.Collection(db.Client, 'user')
-    user.findOne({_id: uid}, {group: 1, user: 1, privacy_information: 1}, function (err, result) {
+    user.findOne({_id: uid}, {group: 1, _id: 1, user: 1, privacy_information: 1}, function (err, result) {
         res.render('u/index', result)
     })
 })
@@ -62,7 +62,6 @@ app.get('/u/json/user-info', function (req, res) {
         if (!err && docs.length > 0) {
             docs.forEach(function (u) {
                 result[u._id] = u
-                delete result[u._id]._id
             })
         }
         res.jsonp(result)

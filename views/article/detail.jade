@@ -11,8 +11,9 @@ block content
                 #article-content
                     #article-title
                         h1
-                            img.avatar(src="#{imgCDN}/avatar/#{owner_id}_30x30")
-                            =title
+                           a(href="/u/#{owner_id}")
+                                img.avatar(src="#{imgCDN}/avatar/#{owner_id}_30x30")
+                                =title
                     #article-img
                         img(width="770",height="200",src="#{imgCDN}/read/#{thumbnails_id}")
                     #content-wrapper !{content}

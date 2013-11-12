@@ -5,7 +5,7 @@
 var app = require('app')
 var db = require('db')
 var helper = require('helper')
-
+var removeHTMLTag = /(?:<[^>]*>|&nbsp(?:;)?|[\r\n\s])/gm
 
 app.get('/article', helper.csrf, function (req, res) {
 
@@ -17,7 +17,7 @@ app.get('/article', helper.csrf, function (req, res) {
     article.find(filter, {}).sort({ts: -1}).toArray(function (err, docs) {
         docs = docs.map(function (obj) {
             if (typeof obj.content === 'string') {
-                obj.content = obj.content.replace(/(?:<.*?>|&nbsp;)/gmi, '').substring(0, 100)
+                obj.content = obj.content.replace(removeHTMLTag, '').substring(0, 100)
                 console.log(obj)
             }
             return obj
@@ -62,7 +62,7 @@ app.get('/personal/article/list', function (req, res) {
     article.find({owner_id: req.session._id, status: {$gte: 1}}, {}).sort({ts: -1}).toArray(function (err, docs) {
         docs = docs.map(function (obj) {
             if (typeof obj.content === 'string') {
-                obj.content = obj.content.replace(/(?:<.*?>|&nbsp;)/gmi, '').substring(0, 100)
+                obj.content = obj.content.replace(removeHTMLTag, '').substring(0, 100)
             }
             return obj
         })
@@ -79,5 +79,24 @@ app.get(/^\/article\/(.+)/, function (req, res) {
         //删除空余的P标签
         result.content = result.content.replace(/<p>\s*?&nbsp;\s*?<\/p>/gmi, '')
         res.render('article/detail', result)
+    })
+})
+
+//获取某个人的文章摘要
+app.get('/user/article/json', function (req, res) {
+    var article = new db.mongodb.Collection(db.Client, 'article')
+    var id = req.query._id
+    if (!id) {
+        res.jspnp()
+        return
+    }
+
+    article.find({owner_id: id}, {}).toArray(function (err, docs) {
+        docs = docs.map(function (obj) {
+            obj.content = obj.content.replace(removeHTMLTag, '')
+            obj.content = obj.content.length > 80 ? obj.content.substring(0, 80) + '...' : obj.content
+            return obj
+        })
+        res.jsonp(docs)
     })
 })
