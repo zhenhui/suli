@@ -65,6 +65,16 @@ app.post('/admin/user/add-user', function (req, res) {
     var new_user = {
         user: user_name,
         pwd: pwd,
+        index: {
+            //作品数量
+            'design-works': 0,
+            //文章数量
+            article: 0,
+            //我关注的人数
+            follow: 0,
+            //关注了我的人数
+            follower: 0
+        },
         status: 1,
         ts: Date.now()
     }
