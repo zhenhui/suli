@@ -11,6 +11,11 @@ var db = require('db')
 var ObjectID = db.mongodb.ObjectID
 var helper = require('helper')
 
+//设计作品首页
+app.get('/design-works', function (req, res) {
+    res.render('design-works/index')
+})
+
 //作品共享接口
 app.get('/design-works/share/list', function (req, res) {
 
@@ -76,7 +81,7 @@ app.get(/\/design-works\/detail\/(\w{24})/, helper.csrf, function (req, res) {
     var work = new db.mongodb.Collection(db.Client, 'design-works')
     work.findOne({_id: id}, {}, function (err, docs) {
         if (docs) {
-            res.render('design-works/share/detail', {docs: docs})
+            res.render('design-works/detail', {docs: docs})
         } else {
             res.render('invalid-group', {title: '木有资源', err: ['无法找到资源']})
         }

@@ -95,9 +95,9 @@ app.get('/design-works/latest/list', function (req, res) {
     design.count(defaultFindParam, function (err, count) {
 
         //todo：应该只返回own类型的页面
-        //每一页的数据量，默认显示5条
+        //每次最多返回40条
         var pageCount = parseInt(req.query.count, 10)
-        pageCount = !isNaN(pageCount) && pageCount <= 10 && pageCount > 0 ? pageCount : 5
+        pageCount = !isNaN(pageCount) && pageCount <= 40 && pageCount > 0 ? pageCount : 5
 
 
         var result = {

@@ -58,6 +58,8 @@ app.post('/design-works/comment/new', function (req, res) {
     var works = new DB.mongodb.Collection(DB.Client, 'design-works')
     var comment = new DB.mongodb.Collection(DB.Client, 'design-works-comment')
 
+    var waitTime = 30000
+
     works.findOne({_id: id, status: {$gte: 1}}, {_id: 1}, function (err, docs) {
         console.log(docs, id, id.valueOf())
         if (!err && docs) {

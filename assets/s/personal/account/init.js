@@ -56,7 +56,7 @@ define(function (require, exports, module) {
         var p3 = form.elements['confirm-pwd'].value
 
         if (p1 === '' || p2 !== p3) {
-            alert('参数错误')
+            alert('请输入原密码和新密码')
             return
         }
         p1 = sha3(p1).toString()
@@ -67,9 +67,11 @@ define(function (require, exports, module) {
             p2: p2,
             _csrf: window._csrf_token_
         }, function (data) {
-
-            console.log(data)
-
+            if (data.status > 0) {
+                alert('新密码和原密码相同')
+            } else {
+                alert('发生错误：' + data.err.join(','))
+            }
         }, 'json')
     })
 
