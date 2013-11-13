@@ -54,17 +54,18 @@ app.get('/design-works/hot/list', function (req, res) {
     user.find({_id: {$in: userArr}}, {_id: 1, user: 1, 'privacy_information': 1}).toArray(function (err, docs) {
         //重新设置数组，过滤掉不存在的用户
         userArr = []
-        docs.forEach(function (obj) {
-            if (!obj.privacy_information) return
-            Object.keys(obj.privacy_information).forEach(function (key) {
-                //只返回用户愿意公开的个人信息,10代表全局公开
-                if (obj.privacy_information[key].code < 10) {
-                    delete obj.privacy_information[key]
-                } else {
-                    //不让权限设置暴露给用户
-                    delete obj.privacy_information[key].code
-                }
-            })
+        docs.map(function (obj) {
+            if (obj.privacy_information) {
+                Object.keys(obj.privacy_information).forEach(function (key) {
+                    //只返回用户愿意公开的个人信息,10代表全局公开
+                    if (obj.privacy_information[key].code < 10) {
+                        delete obj.privacy_information[key]
+                    } else {
+                        //不让权限设置暴露给用户
+                        delete obj.privacy_information[key].code
+                    }
+                })
+            }
             userArr.push(obj._id)
             result[obj._id] = {
                 user: obj
