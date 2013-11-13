@@ -40,7 +40,7 @@ block content
                         td
                             #editorEl.editor
                                 textarea.editor.ks-editor-textarea(style="display:none",name="content")
-                    tr
+                    //tr
                         th 标签
                         td
                             #tag
@@ -50,9 +50,9 @@ block content
                         th
                         td.publish-type
                             label
-                                input(type="radio",value="1",name="status")
+                                input(type="radio",value="1",name="status",checked)
                                 | 直接发布
-                            label
+                            //label
                                 input(type="radio",value="-1",name="status")
                                 | 保存为草稿
                     tr.err.hide
