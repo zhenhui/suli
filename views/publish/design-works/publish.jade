@@ -21,8 +21,8 @@ block content
                             input.title.text(type="text",name="title",placeholder="20字以内",maxlength=60)
                             select.category(name="category",title="作品分类")
                                 option(value="",selected="selected") 请选择分类
-                                option(value="视觉设计",selected="selected") 视觉设计
-                                option(value="交互设计",selected="selected") 交互设计
+                                option(value="视觉设计") 视觉设计
+                                option(value="交互设计") 交互设计
                     tr
                         th 简介
                         td
@@ -54,12 +54,12 @@ block content
                             input.hide#upload-ps(type="file",multiple)
                             textarea#ps_id.hide(name="ps_id",readonly='readonly')
                             #ps-list
-                    tr
-                        th 标签
-                        td
-                            #tag
-                                input#tag-field(type="text",name="tag",value="活动")
-                                | 标签之间用空格隔开
+                        //tr
+                            th 标签
+                            td
+                                #tag
+                                    input#tag-field(type="text",name="tag",value="活动")
+                                    | 标签之间用空格隔开
                         tr
                             th 类型
                             td

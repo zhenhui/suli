@@ -108,7 +108,7 @@ exports.saveFile = function (req, res) {
     var ownerID = req.session._id
 
     var options = {
-        chunk_size: 1024 * 4,
+        chunk_size: 1024 * 256,
         metadata: {
             owner: ownerID
         }
@@ -362,14 +362,14 @@ exports.saveFile = function (req, res) {
             gm(path).size(function (err, size) {
                 if (!err) {
                     var option = {
-                        "chunk_size": 1024 * 4,
+                        "chunk_size": 1024 * 256,
                         metadata: {
                             owner: ownerID,
                             width: size.width,
-                            height: size.height
+                            height: size.height,
+                            type: '缩略图'
                         }
                     }
-                    options.metadata.type = "缩略图"
                     var gs = new GridStore(DB.dbServer, fileName, fileName, "w", option)
                     gs.writeFile(path, function (err) {
                         if (!err) {

@@ -100,7 +100,7 @@ app.get('/design-works/index/unlike', function (req, res) {
     var like = new db.mongodb.Collection(db.Client, 'design-works-index-like')
     var fields = {work_id: req.query.id, owner_id: req.session._id}
 
-    like.remove(fields, {w: 1}, function (err, docs) {
+    like.remove(fields, {w: 1}, function (err) {
         if (err) console.log('取消喜欢失败，文档为：', fields, Date.now())
     })
 

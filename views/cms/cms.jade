@@ -5,6 +5,7 @@ block content
     form(action="/preview",name="origin-template")
         input(type="text",name="page_name",placeholder="页面名称",size="100")
         input(type="text",name="page_url",placeholder="页面访问的URL",size="150")
+        input(type="hidden",name="_csrf",value="#{token}")
         textarea#textarea(name="content",rows=10,cols=150)
         input(type="submit",value="开始编译模板并构造表单")
     form(name="compile-template")

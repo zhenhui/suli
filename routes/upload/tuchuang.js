@@ -71,7 +71,7 @@ exports.saveFile = function (req, res) {
     var ownerID = req.session._id
 
     var options = {
-        chunk_size: 1024 * 2,
+        chunk_size: 1024 * 256,
         metadata: {
             owner: ownerID,
             type: '图床'

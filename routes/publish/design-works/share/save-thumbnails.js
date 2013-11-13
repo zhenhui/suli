@@ -87,7 +87,7 @@ exports.saveFile = function (req, res) {
     var ownerID = req.session._id
 
     var options = {
-        chunk_size: 1024 * 4,
+        chunk_size: 1024 * 256,
         metadata: {
             owner: ownerID,
             type: '作品缩略图'
@@ -270,7 +270,7 @@ exports.saveFile = function (req, res) {
             gm(path).size(function (err, size) {
                 if (!err) {
                     var option = {
-                        "chunk_size": 1024 * 4,
+                        "chunk_size": 1024 * 256,
                         metadata: {
                             owner: ownerID,
                             width: size.width,
