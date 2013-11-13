@@ -21,7 +21,7 @@ app.get('/design-works/delete', function (req, res) {
 
     if (require('helper').isLogin(req) === false) {
         result.status = -1
-        result.err.push('未登陆')
+        result.err.push('未登db陆')
         res.jsonp(result)
         return
     }

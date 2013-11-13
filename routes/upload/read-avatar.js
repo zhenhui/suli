@@ -8,6 +8,7 @@
 
 var app = require('app')
 var DB = require('db')
+var path = require('path')
 
 app.get(/\/avatar\/([^_]+)(?:_)?(\w+)?$/, function (req, res) {
 
@@ -49,7 +50,11 @@ app.get(/\/avatar\/([^_]+)(?:_)?(\w+)?$/, function (req, res) {
                 res.end()
             }
         } else {
-            res.end()
+            if (size === '80x80' || size === '55x55' || size === '30x30' || size === '20x20') {
+                res.sendfile(path.join(__dirname, size + '.jpg'))
+            } else {
+                res.end()
+            }
         }
     })
 })

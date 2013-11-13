@@ -78,7 +78,7 @@ exports.saveFile = function (req, res) {
     file.fileId = new ObjectID()
 
     var options = {
-        chunk_size: 1024 * 256,
+        chunk_size: 1024 * 256 * 10,
         metadata: {
             owner: req.session._id
         }

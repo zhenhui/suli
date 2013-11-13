@@ -88,14 +88,22 @@ app.post('/admin/user/add-user', function (req, res) {
         }
         if (group.indexOf('管理员') >= 0) {
             var user = new db.Collection(db.Client, 'user')
-            user.insert(new_user, {safe: true}, function (err, docs) {
-                if (!err && docs) {
-                    info.success = true
+            user.findOne({user: user_name}, {_id: 1}, function (err, isExist) {
+                if (!err && !isExist) {
+                    user.insert(new_user, {safe: true}, function (err, docs) {
+                        if (!err && docs) {
+                            info.success = true
+                        } else {
+                            info.msg = '无法新建用户'
+                            info.success = false
+                        }
+                        res.json(info)
+                    })
                 } else {
-                    info.msg = '无法新建用户'
+                    info.msg = '用户已经存在'
                     info.success = false
+                    res.json(info)
                 }
-                res.json(info)
             })
         } else {
             info.msg = '您没有权限'
