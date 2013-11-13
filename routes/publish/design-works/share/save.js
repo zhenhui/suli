@@ -52,7 +52,7 @@ exports.save = function (req, res) {
     }
 
     //检测各种异常情况
-    if (typeof data.title !== 'string' || data.title.trim().length > 20 || data.title.trim().length < 1) {
+    if (typeof data.title !== 'string' || data.title.trim().length > 60 || data.title.trim().length < 1) {
         result.err.push('标题长度不符合要求')
     }
 
@@ -60,7 +60,7 @@ exports.save = function (req, res) {
         result.err.push('内容长度必须在0-200之内')
     }
 
-    if (typeof data.thumbnails_id !== 'string') {
+    if (typeof data.thumbnails_id !== 'string' || data.thumbnails_id.length < 1) {
         result.err.push('您必须上传缩略图')
     }
 

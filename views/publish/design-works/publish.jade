@@ -18,8 +18,9 @@ block content
                     tr
                         th 标题
                         td
-                            input.title.text(type="text",name="title",placeholder="20字以内",maxlength=20)
+                            input.title.text(type="text",name="title",placeholder="20字以内",maxlength=60)
                             select.category(name="category",title="作品分类")
+                                option(value="",selected="selected") 请选择分类
                                 option(value="视觉设计",selected="selected") 视觉设计
                                 option(value="交互设计",selected="selected") 交互设计
                     tr
@@ -59,13 +60,12 @@ block content
                             #tag
                                 input#tag-field(type="text",name="tag",value="活动")
                                 | 标签之间用空格隔开
-                    -if(type==='share')
                         tr
                             th 类型
                             td
                                 select(type="text",name="type")
-                                    option(value="share",selected="selected") 共享作品
-                                    option(value="own") 个人作品
+                                    option(value="share") 共享作品
+                                    option(value="own",selected="selected") 个人作品
                     tr.err.hide
                         th 错误信息
                         td

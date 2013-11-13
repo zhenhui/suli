@@ -1,3 +1,5 @@
+@import "variables"
+
 html
   background-color: #e7e7e7
 
@@ -14,15 +16,6 @@ body
 
 .clearfix
   zoom: 1
-
-a-color = #333333
-hover-color = #ff3b35
-bg-color = #bebfb3
-wrapper-bg = #e7e7e7
-input-text-field-color = #a1a1a1
-upload-file-triggers-color = #a1a1a1
-border-color = #ccc
-box-shadow = 0 2px 3px #a9a9a9
 
 a
   color: a-color
@@ -181,25 +174,25 @@ a:hover
 #email-login span
 #weibo-login span
   position absolute
-  left -8px
-  bottom -23px
+  left - 8px
+  bottom - 23px
   width 70px
   text-align center
 
 #email-login
-  background-position -70px 0
+  background-position - 70px 0
 
 #weibo-login
-  background-position -147px 0
+  background-position - 147px 0
 
 #domain-login:hover
-  background-position  0 -48px
+  background-position 0 - 48px
 
 #email-login:hover
-  background-position  -70px -48px
+  background-position - 70px - 48px
 
 #weibo-login:hover
-  background-position -147px -48px
+  background-position - 147px - 48px
 
 #login-register-area .J-login-register-triggers
   overflow: hidden
@@ -420,40 +413,50 @@ a:hover
 .tab .behavior-active
   font-size: 20px !important
 
-
 ::-webkit-scrollbar
-  width:12px
-  height:12px
+  width: 12px
+  height: 12px
+
 ::-webkit-scrollbar-button:start:decrement
 ::-webkit-scrollbar-button:end:increment
-  width:0
-  height:0
+  width: 0
+  height: 0
 
 ::-webkit-scrollbar-track-piece
-  background-clip:padding-box;
-  background-color:whitesmoke;
-  border:solid white;
+  background-clip: padding-box;
+  background-color: whitesmoke;
+  border: solid white;
   border-radius 12px
+
 ::-webkit-scrollbar-track-piece:vertical
-  box-shadow:inset 1px 0 0 rgba(0,0,0,.14),inset -1px 0 0 rgba(0,0,0,.05);
-  border-width:0;
+  box-shadow: inset 1px 0 0 rgba(0, 0, 0, .14), inset - 1px 0 0 rgba(0, 0, 0, .05);
+  border-width: 0;
+
 ::-webkit-scrollbar-track-piece:horizontal
-  box-shadow:inset 0 1px 0 rgba(0,0,0,.14),inset 0 -1px 0 rgba(0,0,0,.05)
-  border-width:0;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, .14), inset 0 - 1px 0 rgba(0, 0, 0, .05)
+  border-width: 0;
+
 ::-webkit-scrollbar-thumb
-  background-color:rgba(0,0,0,.2)
-  background-clip:padding-box
-  border:solid transparent;
+  background-color: rgba(0, 0, 0, .2)
+  background-clip: padding-box
+  border: solid transparent;
   border-radius 5px
+
 ::-webkit-scrollbar-thumb:vertical
-  border-width:1px 1px 1px 2px;min-height:24px
-  box-shadow:inset 1px 1px 0 rgba(0,0,0,.1),inset 0 -1px 0 rgba(0,0,0,.1);
+  border-width: 1px 1px 1px 2px;
+  min-height: 24px
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset 0 - 1px 0 rgba(0, 0, 0, .1);
+
 ::-webkit-scrollbar-thumb:horizontal
-  border-width:2px 1px 1px 1px;min-width:24px
-  box-shadow:inset 1px 1px 0 rgba(0,0,0,.1),inset -1px 0 0 rgba(0,0,0,.1);
+  border-width: 2px 1px 1px 1px;
+  min-width: 24px
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset - 1px 0 0 rgba(0, 0, 0, .1);
+
 ::-webkit-scrollbar-thumb:vertical:hover
-  background-color:rgba(0,0,0,.6);box-shadow
-  inset 1px 1px 0 rgba(0,0,0,.5),inset 0 -1px 0 rgba(0,0,0,.3);
+  background-color: rgba(0, 0, 0, .6);
+  box-shadow
+  inset 1px 1px 0 rgba(0, 0, 0, .5), inset 0 - 1px 0 rgba(0, 0, 0, .3);
+
 ::-webkit-scrollbar-thumb:horizontal:hover
-  background-color:rgba(0,0,0,.6)
-  box-shadow:inset 1px 1px 0 rgba(0,0,0,.5),inset -1px 0 0 rgba(0,0,0,.3);
+  background-color: rgba(0, 0, 0, .6)
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .5), inset - 1px 0 0 rgba(0, 0, 0, .3);
