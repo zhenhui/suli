@@ -100,14 +100,6 @@ define(function (require, exports, module) {
             $('#J-login-user-name-field').focus()
         })
 
-        new Popup({
-            trigger: '.J-logged-list-triggers',
-            triggerType: 'click',
-            element: template.render(tpl, {status: 'logged'}),
-            delegateNode: document.body,
-            effect: "slide"
-        })
-
 
         function loginSuccess(data) {
 
@@ -115,6 +107,7 @@ define(function (require, exports, module) {
 
             var html = template.render(tpl, data)
             $loginNode.append($(html))
+
 
             $('.J-login-register-triggers').css({ marginTop: -19 })
             $('.login-user-info').css({top: 0})
@@ -127,6 +120,19 @@ define(function (require, exports, module) {
         }
 
         KISSY.jsonp(location.protocol + '//' + location.host + '/login/is-login', {}, function (data) {
+
+            $('#login-register-area').addClass('show')
+
+            if (data.status == 1) {
+                new Popup({
+                    trigger: '.J-logged-list-triggers',
+                    triggerType: 'click',
+                    element: template.render(tpl, {_id: data._id, status: 'logged'}),
+                    delegateNode: document.body,
+                    effect: "slide"
+                })
+            }
+
             window._csrf_token_ = data._csrf_token_
             $(document).on('submit', 'form', loginFormSubmitFn)
             if (data.status == 1) {
