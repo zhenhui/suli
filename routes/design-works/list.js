@@ -90,11 +90,10 @@ app.get('/design-works/hot/list', function (req, res) {
 app.get('/design-works/latest/list', function (req, res) {
 
     var design = new db.mongodb.Collection(db.Client, 'design-works')
-    var defaultFindParam = {/*type: 'own',*/ status: {$gte: 1}}
+    var defaultFindParam = {type: 'own', status: {$gte: 1}}
 
     design.count(defaultFindParam, function (err, count) {
 
-        //todo：应该只返回own类型的页面
         //每次最多返回40条
         var pageCount = parseInt(req.query.count, 10)
         pageCount = !isNaN(pageCount) && pageCount <= 40 && pageCount > 0 ? pageCount : 5
