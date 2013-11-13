@@ -92,7 +92,7 @@ exports.save = function (req, res) {
             data.category = '交互设计'
             break;
         default:
-            data.category = '未分类'
+            result.err.push('请选择作品分类')
             break;
     }
 
