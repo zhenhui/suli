@@ -28,6 +28,7 @@ define(function (require, exports, module) {
         dialog.on('afterRenderUI', function () {
             if (dialog.get('isBindRenderUI__')) return
             dialog.set('isBindRenderUI__', true)
+            S.one('a.ks-dialog-close').addClass('icon-untitled-16')
             Event.delegate(dialog.get('el'), 'click', '.ks-overlay-close', function (ev) {
                 dialog.hide()
             })

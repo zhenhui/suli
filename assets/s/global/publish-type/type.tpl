@@ -1,22 +1,19 @@
 <div class="publish-control J-publish-control">
     <p>
-        <a href="/publish/design-works">
+        <a href="/publish/design-works" class="design-works">
             <span class="bg">
-                <img src="http://img.sjplus.cn/read/527261991432c9401400005e.png">
                 <strong><b>new<br>design</b></strong>
             </span>
             <span class="title">发布新作品</span>
         </a>
-        <a href="/publish/article">
+        <a href="/publish/article" class="article">
             <span class="bg">
-                <img src="http://img.sjplus.cn/read/5272619b1432c94014000064.png">
                 <strong><b>new<br>point</b></strong>
             </span>
             <span class="title">发布文章</span>
         </a>
-        <a href="/publish/design-work">
+        <a class="front" href="javascript:alert('暂不可用')">
             <span class="bg">
-                <img src="http://img.sjplus.cn/read/5272619f1432c9401400006a.png">
                 <strong><b>new<br>code</b></strong>
             </span>
             <span class="title">前端演示代码</span>

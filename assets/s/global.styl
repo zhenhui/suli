@@ -275,6 +275,16 @@ a:hover
   top: 22px
   width: 200px
   height: 200px
+  background url(http://img.sjplus.cn/read/5282dd044ef4f5fc0f0001b5.png)
+
+.publish-control a.design-works span.bg
+  background-position 0 0
+
+.publish-control a.article span.bg
+  background-position - 300px 0
+
+.publish-control a.front span.bg
+  background-position - 596px 0
 
 .publish-control a span.bg strong
   position: absolute
@@ -282,8 +292,6 @@ a:hover
   top: 0
   width: 100%
   height: 100%
-  filter: unquote("progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#CC000000', endColorstr='#CC000000');")
-  background: rgba(0, 0, 0, 0.8);
 
 .publish-control a span.bg strong b
   position: absolute
@@ -292,6 +300,7 @@ a:hover
   width: 100%
   text-align: center
   font-size: 20px
+  visibility hidden
 
 .publish-control a span.title
   position: absolute
@@ -306,9 +315,12 @@ a:hover
   background-color: #fff
   color: #fff
 
+.publish-control a:hover span.bg strong b
+  visibility visible
+
 .publish-control a:hover span.bg strong
-  background: rgba(255, 61, 51, 0.8)
-  filter: unquote("progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#CCFF3D33', endColorstr='#CCFF3D33');")
+  filter: unquote("progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#CC000000', endColorstr='#CC000000');")
+  background: rgba(0, 0, 0, 0.8);
 
 .ui-dialog:focus
   outline: none
@@ -380,13 +392,13 @@ a:hover
 .ks-overlay-hidden
   visibility: hidden;
 
-.ks-overlay-mask-hidden
+body .ks-overlay-mask-hidden
   display: none;
 
-.ks-overlay-shown
-  visibility: visible;
+span.ks-dialog-close-x
+  display none
 
-.ks-overlay-mask-shown
+.ks-overlay-mask
   display: block;
   filter: unquote("progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#B2000000', endColorstr='#B2000000')")
   background: rgba(0, 0, 0, 0.5)
@@ -396,15 +408,19 @@ a:hover
   border: solid 1px border-color
   width 886px
   z-index 9999
+  padding 57px 33px 18px 33px
 
 .publish-works a.ks-dialog-close
   position: absolute
-  right: 0
-  top: 0
-  background hover-color
-  color: #fff
-  padding: 6px
+  right: 5px
+  top: 5px
+  padding: 8px 10px
   z-index 3
+  font-size 18px
+
+.publish-works a.ks-dialog-close:hover
+  background hover-color
+  color #fff
 
 .tab .J-tab-trigger
   font-size: 14px
