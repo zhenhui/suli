@@ -13,7 +13,7 @@ define(function (require, exports, module) {
     var $container = $('#main-js-container')
 
     exports.init = function () {
-        $.getJSON('/design-works/share/list', function (data) {
+        $.getJSON('/design-works/share/list?r=' + Math.random(), function (data) {
             $container.html(template.render(tpl, data))
         })
     }

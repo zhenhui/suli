@@ -41,8 +41,8 @@
     <div class="list">
         <ul>
             <li><a class="J-publish-work">发布作品</a></li>
-            <li><a href="/personal#manage-share">管理设计作品</a></li>
-            <li><a href="/admin/user">设置帐号</a></li>
+            <li><a href='/personal#all-works{"view":"design"}'>管理设计作品</a></li>
+            <li><a href="/personal#account-setting">设置帐号</a></li>
             <li><a href="/login/login-out">退出</a></li>
         </ul>
     </div>

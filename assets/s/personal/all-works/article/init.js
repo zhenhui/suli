@@ -12,10 +12,10 @@ define(function (require, exports, module) {
     var $container
 
     exports.init = function () {
-        console.log('当前处于文章视图中'+module.id)
+        console.log('当前处于文章视图中' + module.id)
         $container = $('#tab-container')
         $container.html('加载中...')
-        $.getJSON('/personal/article/list', function (data) {
+        $.getJSON('/personal/article/list?r=' + Math.random(), function (data) {
             $container.html(template.render(tpl, data))
         })
     }

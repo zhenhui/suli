@@ -15,7 +15,7 @@ define(function (require, exports, module) {
         console.log('设计作品开始加载')
         $container = $('#tab-container')
         $container.innerHTML = '加载中'
-        $.getJSON('/design-works/index/like/json/list', function (data) {
+        $.getJSON('/design-works/index/like/json/list?r=' + Math.random(), function (data) {
             $container.html(template.render(tpl, {data: data}))
         })
     }

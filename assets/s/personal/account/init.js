@@ -68,7 +68,7 @@ define(function (require, exports, module) {
             _csrf: window._csrf_token_
         }, function (data) {
             if (data.status > 0) {
-                alert('新密码和原密码相同')
+                alert('更新成功！')
             } else {
                 alert('发生错误：' + data.err.join(','))
             }
