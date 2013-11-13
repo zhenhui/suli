@@ -108,7 +108,7 @@ exports.saveFile = function (req, res) {
     var ownerID = req.session._id
 
     var options = {
-        chunk_size: 102400,
+        chunk_size: 1024 * 4,
         metadata: {
             owner: ownerID
         }
@@ -224,6 +224,8 @@ exports.saveFile = function (req, res) {
                 var qualityPath = file.path + '_quality80'
                 gm(file.path).interlace('Line').noProfile().quality(80).write(qualityPath, function (err) {
                     var fileName = file.fileId + '_quality' + '_' + file.width + 'x' + file.height + '.' + file.format
+
+                    options.type = '优化后的原图'
                     var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
                     gs.writeFile(qualityPath, function (err) {
                         if (!err) {
@@ -249,9 +251,8 @@ exports.saveFile = function (req, res) {
                         file.path = dstPath
                         file.format = 'jpg'
                         var fileName = file.fileId + '_quality' + '_' + file.width + 'x' + file.height + '.' + file.format
-
-                        options.metadata.type = "优化过的原图"
-
+                        //注意case jpg中也使用相同的type
+                        options.metadata.type = "优化后的原图"
                         var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
                         gs.writeFile(dstPath, function (err) {
                             if (!err) {
@@ -361,7 +362,7 @@ exports.saveFile = function (req, res) {
             gm(path).size(function (err, size) {
                 if (!err) {
                     var option = {
-                        "chunk_size": 10240,
+                        "chunk_size": 1024 * 4,
                         metadata: {
                             owner: ownerID,
                             width: size.width,

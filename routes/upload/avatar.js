@@ -97,7 +97,7 @@ exports.saveFile = function (req, res) {
     var ownerID = req.session._id
 
     var options = {
-        chunk_size: 102400,
+        chunk_size: 1024,
         metadata: {
             owner: ownerID,
             type: 'avatar'
@@ -282,11 +282,12 @@ exports.saveFile = function (req, res) {
             gm(path).size(function (err, size) {
                 if (!err) {
                     var option = {
-                        "chunk_size": 10240,
+                        "chunk_size": 1024,
                         metadata: {
                             owner: ownerID,
                             width: size.width,
-                            height: size.height
+                            height: size.height,
+                            type: 'avatar'
                         }
                     }
                     var gs = new GridStore(DB.dbServer, fileName, fileName, "w", option)

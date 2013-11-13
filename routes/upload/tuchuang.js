@@ -71,10 +71,10 @@ exports.saveFile = function (req, res) {
     var ownerID = req.session._id
 
     var options = {
-        chunk_size: 102400,
+        chunk_size: 1024 * 2,
         metadata: {
             owner: ownerID,
-            type: 'tuchuang'
+            type: '图床'
         }
     }
 
@@ -211,7 +211,7 @@ app.get('/tuchuang/list', function (req, res) {
         return
     }
     var file = new DB.mongodb.Collection(DB.Client, 'fs.files')
-    file.find({"metadata.owner": req.session._id, "metadata.type": "tuchuang"}, {id: 1}).sort({uploadDate: -1}).toArray(function (err, docs) {
+    file.find({"metadata.owner": req.session._id, "metadata.type": "图床"}, {id: 1}).sort({uploadDate: -1}).toArray(function (err, docs) {
         if (!err) {
             delete result.err
             result.data = docs
