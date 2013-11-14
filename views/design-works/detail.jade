@@ -27,8 +27,6 @@ block content
                             -item=item.split(':')
                                 a(href="#{imgCDN}/read/#{item[0]}",download="#{item[1]}") #{item[1]}
                         -})
-                -else
-                    .ps 该文件没有附件
             #J-comment-container.J-comment-container(data-id="#{docs._id}")
                 h2 正在加载评论...
                 #comment-container.comment-container
