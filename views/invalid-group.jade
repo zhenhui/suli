@@ -7,3 +7,10 @@ block content
             -err.forEach(function(item,index){
                 li(style="margin-left:1em") #{index+1}：#{item}
             -})
+    -if(status===-10)
+        script.
+            seajs.use('s/global/login/login',function(login){
+                login.login(function(){
+                    window.location.reload()
+                })
+            })

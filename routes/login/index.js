@@ -25,6 +25,7 @@ app.post('/login', function (req, res) {
             info.status = 1
             info.msg = '登陆成功'
             info.user = data.user;
+            info._csrf_token_ = req.csrfToken()
 
             req.session.login_ts = Date.now()
             req.session.user = data.user
