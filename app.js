@@ -35,9 +35,19 @@ function start() {
     app.use(express.csrf());
     app.use(require('stylus').middleware(__dirname + '/assets'))
     app.use(express.static(path.join(__dirname, 'assets')))
-// development only
+
+    // development only
     if ('development' == app.get('env')) {
+        console.log("开发环境")
         app.use(express.errorHandler());
+        global.assetsCDN = global.imgCDN = global.hostDOMAIN = 'http://localhost'
+    }
+
+    if ('production' == app.get('env')) {
+        console.log("生产环境")
+        global.assetsCDN = 'http://a.sjplus.cn'
+        global.imgCDN = 'http://img.sjplus.cn'
+        global.hostDOMAIN = 'http://www.sjplus.cn'
     }
 
     http.createServer(app).listen(app.get('port'), function () {
