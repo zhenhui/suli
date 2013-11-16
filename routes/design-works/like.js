@@ -50,18 +50,7 @@ app.post('/design-works/index/add-like', helper.csrf, function (req, res) {
             }
             res.json(result)
 
-            //将喜欢的数量汇总到design-works集合中
-            var designWorks = new db.mongodb.Collection(db.Client, 'design-works')
-
-            like.count({work_id: id.toString()}, function (err, count) {
-                if (!err && count > 0) {
-                    designWorks.update({_id: id}, {$set: {'index.love': count}}, {w: 1}, function () {
-                        console.log('更新作品' + id.toString() + '的喜欢到：' + count, Date.now())
-                    })
-                } else {
-                    console.log('更新喜欢时出错：' + id.toString(), err, Date.now())
-                }
-            })
+            updateLike(id.toString())
 
         })
 })
@@ -102,6 +91,7 @@ app.get('/design-works/index/unlike', function (req, res) {
 
     like.remove(fields, {w: 1}, function (err) {
         if (err) console.log('取消喜欢失败，文档为：', fields, Date.now())
+        updateLike(req.query.id)
     })
 
 })
@@ -120,3 +110,22 @@ app.get('/design-works/index/liked', function (req, res) {
     })
 
 })
+
+//更新喜欢数到design-works.index中
+function updateLike(id) {
+    //将喜欢的数量汇总到design-works集合中
+    var designWorks = new db.mongodb.Collection(db.Client, 'design-works')
+    var like = new db.mongodb.Collection(db.Client, 'design-works-index-like')
+
+    console.log('开始刷新' + id + '的喜欢量')
+
+    like.count({work_id: id}, function (err, count) {
+        if (!err && count >= 0) {
+            designWorks.update({_id: id}, {$set: {'index.love': count}}, {w: 1}, function () {
+                console.log('更新作品' + id.toString() + '的喜欢到：' + count, Date.now())
+            })
+        } else {
+            console.log('更新喜欢时出错：' + id.toString(), err, Date.now())
+        }
+    })
+}

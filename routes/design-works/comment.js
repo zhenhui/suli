@@ -68,7 +68,7 @@ app.post('/design-works/comment/new', function (req, res) {
                     //首先统计
                     comment.count({work_id: id.toString()}, function (err, num) {
                         //开始更新字段
-                        if (!err && num > 0) {
+                        if (!err && num >= 0) {
                             works.update({_id: id}, {$set: {'index.comment': num}}, {w: 1}, function (err, num) {
                                 if (!err) {
                                     console.log('成功:更新了作品' + id.toString() + '的评论数为' + num)

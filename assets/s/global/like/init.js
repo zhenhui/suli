@@ -11,7 +11,7 @@ define(function (require, exports, module) {
         var $target = $(ev.currentTarget)
         if (location.href.indexOf('/design-works/detail')) {
             if ($target.hasClass('active')) {
-                $.get('/design-works/index/unlike', {
+                $.get('/design-works/index/unlike?r' + Math.random(), {
                         id: $target.data('id')
                     }
                 ).done(function () {
