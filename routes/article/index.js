@@ -18,7 +18,6 @@ app.get('/article', helper.csrf, function (req, res) {
         docs = docs.map(function (obj) {
             if (typeof obj.content === 'string') {
                 obj.content = obj.content.replace(removeHTMLTag, '').substring(0, 100)
-                console.log(obj)
             }
             return obj
         })
@@ -32,7 +31,6 @@ app.get('/article/json/category', function (req, res) {
     var article = new db.mongodb.Collection(db.Client, 'article')
     var category = {}
     article.distinct('category', function (err, docs) {
-        console.log(err, docs)
         var readyNum = 0
         docs.forEach(function (_category) {
             article.count({category: _category}, function (err, count) {

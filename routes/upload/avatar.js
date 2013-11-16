@@ -199,7 +199,6 @@ exports.saveFile = function (req, res) {
     }
 
     function end() {
-        console.log(req.body)
         if (uploadInfo.err.length < 1) {
             delete uploadInfo.err
             uploadInfo.origin_name = file.name

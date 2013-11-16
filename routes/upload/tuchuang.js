@@ -160,11 +160,6 @@ exports.saveFile = function (req, res) {
         }
         res.header('content-type', 'text/html;charset=utf-8')
 
-        console.log(req.body, {
-            callback: req.body['callback-func-name'],
-            result: JSON.stringify(uploadInfo)
-        })
-
         res.render('upload/tuchuangIframeCallBack', {
             callback: req.body['callback-func-name'],
             result: JSON.stringify(uploadInfo)

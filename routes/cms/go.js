@@ -70,7 +70,6 @@ exports.readPage = function (page_url, callback) {
 //通过删除缓存，达到更新的目的
 exports.update = function (page_url) {
     console.log('开始更新缓存' + page_url)
-    console.log(exports.cache)
     if (exports.cache[page_url]) {
         delete exports.cache[page_url]
         console.log('更新了' + page_url + '的缓存')

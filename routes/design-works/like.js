@@ -115,8 +115,6 @@ app.get('/design-works/index/liked', function (req, res) {
 
     var like = new db.mongodb.Collection(db.Client, 'design-works-index-like')
 
-    console.log({work_id: req.query.id, owner_id: req.session._id})
-
     like.findOne({work_id: req.query.id, owner_id: req.session._id}, {_id: 1}, function (err, docs) {
         res.jsonp(docs ? true : false)
     })

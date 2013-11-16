@@ -59,7 +59,6 @@ app.post('/design-works/comment/new', function (req, res) {
     var comment = new DB.mongodb.Collection(DB.Client, 'design-works-comment')
 
     works.findOne({_id: id, status: {$gte: 1}}, {_id: 1}, function (err, docs) {
-        console.log(docs, id, id.valueOf())
         if (!err && docs) {
             comment.insert(data, {safe: true}, function (err, docs) {
                 if (!err && docs.length > 0) {
