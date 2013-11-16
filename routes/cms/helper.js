@@ -12,7 +12,7 @@ var path = require('path')
 exports.staticBaseDir = path.join('D:', 'static')
 
 exports.csrf = function (req, res, next) {
-    res.locals.token = req.session._csrf;
+    res.locals.token = req.csrfToken();
     next();
 }
 
