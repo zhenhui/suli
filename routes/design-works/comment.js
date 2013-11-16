@@ -58,14 +58,29 @@ app.post('/design-works/comment/new', function (req, res) {
     var works = new DB.mongodb.Collection(DB.Client, 'design-works')
     var comment = new DB.mongodb.Collection(DB.Client, 'design-works-comment')
 
-    var waitTime = 30000
-
     works.findOne({_id: id, status: {$gte: 1}}, {_id: 1}, function (err, docs) {
         console.log(docs, id, id.valueOf())
         if (!err && docs) {
             comment.insert(data, {safe: true}, function (err, docs) {
                 if (!err && docs.length > 0) {
                     res.json({docs: docs[0]})
+
+                    //将评论数刷入此作品的index字段
+                    //首先统计
+                    comment.count({work_id: id.toString()}, function (err, num) {
+                        //开始更新字段
+                        if (!err && num > 0) {
+                            works.update({_id: id}, {$set: {'index.comment': num}}, {w: 1}, function (err, num) {
+                                if (!err) {
+                                    console.log('成功:更新了作品' + id.toString() + '的评论数为' + num)
+                                } else {
+                                    console.log('失败:更新作品' + id.toString() + '的评论数')
+                                }
+                            })
+                        } else {
+                            console.log('无法获取作品' + id.toString() + '的评论数')
+                        }
+                    })
                 } else {
                     result.err.push('无法保存评论')
                     result.status = -6
