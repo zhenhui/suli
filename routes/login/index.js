@@ -30,10 +30,12 @@ app.post('/login', function (req, res) {
             req.session.login_ts = Date.now()
             req.session.user = data.user
             req.session._id = data._id
+            console.log(data.user + '登陆成功')
 
         } else {
             info.status = -2
             info.msg = '用户名或密码不正确'
+            console.log(req.body._ + '登陆失败')
         }
         res.json(info)
     })
@@ -50,6 +52,7 @@ app.get('/login/is-login', function (req, res) {
         info.msg = '已登陆'
         info.user = req.session.user
         info.status = 1
+        console.log(info.user + '检测登陆成功')
     } else {
         info.status = -3
         info.msg = '当前未登陆'
@@ -64,6 +67,7 @@ app.get('/login/is-login', function (req, res) {
 
 //退出登陆
 app.get('/login/login-out', function (req, res) {
+    console.log(req.session.user + '退出登陆')
     req.session.destroy();
     res.redirect('/');
 })
