@@ -14,7 +14,7 @@ var GridStore = DB.mongodb.GridStore
 var ObjectID = DB.mongodb.ObjectID
 var gm = require('gm')
 
-var fileSize = 100 * 1024 * 1000
+var fileSize = 200 * 1024 * 1000
 
 function deleteRequestFile(file) {
     if (Array.isArray(file)) {
@@ -69,7 +69,7 @@ exports.saveFile = function (req, res) {
     file.name = file.name.replace(':', '')
 
     if (file.size < 1 || file.size > fileSize) {
-        uploadInfo.err.push('上传文件的大小不对，上限为' + (fileSize / 1024) + 'Kb')
+        uploadInfo.err.push('上传文件的大小不对，上限为' + (fileSize / 1000 / 1024) + 'Mb')
         end()
         return
     }

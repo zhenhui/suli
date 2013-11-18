@@ -23,7 +23,7 @@ define(function (require, exports, module) {
     }).change(function (fileName) {
             psId = 'ps_file' + ( Math.random() * 100000000, 10)
             $psList.innerHTML = ''
-            $('<div class="j-ps-file" id="' + psId + '">' + fileName + '<span class="J-process J-process-running">正在上传...</span></div>').appendTo($psList)
+            $('<div class="j-ps-file" id="' + psId + '">' + fileName + '<span class="J-process J-process-running" ><b style="color: red;">正在上传...</b></span></div>').appendTo($psList)
             $ps = $('#' + psId)
             uploader.submit();
         }).success(function (response) {
@@ -31,7 +31,7 @@ define(function (require, exports, module) {
                 var serverInfo = $.parseJSON(response)
                 if (serverInfo._id && !serverInfo.err) {
                     $ps.addClass('J-success').data('id', serverInfo._id)
-                    $ps.find('.J-process').html(' 上传成功')
+                    $ps.find('.J-process').html('<b style="color: green;">上传成功</b>')
                     $ps.find('.J-process-running').removeClass('J-process-running')
                     getPsList()
                 } else {
@@ -41,7 +41,7 @@ define(function (require, exports, module) {
                 $ps.find('.J-process').html('服务器异常' + response)
             }
         }).error(function (err) {
-            $ps.find('.J-process').html('上传失败，请确认文件小于100Mb')
+            $ps.find('.J-process').html('上传失败，请确认文件小于200Mb')
         });
 
     function getPsList() {
