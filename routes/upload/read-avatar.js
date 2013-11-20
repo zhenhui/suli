@@ -20,7 +20,7 @@ app.get(/\/avatar\/([^_]+)(?:_)?(\w+)?$/, function (req, res) {
         return
     }
 
-    var file = new DB.mongodb.Collection(DB.Client, 'fs.files')
+    var file = new DB.mongodb.Collection(DB.userClient, 'fs.files')
 
     file.findOne({_id: new RegExp(ownerId + '(.+)' + size)}, {fields: {
         _id: 1,
@@ -31,7 +31,7 @@ app.get(/\/avatar\/([^_]+)(?:_)?(\w+)?$/, function (req, res) {
     ]}, function (err, docs) {
         if (docs) {
             if (!req.headers['if-none-match'] || req.headers['if-none-match'] !== docs.md5) {
-                var gs = new DB.mongodb.GridStore(DB.dbServer, docs._id, "r")
+                var gs = new DB.mongodb.GridStore(DB.userServer, docs._id, "r")
                 res.header('ETag', docs.md5)
                 res.header('Cache-Control', 'max-age=315360000');
                 res.header('Expires', ' Tue, 10 Jan 2023 02:19:00 GMT');

@@ -177,7 +177,7 @@ exports.saveFile = function (req, res) {
         _gm.write(qualityPath, function (err) {
                 if (!err) {
                     var fileName = ownerID + '_' + file.fileId + '_' + size.width + 'x' + size.height
-                    var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
+                    var gs = new GridStore(DB.userServer, fileName, fileName, "w", options)
                     gs.writeFile(qualityPath, function (err) {
                         if (!err) {
                             uploadInfo._id = ownerID
@@ -289,7 +289,7 @@ exports.saveFile = function (req, res) {
                             type: 'avatar'
                         }
                     }
-                    var gs = new GridStore(DB.dbServer, fileName, fileName, "w", option)
+                    var gs = new GridStore(DB.userServer, fileName, fileName, "w", option)
                     gs.writeFile(path, function (err) {
                         if (!err) {
                             _resize()
