@@ -13,5 +13,3 @@ require('./read-avatar')
 
 //上传到图床的文件
 require('./tuchuang')
-
-require('./removeUnusedFile')
