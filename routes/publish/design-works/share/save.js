@@ -79,7 +79,7 @@ exports.save = function (req, res) {
         })
     }
 
-    if (typeof data.file_id !== 'string') {
+    if (typeof data.file_id !== 'string' || data.file_id.length < 25) {
         result.err.push('您必须上传主图')
     }
 
@@ -93,6 +93,7 @@ exports.save = function (req, res) {
             break;
         default:
             result.err.push('请选择作品分类')
+            result.errType = 'category'
             break;
     }
 

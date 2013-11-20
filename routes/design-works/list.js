@@ -37,7 +37,7 @@ app.get('/design-works/hot/list', function (req, res) {
     //  console.log(req.query)
 
     var design = new db.mongodb.Collection(db.Client, 'design-works')
-    var user = new db.mongodb.Collection(db.Client, 'user')
+    var user = new db.mongodb.Collection(db.userClient, 'user')
 
     var fields = {
         _id: 1,

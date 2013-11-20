@@ -29,6 +29,11 @@ define(function (require, exports, module) {
                 }
             } else {
                 alert('遇到错误:\r\n' + data.err.join('\r\n'))
+                switch (data.errType) {
+                    case 'category':
+                        form.elements['category'].focus()
+                        break;
+                }
             }
         });
     })

@@ -18,7 +18,7 @@ app.get('/admin/user', helper.csrf, function (req, res) {
         }
 
         if (group.indexOf('管理员') >= 0) {
-            var user = new db.Collection(db.Client, 'user')
+            var user = new db.Collection(db.userClient, 'user')
             user.find({}, {_id: 1, user: 1, group: 1, ts: 1}).toArray(function (err, data) {
                 res.render('admin/user/manager', {docs: data})
             })
@@ -87,7 +87,7 @@ app.post('/admin/user/add-user', function (req, res) {
             return
         }
         if (group.indexOf('管理员') >= 0) {
-            var user = new db.Collection(db.Client, 'user')
+            var user = new db.Collection(db.userClient, 'user')
             user.findOne({user: user_name}, {_id: 1}, function (err, isExist) {
                 if (!err && !isExist) {
                     user.insert(new_user, {safe: true}, function (err, docs) {
@@ -143,7 +143,7 @@ app.post('/admin/user/update/group', function (req, res) {
             return
         }
         if (group.indexOf('管理员') >= 0) {
-            var user = new db.Collection(db.Client, 'user')
+            var user = new db.Collection(db.userClient, 'user')
             user.update({_id: id}, {$set: {group: newGroup}}, {}, function (err, result) {
                 if (!err && result > 0) {
                     result.status = 1
@@ -198,7 +198,7 @@ app.post('/admin/user/update/password', function (req, res) {
         return
     }
 
-    var user = new db.Collection(db.Client, 'user')
+    var user = new db.Collection(db.userClient, 'user')
     user.update({_id: id, pwd: req.body.p1}, {$set: {pwd: req.body.p2}}, {}, function (err, _result) {
         if (!err && _result > 0) {
             result.status = 1
@@ -248,7 +248,7 @@ app.post('/admin/user/update/information', function (req, res) {
         }
     })
 
-    var user = new db.Collection(db.Client, 'user')
+    var user = new db.Collection(db.userClient, 'user')
     user.update({_id: id}, {$set: data}, {}, function (err, _docs) {
         if (!err && _docs > 0) {
             result.status = 1
@@ -272,7 +272,7 @@ app.get('/admin/user/get/personal-information', function (req, res) {
         res.json(result)
         return
     }
-    var user = new db.Collection(db.Client, 'user')
+    var user = new db.Collection(db.userClient, 'user')
     user.findOne({_id: id}, {_id: 1, user: 1, group: 1, privacy_information: 1, ts: 1}, function (err, docs) {
         if (docs) {
             result.status = 1

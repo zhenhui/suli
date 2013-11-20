@@ -12,7 +12,7 @@ var db = require('db')
 
 app.post('/login', function (req, res) {
 
-    var user = new db.Collection(db.Client, 'user')
+    var user = new db.Collection(db.userClient, 'user')
 
     var info = {}
 

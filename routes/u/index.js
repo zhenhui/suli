@@ -15,7 +15,7 @@ app.get(/^\/u\/([0-9a-z]{24})/, function (req, res) {
         res.end('Not Found')
         return
     }
-    var user = new db.mongodb.Collection(db.Client, 'user')
+    var user = new db.mongodb.Collection(db.userClient, 'user')
     user.findOne({_id: uid}, {group: 1, _id: 1, user: 1, privacy_information: 1}, function (err, result) {
         res.render('u/index', result)
     })
@@ -55,7 +55,7 @@ app.get('/u/json/user-info', function (req, res) {
     if (require('helper').isLogin(req)) {
         fields.privacy_information = 1
     }
-    var user = new db.mongodb.Collection(db.Client, 'user')
+    var user = new db.mongodb.Collection(db.userClient, 'user')
     user.find({_id: {$in: arr}}, fields).sort({ts: -1}).toArray(function (err, docs) {
         //将id作为key，方便检索
         var result = {}
