@@ -96,9 +96,9 @@ app.get('/design-works/latest/list', function (req, res) {
 
     design.count(defaultFindParam, function (err, count) {
 
-        //每次最多返回40条
+        //每次最多返回50条
         var pageCount = parseInt(req.query.count, 10)
-        pageCount = !isNaN(pageCount) && pageCount <= 40 && pageCount > 0 ? pageCount : 5
+        pageCount = !isNaN(pageCount) && pageCount <= 50 && pageCount > 0 ? pageCount : 5
 
 
         var result = {
