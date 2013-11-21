@@ -7,7 +7,7 @@ define(function (require, exports, module) {
     var template = require('template')
     var page = 1
     var pageNum = 1
-    var count = 24
+    var count = 36
     var sumPage = 0
 
     function getData() {
