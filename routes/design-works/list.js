@@ -154,7 +154,7 @@ app.get('/design-works/fromid/list', function (req, res) {
 //根据作品id返回作品的相关数据
 app.get('/user/design-works/json', function (req, res) {
     var design = new db.mongodb.Collection(db.Client, 'design-works')
-    design.find({owner_id: req.query._id, type: 'own'}, {}).sort({ts: -1}).toArray(function (err, docs) {
+    design.find({owner_id: req.query._id, type: 'own', status: {$gte: 1}}, {}).sort({ts: -1}).toArray(function (err, docs) {
         res.jsonp(docs)
     })
 
