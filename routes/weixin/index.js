@@ -7,6 +7,9 @@ var crypto = require('crypto')
 
 app.get('/weixin/echo-token', function (req, res) {
 
+    console.log('微信 query:', req.query)
+    console.log('微信 body:', req.body)
+
     var $token = 'sjplus2013011025'
 
     var arr = [  $token, req.query.timestamp  , req.query.nonce ].sort()
