@@ -7,9 +7,9 @@ var crypto = require('crypto')
 
 app.get('/weixin/echo-token', function (req, res) {
 
-    $token = 'sjplus-2013011025'
+    var $token = 'sjplus-2013011025'
 
-    var arr = [  req.query.signature, req.query.timestamp  , req.query.nonce ].sort()
+    var arr = [  $token, req.query.timestamp  , req.query.nonce ].sort()
 
     var shasum = crypto.createHash('sha1');
     shasum.update(arr.join(''))
