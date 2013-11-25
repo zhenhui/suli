@@ -7,7 +7,7 @@ var crypto = require('crypto')
 
 app.get('/weixin/echo-token', function (req, res) {
 
-    var $token = 'sjplus-2013011025'
+    var $token = 'sjplus2013011025'
 
     var arr = [  $token, req.query.timestamp  , req.query.nonce ].sort()
 
