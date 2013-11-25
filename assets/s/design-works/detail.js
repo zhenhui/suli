@@ -96,9 +96,12 @@ define(function (require, exports, module) {
                 exports.waterfall.adjust()
                 var count = parseInt($h2.find('span.J-count').html(), 10)
                 $h2.find('span.J-count').html(count + 1)
+                $textarea.val('')
             } else {
                 if (data.status == -1) {
                     login.login()
+                } else {
+                    alert('遇到错误：\r\n' + data.err.join('\r\n'))
                 }
             }
         })
