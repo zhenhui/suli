@@ -32,5 +32,5 @@ require('./cms')
 //个人空间
 require('./u')
 
-//wx的token
-require('./weixin')
+//验证码
+require('captcha')
