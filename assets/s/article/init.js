@@ -18,28 +18,16 @@ define(function (require, exports, module) {
         })
     })
 
+    require('s/global/comment/comment')
 
-    /*
-     //先使用页面刷新方式，来做类目搜索
-     var filter = {}
+    //加载喜欢组件
+    require('s/global/like/init')
 
-     KISSY.use('event,json', function (S, Event) {
-     $categoryContainer.on('click', 'a.J-category', function (ev) {
-     ev.preventDefault()
-     filter.category = $(ev.currentTarget).data('category')
-     location.hash = S.JSON.stringify(filter)
-     })
-
-
-     Event.on(window, 'hashchange', function () {
-
-     })
-
-     })
-
-     function renderArticleList() {
-
-
-     }*/
+    //检测是否喜欢过
+    $.get('/index/liked?id=' + window.articleId, function (boolean) {
+        if (boolean) {
+            $('.J-like').addClass('active').find('.J-text').html('已喜欢')
+        }
+    })
 
 })

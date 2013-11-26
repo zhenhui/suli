@@ -3,20 +3,32 @@ block css
     link(rel="stylesheet",href="#{assetsCDN}/s/article/detail.css")
 block js
     script.
+        var articleId="#{_id}"
         seajs.use('s/article/init')
 block content
     .wrapper
         .wrapper-990.clearfix
-            -if(typeof title!=='undefined')
-                #article-content
-                    #article-title
-                        h1
-                           a(href="/u/#{owner_id}")
-                                img.avatar(src="#{imgCDN}/avatar/#{owner_id}_30x30")
-                                =title
-                    #article-img
-                        img(width="770",height="200",src="#{imgCDN}/read/#{thumbnails_id}")
-                    #content-wrapper !{content}
-                #sidebar
-            -else
-                | Nothing
+            .main-content.clearfix
+                -if(typeof title!=='undefined')
+                    #article-content
+                        #article-title
+                            h1
+                               a(href="/u/#{owner_id}")
+                                    img.avatar(src="#{imgCDN}/avatar/#{owner_id}_30x30")
+                                    =title
+                        #article-img
+                            img(width="770",height="200",src="#{imgCDN}/read/#{thumbnails_id}")
+                        #content-wrapper !{content}
+                -else
+                    | Nothing
+            .sidebar
+                .des
+                    div.like-comment.clearfix
+                        a.J-like.trigger(data-id="#{_id}",data-type="article")
+                            span.data-icon(data-icon!="&#xe007;")
+                            span.text.J-text 喜欢(#{index.like})
+                        a.J-comment-trigger.trigger(data-id="#{_id}")
+                            span.data-icon(data-icon!="&#xe006;").
+                            span.text.J-text 评论
+        .wrapper-990
+            #J-comment-wrapper(data-page-id="#{_id}",data-type="article")

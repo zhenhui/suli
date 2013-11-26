@@ -22,4 +22,11 @@ define(function (require, exports, module) {
 
         })
 
+    //检测是否喜欢过
+    $.get('/index/liked?id=' + window.designWorksId, function (boolean) {
+        if (boolean) {
+            $('.J-like').addClass('active').find('.J-text').html('已喜欢')
+        }
+    })
+
 })
