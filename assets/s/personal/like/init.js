@@ -5,11 +5,11 @@
 define(function (require, exports, module) {
         var tab = require('./tab.tpl')
 
-        require('./love.css')
+        require('./like.css')
         var $container = $('#main-js-container')
         exports.init = function (data, router) {
             //询问是否为当前路由
-            if ($container.find('#love').length == 0) {
+            if ($container.find('#like').length == 0) {
                 $container.html(tab)
             }
 

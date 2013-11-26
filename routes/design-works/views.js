@@ -9,22 +9,29 @@ var ObjectID = db.mongodb.ObjectID
 var helper = require('helper')
 
 //浏览量
-//利用_csrf_token来防止恶意刷新流量
+//利用req.sessionID来防止恶意刷新
 //尽管如此，用户也可以通过删除Cookie来增加浏览量
 //所以并不是完美的就解决办法
 
-app.post('/design-works/index/add-view', helper.csrf, function (req, res) {
+app.post('/index/add-view', helper.csrf, function (req, res) {
 
     res.end()
 
     try {
         var id = ObjectID(req.body.id)
     } catch (e) {
-        res.end()
         return;
     }
 
-    var view = new db.mongodb.Collection(db.Client, 'design-works-index-view')
+    //只有下方collection方可更新指标
+    var allowType = ['design-works', 'article']
+
+    var type = req.body.type
+    if (allowType.indexOf(type) < 0) {
+        return
+    }
+
+    var view = new db.mongodb.Collection(db.Client, 'index-view')
 
     var data = {
         work_id: id.toString(),
@@ -46,7 +53,7 @@ app.post('/design-works/index/add-view', helper.csrf, function (req, res) {
         work_id: id.toString(),
         token: req.sessionID,
         ts: {
-            //同一用户(包括未登陆和含csrf_token)在同一个作品中，2小时候之后才算增加一次浏览量
+            //同一用户(包括未登陆和含sessionID)在同一个作品中，2小时候之后才算增加一次浏览量
             $gte: Date.now() - (3600 * 1000 * 2)
         }
     }, [
@@ -54,15 +61,14 @@ app.post('/design-works/index/add-view', helper.csrf, function (req, res) {
     ], data, {
         w: 1,
         upsert: true
-    }, function (err, docs) {
-
+    }, function (err) {
         //更新
         if (!err) {
-            var designWorks = new db.mongodb.Collection(db.Client, 'design-works')
+            var collection = new db.mongodb.Collection(db.Client, type)
             view.count({work_id: id.toString()}, function (err, view) {
                 if (!err && view > 0) {
-                    designWorks.update({_id: id}, {$set: {'index.view': view}}, {w: 1}, function () {
-                        console.log('更新作品' + id.toString() + '的浏览量到：' + view, Date.now())
+                    collection.update({_id: id}, {$set: {'index.view': view}}, {w: 1}, function () {
+                        console.log('更新' + type + '的ID：' + id.toString() + '的浏览量到：' + view, Date.now())
                     })
                 } else {
                     console.log('更新浏览量时出错：' + id.toString(), err, Date.now())

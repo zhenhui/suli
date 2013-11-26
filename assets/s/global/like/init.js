@@ -9,18 +9,21 @@ define(function (require, exports, module) {
     $(document.body).on('click', '.J-like', function (ev) {
         ev.preventDefault()
         var $target = $(ev.currentTarget)
+        var type = $target.attr('data-type')
+        if (!type) return
         if (location.href.indexOf('/design-works/detail')) {
             if ($target.hasClass('active')) {
-                $.get('/design-works/index/unlike?r' + Math.random(), {
+                $.get('/index/unlike?type=' + type + '&r' + Math.random(), {
                         id: $target.data('id')
                     }
                 ).done(function () {
                         $('.J-like').removeClass('active').find('.J-text').html('不爱了')
                     })
             } else {
-                $.post('/design-works/index/add-like', {
+                $.post('/index/add-like', {
                         id: $target.data('id'),
-                        _csrf: window._csrf_token_
+                        _csrf: window._csrf_token_,
+                        type: type
                     }
                 ).done(function (data) {
                         if (data.status === -1) {
@@ -33,18 +36,9 @@ define(function (require, exports, module) {
         }
     })
 
-    //增加浏览量
-    $.post('/design-works/index/add-view', {
-            id: window.designWorksId,
-            _csrf: window._csrf_token_
-        }
-    ).done(function (data) {
-
-        })
-
     //检测是否喜欢过
 
-    $.get('/design-works/index/liked?id=' + window.designWorksId, function (boolean) {
+    $.get('/index/liked?id=' + window.designWorksId, function (boolean) {
         if (boolean) {
             $('.J-like').addClass('active').find('.J-text').html('已喜欢')
         }

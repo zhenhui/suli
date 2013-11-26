@@ -39,7 +39,7 @@ exports.save = function (req, res) {
         //喜欢和回复有单独的集合，在这里存储是为了增加冗余后提高查询性能
         index: {
             view: 0,
-            love: 0,
+            like: 0,
             comment: 0
         },
         category: _xss(req.body.category),

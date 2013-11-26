@@ -8,7 +8,7 @@
     </div>
     <div class="info">
         <span class="view"> <b class="data-icon" data-icon="&#xe00a;"></b> #{item.index.view} </span>
-        <span class="love"> <b class="data-icon" data-icon="&#xe007;"></b> #{item.index.love} </span>
+        <span class="like"> <b class="data-icon" data-icon="&#xe007;"></b> #{item.index.like} </span>
         <span class="comment"> <b class="data-icon" data-icon="&#xe015;"></b> #{item.index.comment} </span>
     </div>
 </li>

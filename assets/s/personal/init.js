@@ -12,14 +12,11 @@ define(function (require, exports, module) {
         'rencent-news': {
 
         },
-        'love-': {
-
-        },
         'all-works': {
             path: './all-works/init'
         },
-        'love': {
-            path: './love/init'
+        'like': {
+            path: './like/init'
         },
         'follow': {
 

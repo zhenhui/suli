@@ -12,4 +12,14 @@ define(function (require, exports, module) {
 
     require('s/global/comment/comment')
 
+    //控制浏览量
+    $.post('/index/add-view', {
+            id: window.designWorksId,
+            _csrf: window._csrf_token_,
+            type: 'design-works'
+        }
+    ).done(function (data) {
+
+        })
+
 })
