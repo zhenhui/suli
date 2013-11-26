@@ -39,6 +39,9 @@ html
                     s : "#{assetsCDN}/s",
                     sea:"#{assetsCDN}/s/sea-modules"
                 },
+                map:[
+                    [/(.*\.(css|js))(?:.*)$/i, "$1?20131126.$2"]
+                ],
                 alias: {
                     "$": 's/global/jquery',
                     'sha3':'s/global/crypto/sha3',
