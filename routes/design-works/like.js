@@ -50,7 +50,7 @@ app.post('/design-works/index/add-like', helper.csrf, function (req, res) {
             }
             res.json(result)
 
-            updateLike(id.toString())
+            updateLike(id)
 
         })
 })
@@ -117,9 +117,9 @@ function updateLike(id) {
     var designWorks = new db.mongodb.Collection(db.Client, 'design-works')
     var like = new db.mongodb.Collection(db.Client, 'design-works-index-like')
 
-    console.log('开始刷新' + id + '的喜欢量')
+    console.log('开始刷新' + id.toString() + '的喜欢量')
 
-    like.count({work_id: id}, function (err, count) {
+    like.count({work_id: id.toString()}, function (err, count) {
         if (!err && count >= 0) {
             designWorks.update({_id: id}, {$set: {'index.love': count}}, {w: 1}, function () {
                 console.log('更新作品' + id.toString() + '的喜欢到：' + count, Date.now())
