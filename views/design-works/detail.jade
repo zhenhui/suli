@@ -27,14 +27,7 @@ block content
                             -item=item.split(':')
                                 a(href="#{imgCDN}/read/#{item[0]}",download="#{item[1]}") #{item[1]}
                         -})
-            #J-comment-container.J-comment-container(data-id="#{docs._id}")
-                h2 正在加载评论...
-                #comment-container.comment-container
-                    .item-container.new-comment.J-new-comment.ks-waterfall
-                        textarea#J-comment-textarea(data-id="#{docs._id}")
-                        .J-send-new-comment
-                            button.J-send-new-comment-trigger.btn.btn-normal 发送
-
+            #J-comment-wrapper(data-page-id="#{docs._id}",data-type="design-works")
         .sidebar
             .des
                 h2 设计简介：
