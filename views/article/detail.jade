@@ -26,7 +26,9 @@ block content
                     div.like-comment.clearfix
                         a.J-like.trigger(data-id="#{_id}",data-type="article")
                             span.data-icon(data-icon!="&#xe007;")
-                            span.text.J-text 喜欢(#{index.like})
+                            span.text
+                                span.J-text 喜欢
+                                span.J-count (#{index.like})
                         a.J-comment-trigger.trigger(data-id="#{_id}")
                             span.data-icon(data-icon!="&#xe006;").
                             span.text.J-text 评论

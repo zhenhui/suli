@@ -145,3 +145,36 @@ function updateLike(id, type) {
         }
     })
 }
+
+
+//返回某个ID的指标
+app.get('/index/find', function (req, res) {
+
+    //只有下方collection方可更新指标
+    var allowType = ['design-works', 'article']
+    var type = req.query.type
+
+    if (allowType.indexOf(type) < 0) {
+        res.jsonp({status: -1, err: ['不支持' + type + '的指标查询']})
+        return
+    }
+
+    try {
+        var id = ObjectID(req.query.id)
+    } catch (e) {
+        res.jsonp({status: -2, err: ['必要的参数不正确']})
+        return;
+    }
+
+
+    var collection = new db.mongodb.Collection(db.Client, type)
+
+    collection.findOne({_id: id}, {index: 1}, function (err, result) {
+        if (!err && result) {
+            res.jsonp(result)
+        } else {
+            res.jsonp(null)
+        }
+    })
+
+})
