@@ -28,7 +28,7 @@ app.post('/design-works/index/add-view', helper.csrf, function (req, res) {
 
     var data = {
         work_id: id.toString(),
-        token: req.csrfToken(),
+        token: req.sessionID,
         owner_user: req.session.user,
         owner_id: req.session._id,
         ts: Date.now()
@@ -38,12 +38,13 @@ app.post('/design-works/index/add-view', helper.csrf, function (req, res) {
     if (!data.owner_user) delete data.owner_user
     if (!data.owner_id) delete data.owner_id
 
-    //对于登陆用户，在时间阈值内不累加浏览量
+    //对于登陆用户，在session存活期间内，不增加浏览量
     //对于未登陆用户，也进行此判断
     //但无法防止重复清除cookie导致的“恶意”请求
+
     view.findAndModify({
         work_id: id.toString(),
-        token: req.csrfToken(),
+        token: req.sessionID,
         ts: {
             //同一用户(包括未登陆和含csrf_token)在同一个作品中，2小时候之后才算增加一次浏览量
             $gte: Date.now() - (3600 * 1000 * 2)
