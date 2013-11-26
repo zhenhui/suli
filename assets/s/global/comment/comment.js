@@ -115,6 +115,7 @@ define(function (require, exports, module) {
                 var count = parseInt($h2.find('span.J-count').html(), 10)
                 $h2.find('span.J-count').html(count + 1)
                 $textarea.val('')
+                $('.J-comment').find('.J-count').html(count + 1)
             } else {
                 if (data.status == -1) {
                     login.login()

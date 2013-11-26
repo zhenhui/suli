@@ -28,9 +28,15 @@ block content
                             span.data-icon(data-icon!="&#xe007;")
                             span.text
                                 span.J-text 喜欢
-                                span.J-count (#{index.like})
-                        a.J-comment-trigger.trigger(data-id="#{_id}")
+                                | (
+                                span.J-count=index.like
+                                | )
+                        a.J-comment-trigger.trigger(data-id="#{_id}",href="#J-comment-wrapper")
                             span.data-icon(data-icon!="&#xe006;").
-                            span.text.J-text 评论
+                            span.text
+                                span.J-text 评论
+                                    | (
+                                    span.J-count=index.comment
+                                    | )
         .wrapper-990
             #J-comment-wrapper(data-page-id="#{_id}",data-type="article")

@@ -166,7 +166,6 @@ app.get('/index/find', function (req, res) {
         return;
     }
 
-
     var collection = new db.mongodb.Collection(db.Client, type)
 
     collection.findOne({_id: id}, {index: 1}, function (err, result) {
