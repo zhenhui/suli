@@ -13,6 +13,13 @@ app.get('/email/count', function (req, res) {
 
     var id = req.query.id
 
+    if (typeof id !== 'string' || id.replace(/\s/gmi, '').length < 1) {
+        res.end('require id params')
+        return
+    }
+
+    id = id.replace(/\s/gmi, '')
+
     var count = new db.mongodb.Collection(db.Client, 'email-read-count')
 
     if (req.query.show !== undefined) {
