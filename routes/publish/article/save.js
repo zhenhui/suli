@@ -47,8 +47,8 @@ exports.save = function (req, res) {
         result.err.push('标题长度不符合要求，请小于100个字符')
     }
 
-    if (typeof data.content !== 'string' || data.content.trim().length > 20000 || data.content.trim().length < 1) {
-        result.err.push('内容长度必须在0-20000之内')
+    if (typeof data.content !== 'string' || data.content.trim().length > 80000 || data.content.trim().length < 1) {
+        result.err.push('内容长度必须在0-80000之内')
     }
 
     if (typeof data.thumbnails_id !== 'string' || data.thumbnails_id.trim().length < 1) {
