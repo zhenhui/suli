@@ -14,7 +14,7 @@ html
             window['hostDOMAIN']='#{hostDOMAIN}'
             window['assetsCDN']='#{assetsCDN}'
             window['imgCDN']='#{imgCDN}'
-            if(!window.console)window.console=function(){}
+            if(!window.console)window.console={log:function(){}}
         script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js")
         script(id="seajsnode",src="#{assetsCDN}/s/sea.js")
         script.
@@ -89,7 +89,7 @@ html
         block content
         #footer
             .main-wrapper
-                .wrapper-990
+                .wrapper-990#footer-container
                     h2
                         a(href="/")
                             img(src="/read/52959f11d6fa886445000040.png")
