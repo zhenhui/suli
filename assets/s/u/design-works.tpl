@@ -1,8 +1,8 @@
 <div id="design-works-container">
-    <ul class="clearfix">
+    <ul class="clearfix design-works-list">
         #each(item in data)
         <li>
-            <div class="describe"><h2>#item.title}</h2><p>#item.content}</p></div>
+            <div class="describe"><h2>#{item.title}</h2><p>#{item.content}</p></div>
             <img src="#{imgCDN}/read/#{item.thumbnails_id}" class="thumbnails">
             <a href="#{hostDOMAIN}/design-works/detail/#{item._id}" class="link"></a>
             <div class="avatar">
