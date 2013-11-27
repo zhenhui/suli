@@ -49,7 +49,9 @@ define(function (require, exports, module) {
             $.post("/login", {
                 "_": user,
                 __: sha3(pwd).toString(),
-                _csrf: window._csrf_token_
+                _csrf: (function () {
+                    return window._csrf_token_
+                })()
             }, function (data) {
 
                 updateCsrfToken(data._csrf_token_)
@@ -123,27 +125,25 @@ define(function (require, exports, module) {
         $('.login-user-info img').css({width: 20, height: 20, opacity: 1})
     }
 
-
     function loginFail(data) {
-
+        if (data && data.status < 1) {
+            alert('登陆失败：\r\n' + data.msg)
+        } else {
+            alert('登陆失败，服务器出错')
+        }
     }
 
     $.ajax({
-        url: location.protocol + '//' + location.host + '/login/is-login',
+        url: '/login/is-login',
         data: {},
         dataType: 'jsonp'
     }).done(function (data) {
             $('#login-register-area').addClass('show')
-
             updateCsrfToken(data._csrf_token_)
-
             $(document).on('submit', 'form', loginFormSubmitFn)
             if (data.status == 1) {
                 loginSuccess(data)
-            } else {
-                loginFail(data)
             }
-
             new Popup({
                 trigger: '.J-logged-list-triggers',
                 triggerType: 'click',
@@ -155,6 +155,7 @@ define(function (require, exports, module) {
 
     //更新页面上的token
     function updateCsrfToken(token) {
+        console.log('更新了Token' + token)
         window._csrf_token_ = token
         $('input[name=_csrf]').val(token)
     }
