@@ -33,6 +33,12 @@ exports.save = function (req, res) {
         owner_id: req.session._id,
         //1:发布状态，-1草稿状态
         status: parseInt(req.body.status, 10),
+        //指标
+        index: {
+            love: 0,
+            comment: 0,
+            view: 0
+        },
         ts: Date.now()
     }
 

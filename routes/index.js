@@ -34,3 +34,6 @@ require('./u')
 
 //验证码
 require('captcha')
+
+require('./checkEmailReadCount')
+
