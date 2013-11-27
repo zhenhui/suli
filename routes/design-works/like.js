@@ -71,7 +71,7 @@ app.get('/design-works/index/like/json/list', function (req, res) {
             idArr.push(ObjectID(doc.work_id))
         })
         var designWorks = new db.mongodb.Collection(db.Client, 'design-works')
-        designWorks.find({_id: {$in: idArr}}, {_id: 1, thumbnails_id: 1}).sort({ts: -1}).toArray(function (err, doc) {
+        designWorks.find({_id: {$in: idArr}}, {_id: 1, title: 1, content: 1, thumbnails_id: 1}).sort({ts: -1}).toArray(function (err, doc) {
             res.jsonp(doc)
         })
     })

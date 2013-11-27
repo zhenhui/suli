@@ -8,81 +8,14 @@
 #design-works-container .control a
   margin 0 8px
 
-#design-works-container ul
+#design-works-container ul.design-works-list
   width 1200px
   min-height 420px
-
-#design-works-container li
-  width 230px
-  height 240px
-  position relative
-  float left
-  margin-right 23px
-
-#design-works-container li div.describe
-  position absolute
-  left 0
-  top 0
-  width 100%
-  height 175px
-  visibility hidden
-  overflow hidden
-  color #000
-  filter unquote("progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#CC919287', endColorstr='#CC919287')")
-  background rgba(145, 146, 135, 0.8)
-
-#design-works-container li a.link
-  position absolute
-  left 0
-  top 0
-  width 100%
-  height 175px
-  z-index 3
-  background url(http://img.sjplus.cn/read/5281e508e01ac3441b00015d.png)
-
-#design-works-container li img.thumbnails
-  width 230px
-  height 175px
-
-#design-works-container lihover div.describe
-  visibility visible
-
-#design-works-container li h2
-  font-size 20px
-  margin 12px 20px 12px 20px
-  word-break break-all
-
-#design-works-container li p
-  margin 0 20px
-  word-break break-all
-
-#design-works-container li .avatar
-  position absolute
-  left 0
-  top 180px
-
-#design-works-container li .avatar img
-  border-radius 2px
-
-#design-works-container li .info
-  position absolute
-  right 0
-  top 180px
-  color #999
-
-#design-works-container .info
-  font-size 12px
-  font-family "华文细黑", verdana
-
-#design-works-container .data-icon
-  font-size 14px
-  margin-left 3px
-  margin-right 5px
-  display inline-block
-  vertical-align middle
 
 .show-more
   text-align center
 
 .show-more .btn
   cursor pointer
+
+@import "design-works-list-inline-block"

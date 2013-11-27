@@ -1,11 +1,12 @@
 <div id="design-container">
     <div class="list-area">
-        <ul class="list clearfix">
+        <ul class="list design-works-list clearfix">
             #if(data.length>0)
             #each(item,index in data)
-            <li id="J-design-works-#{item._id}"><a href="/design-works/detail/#{item._id}">
-                <img src="#{imgCDN}/read/#{item.thumbnails_id}"
-                     width="230" height="175" class="avatar"></a>
+            <li id="J-design-works-#{item._id}">
+                <div class="describe"><h2>#{item.title}</h2><p>#{item.content}</p></div>
+                <a href="/design-works/detail/#{item._id}" class="link" target="_blank"></a>
+                <img src="#{imgCDN}/read/#{item.thumbnails_id}" class="thumbnails">
                 <div class="control">
                     <a class="J-unlike-design-works" data-id="#{item._id}" href="javascript:void(0)">取消喜欢</a>
                 </div>
