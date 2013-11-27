@@ -13,11 +13,15 @@ define(function (require, exports, module) {
         require('./publish-type/init')
         require('./weixin-weibo-float-menu/init')
 
-        var href = location.href
-
-        $('<div id="feedback"><h4>反馈</h4><a href="mailto:hangzhenhui@beyondsoft.com?subject='+encodeURIComponent('页面交互、功能性建议')+'&amp;cc=xiongsongsong@beyondsoft.com&amp;body=url:' + href + '">1：页面、优化、功能性建议</a>' +
-            '<a href="mailto:xiongsongsong@beyondsoft.com?subject='+encodeURIComponent('页面报错，点击不正常，无法使用')+'&amp;cc=hangzhenhui@beyondsoft.com&amp;body=url:' + href + '">2：页面报错，点击不正常，无法使用</a></div>')
+        $('<div id="feedback"><h4>反馈</h4><a id="feedback1" href="">1：页面、优化、功能性建议</a>' +
+            '<a id="feedback2" href="">2：页面报错，点击不正常，无法使用</a></div>')
             .appendTo($('#footer-container'))
+
+        $('#feedback').on('focus click', 'a', function () {
+            $('#feedback1')[0].href = 'mailto:hangzhenhui@beyondsoft.com?subject=' + encodeURIComponent('页面交互、功能性建议') + '&cc=xiongsongsong@beyondsoft.com&body=url:' + location.href
+            $('#feedback2')[0].href = 'mailto:xiongsongsong@beyondsoft.com?subject=' + encodeURIComponent('页面报错，点击不正常，无法使用') + '&cc=hangzhenhui@beyondsoft.com&body=url:' + location.href
+        })
+
 
     })
 })
