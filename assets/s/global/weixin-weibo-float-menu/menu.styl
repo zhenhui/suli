@@ -14,22 +14,46 @@
   margin-bottom 5px
   border-radius 4px
   color #383838
+  position relative
 
 #weixin-weibo-float-menu div.item .icon-content
   width 45px
   height 45px
   position relative
   text-align center
+  border-radius 4px
 
 #weixin-weibo-float-menu div.item .icon-content .icon
-  font-size 26px
-  line-height 26px
+  font-size 24px
+  line-height 24px
   width 100%
   height 100%
   position absolute
   top 10px
   left 0
+  cursor default
 
 #weixin-weibo-float-menu div.item .icon-content b.icon
-  visibility none
+  visibility hidden
 
+#weixin-weibo-float-menu div.item .icon-content:hover
+  background hover-color
+  color #fff
+
+#weixin-weibo-float-menu div.item .icon-content:hover span.icon
+  visibility hidden
+
+#weixin-weibo-float-menu div.item .icon-content:hover b.icon
+  visibility visible
+
+//微信浮层
+#weixin-weibo-float-menu .weixin-tips img
+  display block
+  width 147px
+  height 147px
+
+#weixin-weibo-float-menu .weixin-tips
+  border solid 3px #bebfb3
+  position absolute
+  left -160px
+  top -100px
