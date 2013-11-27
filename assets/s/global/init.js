@@ -11,6 +11,7 @@ define(function (require, exports, module) {
     KISSY.ready(function () {
         require('./login/login')
         require('./publish-type/init')
+        require('./weixin-weibo-float-menu/init')
     })
 })
 

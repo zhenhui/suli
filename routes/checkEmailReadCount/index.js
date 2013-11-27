@@ -12,6 +12,7 @@ var db = require('db')
 app.get('/email/count', function (req, res) {
 
     var id = req.query.id
+    var url = req.query.url
 
     if (typeof id !== 'string' || id.replace(/\s/gmi, '').length < 1) {
         res.end('require id params')
@@ -29,8 +30,11 @@ app.get('/email/count', function (req, res) {
     } else {
         count.findAndModify({id: id}, [
         ], { $inc: {count: 1}}, {new: true, upsert: true}, function (err, docs) {
-            res.header('count', docs.count)
-            res.sendfile(path.join(__dirname, 'sjplus.jpg'))
+            if (url) {
+                res.redirect(url)
+            } else {
+                res.end()
+            }
         })
     }
 })
