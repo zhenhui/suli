@@ -79,7 +79,7 @@ app.get(/\/design-works\/detail\/(\w{24})/, helper.csrf, function (req, res) {
     }
 
     var work = new db.mongodb.Collection(db.Client, 'design-works')
-    work.findOne({_id: id}, {}, function (err, docs) {
+    work.findOne({_id: id, status: {$gte: 1}}, {}, function (err, docs) {
         if (docs) {
             res.render('design-works/detail', {docs: docs})
         } else {

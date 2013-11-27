@@ -71,7 +71,7 @@ app.get('/design-works/index/like/json/list', function (req, res) {
             idArr.push(ObjectID(doc.work_id))
         })
         var designWorks = new db.mongodb.Collection(db.Client, 'design-works')
-        designWorks.find({_id: {$in: idArr}}, {_id: 1, title: 1, content: 1, thumbnails_id: 1}).sort({ts: -1}).toArray(function (err, doc) {
+        designWorks.find({_id: {$in: idArr}, status: { $gte : 1}}, {_id: 1, title: 1, content: 1, thumbnails_id: 1}).sort({ts: -1}).toArray(function (err, doc) {
             res.jsonp(doc)
         })
     })
@@ -137,7 +137,7 @@ function updateLike(id, type) {
 
     like.count({work_id: id.toString()}, function (err, count) {
         if (!err && count >= 0) {
-            collection.update({_id: id}, {$set: {'index.like': count}}, {w: 1}, function () {
+            collection.update({_id: id , status:{ $gte : 1 }}, {$set: {'index.like': count}}, {w: 1}, function () {
                 console.log('更新' + type + '的：' + id.toString() + '的喜欢到：' + count, Date.now())
             })
         } else {

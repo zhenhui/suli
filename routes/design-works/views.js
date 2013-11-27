@@ -67,7 +67,7 @@ app.post('/index/add-view', helper.csrf, function (req, res) {
             var collection = new db.mongodb.Collection(db.Client, type)
             view.count({work_id: id.toString()}, function (err, view) {
                 if (!err && view > 0) {
-                    collection.update({_id: id}, {$set: {'index.view': view}}, {w: 1}, function () {
+                    collection.update({_id: id , status: {$gte: 1}}, {$set: {'index.view': view}}, {w: 1}, function () {
                         console.log('更新' + type + '的ID：' + id.toString() + '的浏览量到：' + view, Date.now())
                     })
                 } else {
