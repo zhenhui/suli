@@ -13,8 +13,9 @@ define(function (require, exports, module) {
         require('./publish-type/init')
         require('./weixin-weibo-float-menu/init')
 
-        $('<div id="feedback"><h4>反馈</h4><a id="feedback1" href="">1：页面、优化、功能性建议</a>' +
-            '<a id="feedback2" href="">2：页面报错，点击不正常，无法使用</a></div>')
+        $('<div id="feedback"><h4>反馈</h4>' +
+            '<div><a id="feedback1" href="">1：页面、优化、功能性建议</a><br>hangzhenhui@beyondsoft.com</div>' +
+            '<div><a id="feedback2" href="">2：页面报错，点击不正常，无法使用</a><br>xiongsongsong@beyondsoft.com</div></div>')
             .appendTo($('#footer-container'))
 
         $('#feedback').on('focus click', 'a', function () {
