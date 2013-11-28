@@ -123,6 +123,8 @@ define(function (require, exports, module) {
         $('.J-login-register-triggers').css({ marginTop: -19 })
         $('.login-user-info').css({top: 0})
         $('.login-user-info img').css({width: 20, height: 20, opacity: 1})
+        initPersonMenu(data)
+
     }
 
     function loginFail(data) {
@@ -144,14 +146,17 @@ define(function (require, exports, module) {
             if (data.status == 1) {
                 loginSuccess(data)
             }
-            new Popup({
-                trigger: '.J-logged-list-triggers',
-                triggerType: 'click',
-                element: template.render(tpl, {_id: data._id, status: 'logged'}),
-                delegateNode: document.body,
-                effect: "slide"
-            })
         })
+
+    function initPersonMenu(data) {
+        new Popup({
+            trigger: '.J-logged-list-triggers',
+            triggerType: 'click',
+            element: template.render(tpl, {_id: data._id, status: 'logged'}),
+            delegateNode: document.body,
+            effect: "slide"
+        })
+    }
 
     //更新页面上的token
     function updateCsrfToken(token) {
