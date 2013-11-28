@@ -46,7 +46,10 @@ block content
                             td(align="right")
                                 span.user-name=user.user
                             td
-                                input.group.text-field.J-group(type="text",name="group",value="#{user.group.join(' ')}")
+                                - if(Array.isArray(user.group))
+                                    input.group.text-field.J-group(type="text",name="group",value="#{user.group.join(' ')}")
+                                - else
+                                    | 无任何权限
                             td
                                 - var d = new Date(user.ts)
                                 span.ts #{d.getFullYear()}-#{d.getMonth()+1}-#{d.getDate()} #{d.toLocaleTimeString()}
