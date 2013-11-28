@@ -13,7 +13,7 @@ define(function (require, exports, module) {
     var $float = $('#weixin-weibo-float-menu-wrapper')
 
     $float.on('click', '.J-top', function () {
-        $(document.body).animate({scrollTop: 0}, 300, 'swing', function () {
+        $('body,html').animate({scrollTop: 0}, 300, 'swing', function () {
         });
     })
     $float.on('mouseenter mouseleave', '.J-weixin-trigger', function (ev) {
