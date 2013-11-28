@@ -16,7 +16,6 @@ function start() {
     app.set('port', process.env.PORT || 80);
     app.set('view engine', 'jade');
     app.locals.basedir = './views'
-    app.use(express.favicon());
     app.use(express.compress())
     app.use(express.logger('dev'));
     app.use(express.urlencoded());
