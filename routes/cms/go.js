@@ -9,6 +9,7 @@ var template = require('template')
 
 exports.mimeTypeMap = {
     js: 'application/javascript;charset=utf-8',
+    jsonp: 'application/javascript;charset=utf-8',
     css: 'text/css;charset=utf-8',
     default: 'text/html;charset=utf-8'
 }
@@ -22,13 +23,25 @@ app.get(/^\/go\/(.+)/, function (req, res) {
     var page_url = req.params && req.params[0] ? req.params[0] : false
     exports.readPage(page_url, function (str, status) {
         if (status > 0 && status < 500) res.status(status)
+
+        var mimeType = ''
         if (exports.mimeTypeMap[req.query.format]) {
-            res.header('content-type', exports.mimeTypeMap[req.query.format])
+            mimeType = exports.mimeTypeMap[req.query.format]
+        } else if (req.query.callback) {
+            mimeType = exports.mimeTypeMap.js
         } else {
-            res.header('content-type', exports.mimeTypeMap.default)
+            mimeType = exports.mimeTypeMap.default
         }
+        res.header('content-type', mimeType)
         try {
-            res.end(template.render(str, {}))
+            if (str.indexOf('//@SOURCE_TYPE=AMS_DYNAMIC') > -1) {
+                str = template.render(str, {})
+            }
+            if (req.query.callback) {
+                res.end(req.query.callback + "(" + str + ");")
+            } else {
+                res.end(str)
+            }
         } catch (e) {
             res.end('500 error')
         }

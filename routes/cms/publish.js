@@ -73,7 +73,7 @@ app.get(/\/publish\/([a-z0-9]{24})/, function (req, res) {
         }
         console.log('效验成功，开始编译模板')
         //开始编译模板
-        compileTemplate(doc, eachResult, res)
+        compileTemplate(doc, eachResult, res, req)
     })
 })
 
@@ -107,7 +107,7 @@ function translateTpl(param) {
     return param.source
 }
 
-function compileTemplate(doc, eachResult, res) {
+function compileTemplate(doc, eachResult, res, req) {
 
     res.header('content-type', 'text/plain;charset=utf-8')
 
@@ -161,11 +161,17 @@ function compileTemplate(doc, eachResult, res) {
                                 source = template.compile(Data + source)
                                 try {
                                     console.log('编译成功，开始尝试eval')
-                                    template.render(source, {})
+                                    var compile = template.render(source, {})
                                     console.log('eval成功，开始保存到磁盘')
                                     //更新页面缓存
                                     require('./go').update(doc.page_url.replace(/.jstpl$/, ''))
-                                    stream.write(source)
+                                    if (req.query.dynamic !== undefined) {
+                                        console.log('保存动态模板')
+                                        stream.write('//@SOURCE_TYPE=AMS_DYNAMIC\\r\\n' + source)
+                                    } else {
+                                        console.log('保存静态模板')
+                                        stream.write(compile)
+                                    }
                                     stream.end()
                                     console.log('保存完毕')
                                     res.end('发布成功，以下是编译后的结果\r\n' + source)
