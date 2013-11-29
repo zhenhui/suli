@@ -30,9 +30,28 @@ require('./rollback-data-source')
 var db = require('db')
 
 app.get('/cms', helper.csrf, function (req, res) {
-    var tpl = new db.Collection(db.Client, 'cms-tpl')
-    tpl.find({status: 1}, {}).sort({ts: -1}).toArray(function (err, docs) {
-        res.render('cms/cms', {docs: docs})
+
+    if (!helper.isLogin(req)) {
+        res.render('invalid-group', {title: '您没有登陆', err: ['CMS需要登陆方可使用']})
+        return
+    }
+
+    helper.getGroup(req, function (group) {
+        if (Array.isArray(group) === false) {
+            res.render('invalid-group', {title: '无权限', err: [ '暂无权限']})
+            return
+        }
+
+        if (group.indexOf('CMS') >= 0) {
+            var tpl = new db.Collection(db.Client, 'cms-tpl')
+            tpl.find({status: 1}, {}).sort({ts: -1}).toArray(function (err, docs) {
+                res.render('cms/cms', {docs: docs})
+            })
+        } else {
+            res.render('invalid-group', {title: '无权限', err: [ '您无CMS系统权限']})
+        }
     })
+
+
 })
 
