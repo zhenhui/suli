@@ -54,11 +54,9 @@ define(function (require, exports, module) {
         //恢复版本
         $(document).on('click', '.J-rollback-version', function (ev) {
 
-            /*
-             if (!confirm('确认恢复到此版本吗？')) {
-             return
-             }
-             */
+            if (!confirm('确认恢复此版本的代码？\r\n\r\n恢复后，需要重新发布页面，才会更新到线上。')) {
+                return
+            }
 
             var $target = $(ev.currentTarget)
 
