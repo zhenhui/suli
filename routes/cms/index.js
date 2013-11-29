@@ -29,6 +29,7 @@ require('./rollback-data-source')
 
 var db = require('db')
 
+//CMS系统首页
 app.get('/cms', helper.csrf, function (req, res) {
 
     if (!helper.isLogin(req)) {
@@ -51,7 +52,6 @@ app.get('/cms', helper.csrf, function (req, res) {
             res.render('invalid-group', {title: '无权限', err: [ '您无CMS系统权限']})
         }
     })
-
-
 })
+
 

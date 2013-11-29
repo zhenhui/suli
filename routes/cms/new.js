@@ -61,7 +61,7 @@ app.post('/compile-template', function (req, res) {
                         page_url: pageUrl,
                         page_name: pageName,
                         owner_id: req.session._id,
-                        owner_name: req.session.name,
+                        owner_name: req.session.user,
                         status: 1,
                         ts: Date.now()
                     }, {}, function (err, docs) {
@@ -75,7 +75,7 @@ app.post('/compile-template', function (req, res) {
                                 page_url: pageUrl,
                                 source: content,
                                 owner_id: req.session._id,
-                                owner_name: req.session.name,
+                                owner_name: req.session.user,
                                 ts: Date.now()
                             }, {}, function (err, docs) {
                                 if (!err) {
