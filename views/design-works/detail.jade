@@ -54,8 +54,9 @@ block content
                             img(src="#{assetsCDN}/s/global/temp1.png")
                         a.pic(herf="#")
                             img(src="#{assetsCDN}/s/global/temp2.png")
-            //.tag
+            .tag
                 h2 相关标签
                 .tag-control
-                    #foreach
+                    - docs.tag.forEach(function(item){
                         a=item
+                    - })

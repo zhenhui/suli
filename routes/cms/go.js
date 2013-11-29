@@ -34,7 +34,7 @@ app.get(/^\/go\/(.+)/, function (req, res) {
         }
         res.header('content-type', mimeType)
         try {
-            if (str.indexOf('//@SOURCE_TYPE=AMS_DYNAMIC') > -1) {
+            if (str.indexOf(helper.isDynmaic) > -1) {
                 str = template.render(str, {})
             }
             if (req.query.callback) {

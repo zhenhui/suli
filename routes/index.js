@@ -32,8 +32,12 @@ require('./cms')
 //个人空间
 require('./u')
 
+//设计作品的Tag
+require('./design-works/tag')
+
 //验证码
 require('captcha')
 
+//一个简单的流量点击统计
 require('./checkEmailReadCount')
 

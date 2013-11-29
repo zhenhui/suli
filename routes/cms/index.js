@@ -24,6 +24,9 @@ require('./publish')
 //展示
 require('./go')
 
+//代码回滚
+require('./rollback-data-source')
+
 var db = require('db')
 
 app.get('/cms', helper.csrf, function (req, res) {

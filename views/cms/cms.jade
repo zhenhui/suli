@@ -1,28 +1,52 @@
 extends layout
-
-block content
-    h1= title
-    form(action="/preview",name="origin-template")
-        input(type="text",name="page_name",placeholder="页面名称",size="100")
-        input(type="text",name="page_url",placeholder="页面访问的URL",size="150")
-        input(type="hidden",name="_csrf",value="#{token}")
-        textarea#textarea(name="content",rows=10,cols=150)
-        input(type="submit",value="开始编译模板并构造表单")
-    form(name="compile-template")
-    ul
-    -docs.forEach(function(item){
-        li
-            a(href="/edit/source/#{item._id}")=item.page_name
-            | |
-            a(href="/edit/data/#{item._id}") 编辑数据
-            | |
-            a(href="/publish/#{item._id}?dynamic") 发布成动态网页
-            | |
-            a(href="/publish/#{item._id}?static") 发布成静态
-            | |
-            a(href="/go/#{item.page_url.replace(/.jstpl$/,'')}") 查看线上地址
-    -})
-
 block js
     script.
-        KISSY.ready(function(){seajs.use('s/cms/compile-template')})
+        seajs.use('s/cms/compile-template')
+block css
+    link(rel="stylesheet",type="text/css",href="/s/cms/cms.css")
+block content
+    ul.nav.nav-tabs
+        li.active
+            a(href="#create-page",data-toggle="tab") 新建页面
+        li
+            a(href="#page-list",data-toggle="tab") 修改页面
+    .tab-content
+        #create-page.tab-pane.active
+            h1 创建页面
+            form(role="form",action="/preview",name="origin-template",method="post")
+                .form-group
+                    input.form-control(type="text",name="page_name",placeholder="页面名称",size="100")
+                .form-group
+                    input.form-control(type="text",name="page_url",placeholder="页面访问的URL",size="150")
+                    input(type="hidden",name="_csrf",value="#{token}")
+                .form-group
+                    textarea.form-control#textarea(name="content",rows=10,cols=150)
+                .form-group
+                    input.btn.btn-danger(type="submit",value="创建页面")
+            form(name="compile-template")
+        #page-list.tab-pane
+            h1(type="asdfasdfsadfa") 页面列表
+            table.table.table-striped.table-hover
+                tr
+                    th 页面名称
+                    th 操作
+                -docs.forEach(function(item){
+                    tr
+                        td(width="60%")
+                            a(target="_blank",href="/go/#{item.page_url.replace(/.jstpl$/,'')}")=item.page_name
+                        td
+                            a.btn.btn-primary(href="/edit/source/#{item._id}") 改代码
+                            a.btn.btn-primary(href="/edit/data/#{item._id}") 改数据
+                            .btn-group
+                                button(type="button",data-toggle="dropdown").btn.btn-danger.dropdown-toggle
+                                    | 发布页面
+                                    span.caret
+                                ul.dropdown-menu(role="menu")
+                                    li
+                                        a(href="/publish/#{item._id}?static") 推荐静态（节约内存）
+                                    li
+                                        a(href="/publish/#{item._id}?dynamic") 动态（占用更多内存）
+                            a.btn.btn-success.J-rollback(data-id="#{item._id}") 回滚代码
+                -})
+        script.
+            seajs.use('/s/cms/init')

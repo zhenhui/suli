@@ -54,12 +54,11 @@ block content
                             input.hide#upload-ps(type="file",multiple)
                             textarea#ps_id.hide(name="ps_id",readonly='readonly')
                             #ps-list
-                        //tr
+                        tr
                             th 标签
                             td
                                 #tag
-                                    input#tag-field(type="text",name="tag",value="活动")
-                                    | 标签之间用空格隔开
+                                    input#tag-field(type="text",name="tag",placeholder="例如 视觉 交互 动图")
                         tr
                             th 类型
                             td

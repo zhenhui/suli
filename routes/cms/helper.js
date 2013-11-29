@@ -11,6 +11,9 @@ var maxNum = 6000
 var path = require('path')
 exports.staticBaseDir = path.join('D:', 'static')
 
+exports.isDynmaic = '#run //@SOURCE_TYPE=AMS_DYNAMIC\r\n'
+
+
 exports.csrf = function (req, res, next) {
     res.locals.token = req.csrfToken();
     next();

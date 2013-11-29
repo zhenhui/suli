@@ -167,7 +167,7 @@ function compileTemplate(doc, eachResult, res, req) {
                                     require('./go').update(doc.page_url.replace(/.jstpl$/, ''))
                                     if (req.query.dynamic !== undefined) {
                                         console.log('保存动态模板')
-                                        stream.write('//@SOURCE_TYPE=AMS_DYNAMIC\\r\\n' + source)
+                                        stream.write(helper.isDynmaic + source)
                                     } else {
                                         console.log('保存静态模板')
                                         stream.write(compile)
@@ -190,9 +190,19 @@ function compileTemplate(doc, eachResult, res, req) {
             } else {
                 try {
                     console.log('无CMS数据需要查询，开始预eval')
-                    template.render(doc.source, {})
+
+
+                    var compile = template.render(doc.source, {})
                     console.log('eval成功，开始写入磁盘')
-                    stream.write(doc.source)
+
+                    if (req.query.dynamic !== undefined) {
+                        console.log('保存动态模板')
+                        stream.write(helper.isDynmaic + doc.source)
+                    } else {
+                        console.log('保存静态模板')
+                        stream.write(compile)
+                    }
+
                     stream.end()
                     //更新页面缓存
                     require('./go').update(doc.page_url.replace(/.jstpl$/, ''))
