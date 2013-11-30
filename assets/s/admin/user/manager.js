@@ -4,7 +4,6 @@ define(function (require, exports, module) {
     var $form = $(form);
     var sha3 = require('sha3')
 
-
     $form.on('submit', function (ev) {
 
         ev.preventDefault();
@@ -65,4 +64,22 @@ define(function (require, exports, module) {
         }, 'json');
     })
 
+    //拉取Git
+    $(document).on('click', '.J-git-pull', function () {
+        $('#gitPullResult').val('please wait ...')
+        $.get('/admin/system/git-pull?r=' + Math.random(), function (text) {
+            $('#gitPullResult').val(text)
+        })
+    })
+
+    //拉取Git
+    $(document).on('click', '.J-result-pm2-id', function () {
+        $('#restartPM2idResult').val('please wait ...')
+        $.get('/admin/system/pm2-restart', {
+            r: Math.random(),
+            pm2id: $('#pm2id').val()
+        }, function (text) {
+            $('#restartPM2idResult').val(text)
+        })
+    })
 })

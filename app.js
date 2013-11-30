@@ -10,6 +10,7 @@ var db = require('db')
 var app = express();
 
 global.assetsDir = path.join(__dirname, 'assets')
+exports.projectRootDir = __dirname
 
 function start() {
 // all environments
