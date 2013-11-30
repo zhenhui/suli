@@ -60,7 +60,6 @@ app.get('/admin/system/git-pull', function (req, res) {
 
 app.get('/admin/system/pm2-restart', function (req, res) {
 
-
     var exec = require('child_process').exec
 
     res.header('content-type', 'text/plain;charset=utf-8')
@@ -68,9 +67,14 @@ app.get('/admin/system/pm2-restart', function (req, res) {
     var pm2id = req.query.pm2id
 
     if (!/^\d+$/.test(pm2id)) {
+        console.log('pm2id:' + pm2id + '参数不正确')
         res.end('require pm2 id')
         return
     }
+
+    console.log('pm2id:' + pm2id + '参数正确')
+
+    console.log('开始pm2 restart')
 
     exec('pm2 restart ' + pm2id, {cwd: app.projectRootDir, timeout: 10000},
         function (error, stdout, stderr) {
