@@ -31,69 +31,104 @@ app.get('/admin/system', function (req, res) {
 
 //git pull
 app.get('/admin/system/git-pull', function (req, res) {
-    var exec = require('child_process').exec
 
-    res.header('content-type', 'text/plain;charset=utf-8')
+    if (require('helper').isLogin(req) === false) {
+        res.render('invalid-group', {title: '未登陆', err: [ '请先登陆']})
+        return
+    }
 
-    exec('git pull', {cwd: app.projectRootDir, timeout: 10000},
-        function (error, stdout, stderr) {
+    helper.getGroup(req, function (group) {
+        if (Array.isArray(group) === false) {
+            res.render('invalid-group', {title: '无权限', err: [ '无法获取权限信息']})
+            return
+        }
 
-            console.log('pm2 restart:', error, stdout, stderr)
+        if (group.indexOf('管理员') >= 0) {
+            var exec = require('child_process').exec
 
-            if (stdout) {
-                res.write(stdout)
-            } else if (stderr) {
-                res.write(stderr)
-            } else {
-                res.write('timeout ')
-            }
+            res.header('content-type', 'text/plain;charset=utf-8')
 
-            if (error !== null) {
-                res.write(error.toString())
-            }
+            exec('git pull', {cwd: app.projectRootDir, timeout: 10000},
+                function (error, stdout, stderr) {
 
-            res.end()
+                    console.log('pm2 restart:', error, stdout, stderr)
 
-        });
+                    if (stdout) {
+                        res.write(stdout)
+                    } else if (stderr) {
+                        res.write(stderr)
+                    } else {
+                        res.write('timeout ')
+                    }
+
+                    if (error !== null) {
+                        res.write(error.toString())
+                    }
+
+                    res.end()
+
+                });
+        } else {
+            res.end('无权限')
+        }
+    })
+
 })
 
 
 app.get('/admin/system/pm2-restart', function (req, res) {
 
-    var exec = require('child_process').exec
-
-    res.header('content-type', 'text/plain;charset=utf-8')
-
-    var pm2id = req.query.pm2id
-
-    if (!/^\d+$/.test(pm2id)) {
-        console.log('pm2id:' + pm2id + '参数不正确')
-        res.end('require pm2 id')
+    if (require('helper').isLogin(req) === false) {
+        res.render('invalid-group', {title: '未登陆', err: [ '请先登陆']})
         return
     }
 
-    console.log('pm2id:' + pm2id + '参数正确')
+    helper.getGroup(req, function (group) {
+        if (Array.isArray(group) === false) {
+            res.render('invalid-group', {title: '无权限', err: [ '无法获取权限信息']})
+            return
+        }
 
-    console.log('开始pm2 restart')
+        if (group.indexOf('管理员') >= 0) {
+            var exec = require('child_process').exec
 
-    exec('pm2 restart ' + pm2id, {cwd: app.projectRootDir, timeout: 10000},
-        function (error, stdout, stderr) {
+            res.header('content-type', 'text/plain;charset=utf-8')
 
-            console.log('pm2 restart:', error, stdout, stderr)
+            var pm2id = req.query.pm2id
 
-            if (stdout) {
-                res.write(stdout)
-            } else if (stderr) {
-                res.write(stderr)
-            } else {
-                res.write('timeout ')
+            if (!/^\d+$/.test(pm2id)) {
+                console.log('pm2id:' + pm2id + '参数不正确')
+                res.end('require pm2 id')
+                return
             }
 
-            if (error !== null) {
-                res.write(error.toString())
-            }
+            console.log('pm2id:' + pm2id + '参数正确')
 
-            res.end()
+            console.log('开始pm2 restart')
 
-        });
+            exec('pm2 restart ' + pm2id, {cwd: app.projectRootDir, timeout: 10000},
+                function (error, stdout, stderr) {
+
+                    console.log('pm2 restart:', error, stdout, stderr)
+
+                    if (stdout) {
+                        res.write(stdout)
+                    } else if (stderr) {
+                        res.write(stderr)
+                    } else {
+                        res.write('timeout ')
+                    }
+
+                    if (error !== null) {
+                        res.write(error.toString())
+                    }
+
+                    res.end()
+
+                });
+        } else {
+            res.end('无权限')
+        }
+    })
+
 })
