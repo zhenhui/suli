@@ -28,7 +28,7 @@ app.get('/cms/rollback/history', function (req, res) {
 
 })
 
-//恢复版本
+//恢复代码到指定版本
 app.get('/cms/rollback/version', function (req, res) {
 
     try {
