@@ -75,11 +75,12 @@ define(function (require, exports, module) {
     //拉取Git
     $(document).on('click', '.J-result-pm2-id', function () {
         $('#restartPM2idResult').val('please wait ...')
+        var id = $('#pm2id').val()
         $.get('/admin/system/pm2-restart', {
             r: Math.random(),
-            pm2id: $('#pm2id').val()
-        }, function (text) {
-            $('#restartPM2idResult').val(text)
-        })
+            pm2id: id
+        }).done(function () {
+                $('#restartPM2idResult').val('ok，' + id + '进程正在重启中，一般耗时在5秒内 ')
+            })
     })
 })
