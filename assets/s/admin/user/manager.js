@@ -83,8 +83,10 @@ define(function (require, exports, module) {
                 if (text) {
                     $('#restartPM2idResult').val(text)
                 } else {
-                    $('#restartPM2idResult').val('ok，' + id + '进程正在重启中，一般耗时在5秒内 ')
+                    $('#restartPM2idResult').val('重启貌似没有成功，请等5秒后刷新页面，或赶紧联系管理员')
                 }
+            }).error(function () {
+                $('#restartPM2idResult').val('连接已断开，说明，' + id + '进程正在重启中，一般耗时在5秒内 ')
             })
     })
 })
