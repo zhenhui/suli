@@ -1,6 +1,6 @@
 #if(status<1)
 
-<div class="login-small-dialog">
+<div id="loginSmallDialog" class="login-small-dialog">
     <div class="wrapper">
 
         <h2>登 陆</h2>

@@ -37,12 +37,12 @@ define(function (require, exports, module) {
             var pwd = $.trim(this.elements["pwd"].value)
 
             if (user.length < 2) {
-                alert('用户名长度太短，至少2个字符')
+                loginFail()
                 return
             }
 
             if (pwd.length < 2) {
-                alert('密码必须大于3位')
+                loginFail()
                 return
             }
 
@@ -61,10 +61,10 @@ define(function (require, exports, module) {
                         loginSuccess(data)
                         break
                     case -1:
-                        loginFail(data)
+                        loginFail()
                         break
                     case -2:
-                        loginFail(data)
+                        loginFail()
                         break
                 }
 
@@ -127,12 +127,20 @@ define(function (require, exports, module) {
 
     }
 
-    function loginFail(data) {
-        if (data && data.status < 1) {
-            alert('登陆失败：\r\n' + data.msg)
-        } else {
-            alert('登陆失败，服务器出错')
-        }
+    function loginFail() {
+
+        var $loginDialog = $('#loginSmallDialog').stop()
+        $loginDialog.animate({marginLeft: '-15'}, 80, function () {
+            $loginDialog.animate({marginLeft: '15'}, 80, function () {
+                $loginDialog.animate({marginLeft: '-15'}, 80, function () {
+                    $loginDialog.animate({marginLeft: '15'}, 80, function () {
+                        $loginDialog.animate({marginLeft: '-15'}, 80, function () {
+                            $loginDialog.animate({marginLeft: '0'}, 80)
+                        })
+                    })
+                })
+            })
+        })
     }
 
     $.ajax({
