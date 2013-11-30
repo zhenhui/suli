@@ -10,7 +10,7 @@ block content
     -if(status===-10)
         script.
             seajs.use('s/global/login/login',function(login){
-                login.login(function(){
-                    window.location.reload()
+                login.login(function(data){
+                    if(data.status===1) window.location.reload()
                 })
             })
