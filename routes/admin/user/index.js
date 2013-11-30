@@ -7,7 +7,7 @@ var xss = require('xss')
 app.get('/admin/user', helper.csrf, function (req, res) {
 
     if (require('helper').isLogin(req) === false) {
-        res.render('invalid-group', {title: '未登陆', err: [ '请先登陆']})
+        res.render('invalid-group', {title: '未登陆', status: -10, err: [ '请先登陆']})
         return
     }
 

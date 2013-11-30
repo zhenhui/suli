@@ -8,7 +8,7 @@ var helper = require('helper')
 app.get('/admin/system', function (req, res) {
 
     if (require('helper').isLogin(req) === false) {
-        res.render('invalid-group', {title: '未登陆', err: [ '请先登陆']})
+        res.render('invalid-group', {title: '未登陆', status: -10, err: [ '请先登陆']})
         return
     }
 
@@ -33,7 +33,7 @@ app.get('/admin/system', function (req, res) {
 app.get('/admin/system/git-pull', function (req, res) {
 
     if (require('helper').isLogin(req) === false) {
-        res.render('invalid-group', {title: '未登陆', err: [ '请先登陆']})
+        res.render('invalid-group', {title: '未登陆', status: -10, err: [ '请先登陆']})
         return
     }
 
@@ -79,7 +79,7 @@ app.get('/admin/system/git-pull', function (req, res) {
 app.get('/admin/system/pm2-restart', function (req, res) {
 
     if (require('helper').isLogin(req) === false) {
-        res.render('invalid-group', {title: '未登陆', err: [ '请先登陆']})
+        res.render('invalid-group', {title: '未登陆', status: -10, err: [ '请先登陆']})
         return
     }
 
