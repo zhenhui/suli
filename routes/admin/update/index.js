@@ -48,7 +48,7 @@ app.get('/admin/system/git-pull', function (req, res) {
 
             res.header('content-type', 'text/plain;charset=utf-8')
 
-            exec('git pull', {cwd: app.projectRootDir, timeout: 10000},
+            exec('git pull', {cwd: app.projectRootDir, timeout: 40000},
                 function (error, stdout, stderr) {
 
                     console.log('pm2 restart:', error, stdout, stderr)
