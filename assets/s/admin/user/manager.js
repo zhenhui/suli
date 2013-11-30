@@ -79,8 +79,12 @@ define(function (require, exports, module) {
         $.get('/admin/system/pm2-restart', {
             r: Math.random(),
             pm2id: id
-        }).done(function () {
-                $('#restartPM2idResult').val('ok，' + id + '进程正在重启中，一般耗时在5秒内 ')
+        }).done(function (text) {
+                if (text) {
+                    $('#restartPM2idResult').val(text)
+                } else {
+                    $('#restartPM2idResult').val('ok，' + id + '进程正在重启中，一般耗时在5秒内 ')
+                }
             })
     })
 })
