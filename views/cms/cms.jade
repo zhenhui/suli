@@ -31,9 +31,9 @@ block content
                                     span.caret
                                 ul.dropdown-menu(role="menu")
                                     li
-                                        a(href="/publish/#{item._id}?static") 推荐静态（节约内存）
+                                        a(href="/publish/#{item._id}?static") 推荐静态（更好性能）
                                     li
-                                        a(href="/publish/#{item._id}?dynamic") 动态（占用更多内存）
+                                        a(href="/publish/#{item._id}?dynamic") 动态
                             a.btn.btn-success.J-rollback(data-id="#{item._id}") 回滚代码
                 -})
         #create-page.tab-pane
