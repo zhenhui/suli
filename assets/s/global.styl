@@ -189,19 +189,19 @@ a:hover
   text-align center
 
 #email-login
-  background-position -70px 0
+  background-position - 70px 0
 
 #weibo-login
-  background-position -147px 0
+  background-position - 147px 0
 
 #domain-login:hover
-  background-position 0 -48px
+  background-position 0 - 48px
 
 #email-login:hover
-  background-position -70px -48px
+  background-position - 70px - 48px
 
 #weibo-login:hover
-  background-position -147px -48px
+  background-position - 147px - 48px
 
 #login-register-area .J-login-register-triggers
   overflow: hidden
@@ -436,6 +436,33 @@ span.ks-dialog-close-x
 
 .tab .behavior-active
   font-size: 20px !important
+
+/*标签*/
+
+.tag-control a
+  display inline-block
+  background #fff
+  border solid 1px #999
+  border-radius 2px
+  padding 3px 11px 3px 8px
+  margin-right 5px
+  margin-bottom 5px
+  cursor pointer
+  position relative
+
+.tag-control a .close
+  position absolute
+  right 2px
+  top 2px
+  visibility hidden
+
+.tag-control a.active
+  background hover-color
+  color #fff
+  border solid 1px hover-color
+
+.tag-control a.active .close
+  visibility visible
 
 #footer
   position relative

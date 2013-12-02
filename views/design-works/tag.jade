@@ -1,0 +1,42 @@
+extends /layout
+block css
+    link(rel="stylesheet",href="#{assetsCDN}/s/design-works/tag.css")
+block js
+    script.
+        seajs.use('s/design-works/tag')
+block content
+    .wrapper
+        .wrapper-990
+            #user-panel
+    .wrapper
+        .wrapper-990.clearfix
+            #tag-design-works-wrapper
+                #design-works-container
+                    ul.design-works-list.clearfix#J-design-works-list
+                .show-more
+                    a.btn.btn-large.show-more.J-show-more 查看更多
+            #sidebar
+                h2 分类
+                #J-category-container.category
+                    a.tag.J-category(href="#",data-text="视觉设计")
+                        span.J-text 视觉设计
+                        |(
+                        span.J-count 22
+                        |)
+                        span.close.J-close &times;
+                    a.tag.J-category(href="#",data-text="界面设计")
+                        span.J-text 界面设计
+                        |(
+                        span.J-count 22
+                        |)
+                        span.close.J-close &times;
+                    a.tag.J-category(href="#",data-text="前端设计")
+                        span.J-text 前端设计
+                        |(
+                        span.J-count 22
+                        |)
+                        span.close.J-close &times;
+
+                h2 标签
+                .tag-control#J-tag-control-container
+                    a.tag(href="#") 视觉

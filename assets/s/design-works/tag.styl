@@ -1,0 +1,52 @@
+@import "../variables"
+
+#design-works-container
+  overflow hidden
+
+#design-works-container ul.design-works-list
+  width 770px
+  min-height 620px
+
+.show-more
+  text-align center
+
+.show-more .btn
+  cursor pointer
+
+@import "design-works-list-inline-block"
+
+#tag-design-works-wrapper
+  float left
+
+#sidebar
+  margin-top 20px
+  float right
+  width 218px
+
+#sidebar .category
+  margin 0 auto 12px auto
+  line-height 23px
+
+#sidebar .category .tag
+  display block
+  padding 1px 5px
+  margin 5px auto
+  border-radius 3px
+  position relative
+
+#sidebar .category .tag .close
+  position absolute
+  right 12px
+  top 1px
+  visibility hidden
+
+#sidebar .category .active
+  background hover-color
+  color #fff
+
+#sidebar .category .active .close
+  visibility visible
+
+#sidebar h2
+  font-size 20px
+  margin-bottom 12px
