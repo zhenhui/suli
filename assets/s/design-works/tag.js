@@ -23,11 +23,12 @@ define(function (require, module, exports) {
         var pageNum = 1
         var count = 36
         var sumPage = 0
+        var $list = $('#J-design-works-list')
 
         function getData() {
             var config = updateHash()
 
-            $('#J-design-works-list').html('<li>加载中</li>')
+            $list.html('').addClass('loading')
 
             $.ajax({
                 url: '/design-works/filter/json',
@@ -44,8 +45,7 @@ define(function (require, module, exports) {
                     if (page === data.sumPage) {
                         $('.J-show-more').html('没有更多了')
                     }
-                    console.log(data.data)
-                    $('#J-design-works-list').html(template.render(tpl, data))
+                    $list.html(template.render(tpl, data)).removeClass('loading')
                 })
         }
 
