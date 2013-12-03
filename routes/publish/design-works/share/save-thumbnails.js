@@ -128,14 +128,7 @@ exports.saveFile = function (req, res) {
 
                 //获取大小
                 gm(file.path).size(function (err, size) {
-                    if (!err && size.width === 460 && size.height === 350) {
-                        saveImageFile(file, size)
-                    } else {
-                        console.log('尺寸不正确', err)
-                        uploadInfo.err.push('尺寸不正确')
-                        end()
-                        unlink(file.path)
-                    }
+                    saveImageFile(file, size)
                 })
 
             } else {
@@ -175,7 +168,7 @@ exports.saveFile = function (req, res) {
                 break;
         }
 
-        _gm.write(qualityPath, function (err) {
+        _gm.resize(460, 350, '!').write(qualityPath, function (err) {
                 if (!err) {
                     var fileName = file.fileId + '_' + size.width + 'x' + size.height + '.' + file.format
                     var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
@@ -235,7 +228,7 @@ exports.saveFile = function (req, res) {
             switch (file.format) {
                 //PSD因为压缩后会生成jpg，所以其实是case 'jpg|psd''
                 case 'jpg':
-                    gm(file.path).resize(cur.width, cur.height).interlace('Line').noProfile().quality(cur.quality).write(dstSrc, function (err) {
+                    gm(file.path).resize(cur.width, cur.height, '!').interlace('Line').noProfile().quality(cur.quality).write(dstSrc, function (err) {
                         if (!err) {
                             save(fileName, dstSrc)
                         } else {
@@ -249,7 +242,7 @@ exports.saveFile = function (req, res) {
                     //增加背景色是为了减弱gif的锯齿，类似于ps中的杂边
                     //http://imagemagick.org/Usage/anim_mods/
                     //Resize with Flatten, A General Solution.
-                    gm.subClass({ imageMagick: true })(file.path).coalesce().borderColor('white').border(0, 0).resize(cur.width, cur.height).write(dstSrc, function (err) {
+                    gm.subClass({ imageMagick: true })(file.path).coalesce().borderColor('white').border(0, 0).resize(cur.width, cur.height, '!').write(dstSrc, function (err) {
                         if (!err) {
                             save(fileName, dstSrc)
                         } else {
@@ -260,7 +253,7 @@ exports.saveFile = function (req, res) {
                     })
                     break;
                 case 'png':
-                    gm(file.path).resize(cur.width, cur.height).write(dstSrc, function (err) {
+                    gm(file.path).resize(cur.width, cur.height, '!').write(dstSrc, function (err) {
                         if (!err) {
                             save(fileName, dstSrc)
                         } else {
