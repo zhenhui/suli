@@ -13,18 +13,40 @@
 .show-more
   text-align center
 
-.show-more .btn
+.btn
   cursor pointer
+
+.show-more .btn
+  min-width 130px
+
+.btn.loading
+  background-image url(/read/529d4ff0f741fcfc2c000008.gif)
+  background-position center center
+  background-repeat no-repeat
 
 @import "design-works-list-inline-block"
 
 #tag-design-works-wrapper
-  float left
+  position relative
+  width 736px
+
+#sidebar-wrapper.fixed
+  position fixed
+  left 0
+  top 0
+  width 100%
+
+#sidebar-container
+  width 990px
+  margin 0 auto
+  position relative
+  height 0
 
 #sidebar
-  margin-top 20px
-  float right
+  position absolute
+  right 0
   width 218px
+  height 300px
 
 #sidebar .category
   margin 0 auto 12px auto

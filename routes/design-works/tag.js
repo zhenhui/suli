@@ -12,7 +12,7 @@ app.get('/design-works/tag', function (req, res) {
 //根据tag或者类目过滤数据
 app.get('/design-works/filter/json', function (req, res) {
 
-    var filter = {}
+    var filter = {status: {$gte: 1}}
     var tag = req.query.tag ? req.query.tag.split(',') : ''
     var category = req.query.category ? req.query.category.split(',') : ''
 
@@ -43,11 +43,12 @@ app.get('/design-works/filter/json', function (req, res) {
 
         result.page = page
 
-        design.find(filter, {_id: 1, title: 1, content: 1, thumbnails_id: 1, owner_id: 1, index: 1}).toArray(function (err, docs) {
-            result.data = docs
-            setTimeout(function () {
-                res.jsonp(result)
-            }, 400)
-        })
+        design.find(filter, {_id: 1, title: 1, content: 1, thumbnails_id: 1, owner_id: 1, index: 1}).sort({ts: -1}).
+            skip((page - 1) * pageCount).limit(pageCount).toArray(function (err, docs) {
+                result.data = docs
+                setTimeout(function () {
+                    res.jsonp(result)
+                }, 3000)
+            })
     })
 })

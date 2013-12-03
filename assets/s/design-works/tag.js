@@ -16,6 +16,7 @@ define(function (require, module, exports) {
         var $category = $('#J-category-container')
         $tag.html(tag.join(''))
 
+        var $more = $('.J-show-more')
 
         var tpl = require('./tag.tpl')
         var template = require('template')
@@ -24,13 +25,18 @@ define(function (require, module, exports) {
         var count = 36
         var sumPage = 0
         var $list = $('#J-design-works-list')
+        var xhr
 
         function getData() {
+
+            if (xhr && xhr.readyState != 4) {
+                xhr.abort();
+            }
+
             var config = updateHash()
+            $more.addClass('loading btn-disabled').html('&nbsp;')
 
-            $list.html('').addClass('loading')
-
-            $.ajax({
+            xhr = $.ajax({
                 url: '/design-works/filter/json',
                 dataType: 'jsonp',
                 data: {
@@ -42,23 +48,28 @@ define(function (require, module, exports) {
                 }
             }).done(function (data) {
                     sumPage = data.sumPage
-                    if (page === data.sumPage) {
-                        $('.J-show-more').html('没有更多了')
+                    $more.removeClass('loading')
+                    if (page === data.sumPage || data.sumPage === 0) {
+                        $more.html('没有更多了').addClass('btn-disabled')
+                    } else {
+                        $more.html('加载更多').removeClass('btn-disabled')
                     }
-                    $list.html(template.render(tpl, data)).removeClass('loading')
+                    $(template.render(tpl, data)).appendTo($list)
+                    $list.removeClass('loading')
                 })
         }
 
-        getData()
-
         //显示更多
-        $('.J-show-more').on('click', function (ev) {
+        $more.on('click', function (ev) {
             ev.preventDefault()
+
+            if ($(this).hasClass('loading')) return
+
             if (page < sumPage) {
                 page++
                 getData()
             } else {
-                $(this).html('没有更多了')
+                $(this).html('没有更多了').addClass('btn-disabled')
             }
         })
 
@@ -68,6 +79,7 @@ define(function (require, module, exports) {
             ev.preventDefault()
             var $target = $(ev.currentTarget)
             $target.toggleClass('active')
+            $list.addClass('loading').html('')
             updateHash()
         })
 
@@ -76,6 +88,7 @@ define(function (require, module, exports) {
             ev.preventDefault()
             var $target = $(ev.currentTarget)
             $target.toggleClass('active')
+            $list.addClass('loading').html('')
             updateHash()
         })
 
@@ -128,8 +141,27 @@ define(function (require, module, exports) {
 
         translateHash()
 
-
         Event.on(window, 'hashchange', getData)
+
         Event.fire(window, 'hashchange', getData)
+
+
+        //右侧类目漂浮
+
+        var $sidebar = $('#sidebar-wrapper')
+        var $container = $('#tag-design-works-wrapper')
+
+        function fixedSidebar() {
+            if (DOM.scrollTop() > $container.offset().top) {
+                $sidebar.addClass('fixed')
+            } else {
+                $sidebar.removeClass('fixed')
+            }
+        }
+
+        Event.on(window, 'scroll', fixedSidebar)
+
+        Event.fire(window, 'scroll', fixedSidebar)
+
     })
 })
