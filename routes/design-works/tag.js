@@ -46,9 +46,7 @@ app.get('/design-works/filter/json', function (req, res) {
         design.find(filter, {_id: 1, title: 1, content: 1, thumbnails_id: 1, owner_id: 1, index: 1}).sort({ts: -1}).
             skip((page - 1) * pageCount).limit(pageCount).toArray(function (err, docs) {
                 result.data = docs
-                setTimeout(function () {
-                    res.jsonp(result)
-                }, 3000)
+                res.jsonp(result)
             })
     })
 })
