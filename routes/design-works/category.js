@@ -9,12 +9,13 @@ var ObjectID = db.mongodb.ObjectID
 var helper = require('helper')
 
 //获取所有文章分类，并且统计数量
+//TODO:这个查询太耗资源，应该设置一个缓存
+
 app.get('/design-works/json/category', function (req, res) {
     var designWorks = new db.mongodb.Collection(db.Client, 'design-works')
     var category = {}
     designWorks.distinct('category', function (err, docs) {
         var readyNum = 0
-        console.log(docs)
         docs.forEach(function (_category) {
             designWorks.count({category: _category}, function (err, count) {
                 readyNum++

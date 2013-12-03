@@ -6,7 +6,8 @@ define(function (require, module, exports) {
 
     KISSY.use('dom,event,json,io', function (S, DOM, Event) {
 
-        var tag = KISSY.map(require('/go/design-works/tag?callback=define').replace(/\s/gm, '').split(/[,，]/gmi), function (tag) {
+        //加载标签
+        var tag = S.map(require('/go/design-works/tag?callback=define').replace(/\s/gm, '').split(/[,，]/gmi), function (tag) {
             return '<a href="#" data-text="' + tag + '" class="tag">' +
                 '<span class="J-tag">' + tag + '' +
                 '</span><span class="close J-close">&times;</span></a> '
@@ -15,6 +16,20 @@ define(function (require, module, exports) {
         var $tag = $('#J-tag-control-container')
         var $category = $('#J-category-container')
         $tag.html(tag.join(''))
+
+        //加载类目
+        require.async('/design-works/json/category?callback=define', function (category) {
+
+            var str = S.map(S.keys(category), function (key) {
+                return '<a href="#" data-text="' + key + '" class="tag J-category">' +
+                    '<span class="J-text">' + key + '</span>' +
+                    '(<span class="J-count">' + category[key] + '</span>)<span class="close J-close">&times;</span>' +
+                    '</a>'
+            })
+
+            $category.html(str)
+
+        })
 
         var $more = $('.J-show-more')
 
