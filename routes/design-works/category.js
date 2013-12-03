@@ -14,7 +14,7 @@ var helper = require('helper')
 app.get('/design-works/json/category', function (req, res) {
     var designWorks = new db.mongodb.Collection(db.Client, 'design-works')
     var category = {}
-    designWorks.distinct('category', function (err, docs) {
+    designWorks.distinct('category', {status: {$gte: 1}}, function (err, docs) {
         var readyNum = 0
         docs.forEach(function (_category) {
             designWorks.count({category: _category}, function (err, count) {
