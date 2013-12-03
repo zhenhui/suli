@@ -98,3 +98,5 @@ require('./list')
 require('./like')
 
 require('./views')
+
+require('./tag')

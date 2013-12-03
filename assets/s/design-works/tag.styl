@@ -1,0 +1,77 @@
+@import "../variables"
+
+#design-works-container
+  overflow hidden
+
+#design-works-container ul.design-works-list
+  width 770px
+  min-height 620px
+
+#design-works-container ul.loading
+  background url(/read/529c8f97cda9d350a4000009.gif) center center no-repeat
+
+.show-more
+  text-align center
+
+.btn
+  cursor pointer
+
+.show-more .btn
+  min-width 130px
+
+.btn.loading
+  background-image url(/read/529d4ff0f741fcfc2c000008.gif)
+  background-position center center
+  background-repeat no-repeat
+
+@import "design-works-list-inline-block"
+
+#tag-design-works-wrapper
+  position relative
+  width 736px
+
+#sidebar-wrapper.fixed
+  position fixed
+  left 0
+  top 0
+  width 100%
+
+#sidebar-container
+  width 990px
+  margin 0 auto
+  position relative
+  height 0
+
+#sidebar
+  position absolute
+  right 0
+  width 218px
+  height 300px
+
+#sidebar .category
+  margin 0 auto 12px auto
+  line-height 23px
+
+#sidebar .category .tag
+  display block
+  padding 1px 5px
+  margin 5px auto
+  border-radius 3px
+  position relative
+
+#sidebar .category .tag .close
+  position absolute
+  right 12px
+  top 1px
+  visibility hidden
+
+#sidebar .category .active
+  background hover-color
+  color #fff
+
+#sidebar .category .active .close
+  visibility visible
+
+#sidebar h2
+  font-size 20px
+  margin-bottom 12px

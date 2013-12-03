@@ -24,7 +24,6 @@ define(function (require, exports, module) {
                 if (page === data.sumPage) {
                     $('.J-show-more').html('没有更多了')
                 }
-                $('#latest-design-works-wrapper').html()
                 $(template.render(tpl, data)).appendTo($('#J-design-works-list'))
             })
     }
