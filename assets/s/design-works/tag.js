@@ -87,7 +87,7 @@ define(function (require, module, exports) {
         $category.on('click', '.J-category', function (ev) {
             ev.preventDefault()
             var $target = $(ev.currentTarget)
-            $target.toggleClass('active')
+            $target.toggleClass('active').siblings('.J-category').removeClass('active')
             $list.addClass('loading').html('')
             updateHash()
         })
