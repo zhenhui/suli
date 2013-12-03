@@ -100,3 +100,5 @@ require('./like')
 require('./views')
 
 require('./tag')
+
+require('./category')

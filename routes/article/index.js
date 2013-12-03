@@ -39,7 +39,14 @@ app.get('/article/json/category', function (req, res) {
                     category[_category] = count
                 }
                 if (readyNum >= docs.length) {
-                    res.jsonp(category)
+                    //排序下
+                    var newCategory = {}
+                    Object.keys(category).sort(function (a, b) {
+                        return a < b
+                    }).forEach(function (item) {
+                            newCategory[item] = category[item]
+                        })
+                    res.jsonp(newCategory)
                 }
             })
         })
