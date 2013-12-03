@@ -17,11 +17,11 @@ app.get('/design-works/filter/json', function (req, res) {
     var category = req.query.category ? req.query.category.split(',') : ''
 
     if (Array.isArray(tag) && tag.length > 0) {
-        filter.tag = {$in: tag}
+        filter.tag = {$all: tag}
     }
 
     if (Array.isArray(category) && category.length > 0) {
-        filter.category = {$in: category}
+        filter.category = {$all: category}
     }
 
     var design = new db.mongodb.Collection(db.Client, 'design-works')
