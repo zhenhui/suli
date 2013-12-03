@@ -130,11 +130,11 @@ define(function (require, exports, module) {
     function loginFail() {
 
         var $loginDialog = $('#loginSmallDialog').stop()
-        $loginDialog.animate({marginLeft: '-15'}, 80, function () {
-            $loginDialog.animate({marginLeft: '15'}, 80, function () {
-                $loginDialog.animate({marginLeft: '-15'}, 80, function () {
-                    $loginDialog.animate({marginLeft: '15'}, 80, function () {
-                        $loginDialog.animate({marginLeft: '-15'}, 80, function () {
+        $loginDialog.animate({marginLeft: '-10'}, 80, function () {
+            $loginDialog.animate({marginLeft: '10'}, 80, function () {
+                $loginDialog.animate({marginLeft: '-10'}, 80, function () {
+                    $loginDialog.animate({marginLeft: '10'}, 80, function () {
+                        $loginDialog.animate({marginLeft: '-10'}, 80, function () {
                             $loginDialog.animate({marginLeft: '0'}, 80)
                         })
                     })
