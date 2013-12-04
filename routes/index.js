@@ -41,3 +41,5 @@ require('captcha')
 //一个简单的流量点击统计
 require('./checkEmailReadCount')
 
+//得到token
+require('./token')
