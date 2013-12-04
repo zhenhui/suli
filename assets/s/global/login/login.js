@@ -168,7 +168,6 @@ define(function (require, exports, module) {
 
     //更新页面上的token
     function updateCsrfToken(token) {
-        console.log('更新了Token' + token)
         window._csrf_token_ = token
         $('input[name=_csrf]').val(token)
     }
