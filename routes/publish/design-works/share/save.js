@@ -15,6 +15,8 @@ function _xss(val) {
     return typeof val === 'string' ? xss(val) : val;
 }
 
+var tagRe = /^[\u4e00-\u9fa5A-Za-z0-9]{2,}$/
+
 exports.save = function (req, res) {
 
     var result = {
@@ -75,7 +77,7 @@ exports.save = function (req, res) {
 
     if (typeof data.tag === 'string') {
         data.tag = data.tag.split(' ').filter(function (item) {
-            return item !== ''
+            return item !== '' && tagRe.test(item)
         })
     }
 
