@@ -62,6 +62,7 @@ define(function (require, exports, module) {
         var text = $(ev.currentTarget).data('text')
         delete tagCache[text]
         $(ev.currentTarget).parents('.J-tag').remove()
+        $tagValue.val(S.keys(tagCache).join(' '))
     })
 
     $tag.on('click', function (ev) {
