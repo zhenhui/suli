@@ -38,8 +38,8 @@ exports.save = function (req, res) {
         //指标，喜欢数量，回复数量
         //喜欢和回复有单独的集合，在这里存储是为了增加冗余后提高查询性能
         index: {
-            view: 0,
             like: 0,
+            view: 0,
             comment: 0
         },
         category: _xss(req.body.category),

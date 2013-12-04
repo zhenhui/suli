@@ -35,9 +35,9 @@ exports.save = function (req, res) {
         status: parseInt(req.body.status, 10),
         //指标
         index: {
-            love: 0,
-            comment: 0,
-            view: 0
+            like: 0,
+            view: 0,
+            comment: 0
         },
         ts: Date.now()
     }
