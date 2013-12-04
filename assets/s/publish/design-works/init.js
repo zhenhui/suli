@@ -6,12 +6,18 @@
  * To change this template use File | Settings | File Templates.
  */
 define(function (require, exports, module) {
+
     //上传主图
     require('./upload-main-file')
+
     //上传缩略图
     require('./upload-thumbnails')
+
     //上传附件
     require('./upload-ps')
+
+    //标签
+    require('./tag')
 
     var form = document.forms['publish']
     $(document.forms['publish']).on('submit', function (ev) {
@@ -22,11 +28,7 @@ define(function (require, exports, module) {
         }
         $.post("/publish/design-works/save", $(form).serialize(), function (data) {
             if (data && data.docs) {
-                if (form.elements['type'].value === 'own') {
-                    window.location.href = '/personal#all-works{"view":"design"}'
-                } else {
-                    window.location.href = '/personal#manage-share'
-                }
+                window.location.href = '/personal#all-works{"view":"design"}'
             } else {
                 alert('遇到错误:\r\n' + data.err.join('\r\n'))
                 switch (data.errType) {
