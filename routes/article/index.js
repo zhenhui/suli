@@ -77,7 +77,7 @@ app.get('/personal/article/list', function (req, res) {
 
 
 //文章详情页
-app.get(/^\/article\/(.+)/, function (req, res) {
+app.get(/^\/article\/(.+)/, helper.csrf, function (req, res) {
     var title = req.params[0]
     var article = new db.mongodb.Collection(db.Client, 'article')
     article.findOne({title: title, status: {$gte: 1}}, function (err, result) {
