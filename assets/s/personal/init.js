@@ -24,9 +24,6 @@ define(function (require, exports, module) {
         'rights-management': {
 
         },
-        'manage-share': {
-            path: './design-works/init'
-        },
         'account-setting': {
             path: './account/init'
         },
