@@ -16,6 +16,7 @@ function _xss(val) {
 }
 
 var tagRe = /^[\u4e00-\u9fa5A-Za-z0-9]{2,}$/
+var allowCategory = ['视觉设计', '界面设计', '图标设计']
 
 exports.save = function (req, res) {
 
@@ -86,17 +87,10 @@ exports.save = function (req, res) {
     }
 
     //作品分类
-    switch (data.category) {
-        case '视觉设计':
-            data.category = '视觉设计'
-            break;
-        case '交互设计':
-            data.category = '交互设计'
-            break;
-        default:
-            result.err.push('请选择作品分类')
-            result.errType = 'category'
-            break;
+
+    if (allowCategory.indexOf(data.category) < 0) {
+        result.err.push('请选择作品分类')
+        result.errType = 'category'
     }
 
     //作品共享&个人

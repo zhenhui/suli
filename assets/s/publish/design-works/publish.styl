@@ -82,9 +82,36 @@
   margin 0 6px
   font-weight normal
   color blue
-  cursor pointer
   text-decoration underline
 
+#tag .tag-control a.tag
+  padding-right 2px
+  cursor default
+
+#tag .tag-control a.tag span.delete
+  display inline-block
+  padding 0 5px
+  color hover-color
+  margin-left 4px
+  cursor pointer
+
+#tag .tag-control a.tag span.delete:hover
+  background hover-color
+  color #fff
+
+#tag
+  border solid 1px border-color
+  padding 10px
+  background #fff
+
 #tag input
-  width 480px
+  width 155px
   padding-left 2px
+  border none
+  background transparent
+  outline none
+
+//自动完成
+.ui-autocomplete
+  background #fff
+  width 300px

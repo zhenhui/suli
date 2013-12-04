@@ -22,7 +22,8 @@ block content
                             select.category(name="category",title="作品分类")
                                 option(value="",selected="selected") 请选择分类
                                 option(value="视觉设计") 视觉设计
-                                option(value="交互设计") 交互设计
+                                option(value="界面设计") 界面设计
+                                option(value="图标设计") 图标设计
                     tr
                         th 简介
                         td
@@ -59,12 +60,14 @@ block content
                             td
                                 #tag
                                     span#tag-control.tag-control
-                                    input#tag-field(type="text",name="tag",placeholder="多个标签用空格隔开")
-                        tr
+                                    input#tag-value(type="hidden",name="tag")
+                                    input#tag-field(list="tagList",type="text",placeholder="多个Tag用空格隔开",maxlength="12")
+                                    datalist#tagList(style="display:none;")
+                        //tr
                             th 类型
                             td
                                 select(type="text",name="type")
-                                    //option(value="share") 共享作品
+                                    option(value="share") 共享作品
                                     option(value="own",selected="selected") 个人作品
                     tr.err.hide
                         th 错误信息
