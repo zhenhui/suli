@@ -61,7 +61,8 @@ block content
                                 #tag
                                     span#tag-control.tag-control
                                     input#tag-value(type="hidden",name="tag")
-                                    input#tag-field(list="tagList",type="text",placeholder="多个Tag用空格隔开",maxlength="12")
+                                    span.tag-input-wrapper
+                                        input#tag-field(list="tagList",type="text",placeholder="多个Tag用空格隔开，或连续敲入3个空格进行预览")
                                     datalist#tagList(style="display:none;")
                         //tr
                             th 类型

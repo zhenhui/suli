@@ -80,6 +80,9 @@ exports.save = function (req, res) {
         data.tag = data.tag.split(' ').filter(function (item) {
             return item !== '' && tagRe.test(item)
         })
+        if (data.tag.length > 16) {
+            result.err.push('标签最多只能写16个')
+        }
     }
 
     if (typeof data.file_id !== 'string' || data.file_id.length < 25) {
