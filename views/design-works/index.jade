@@ -1,9 +1,6 @@
 extends /layout
 block css
     link(rel="stylesheet",href="#{assetsCDN}/s/design-works/home.css")
-block js
-    script.
-        seajs.use('s/design-works/home')
 block content
     .wrapper
         .wrapper-990
@@ -15,3 +12,8 @@ block content
                     ul.design-works-list.clearfix#J-design-works-list
                 .show-more
                     a.btn.btn-large.show-more.J-show-more 查看更多
+block js
+    script(src="#{assetsCDN}/s/design-works/dist/home/home.js")
+    script.
+        seajs.use('sjplus/design-works/0.0.1/home/home')
+

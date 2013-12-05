@@ -2,11 +2,6 @@ extends /layout
 
 block css
     link(rel="stylesheet",href="#{assetsCDN}/s/design-works/detail.css")
-block js
-    script.
-        var designWorksId="#{docs._id}"
-        seajs.use('s/design-works/detail')
-
 block content
     #main-container.wrapper-990.clearfix
         .main-content
@@ -61,3 +56,9 @@ block content
                         - docs.tag.forEach(function(item){
                             a=item
                         - })
+block js
+    script(src="#{assetsCDN}/s/??design-works/dist/detail/detail.js,global/dist/like/init.js,global/dist/comment/comment.js")
+    script.
+        var designWorksId="#{docs._id}"
+        seajs.use('sjplus/design-works/0.0.1/detail/detail')
+

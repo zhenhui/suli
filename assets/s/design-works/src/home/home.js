@@ -3,7 +3,7 @@
  */
 define(function (require, exports, module) {
 
-    var tpl = require('./latest-design-works-tpl.tpl')
+    var tpl = require('./tpl.tpl')
     var template = require('template')
     var page = 1
     var pageNum = 1
