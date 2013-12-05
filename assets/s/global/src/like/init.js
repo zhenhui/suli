@@ -4,7 +4,7 @@
 
 define(function (require, exports, module) {
 
-    var login = require('s/global/login/login')
+    var login = require('sjplus/global/0.0.1/login/login')
 
     $(document.body).on('click', '.J-like', function (ev) {
         ev.preventDefault()

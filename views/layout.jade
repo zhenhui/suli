@@ -26,7 +26,7 @@ html
             window['assetsCDN']='#{assetsCDN}'
             window['imgCDN']='#{imgCDN}'
             if(!window.console)window.console={log:function(){}}
-        script(id="seajsnode",src="#{assetsCDN}/s/??sea.js,seajs-combo.js")
+        script(id="seajsnode",src="#{assetsCDN}/s/??sea.js,seajs-combo.js,sea-style.js,global/jquery.js")
         script.
             KISSY.config({
                 modules: {
@@ -53,13 +53,12 @@ html
                     [/(.*\.(css|js))(?:.*)$/i, "$1?2013124.$2"]
                 ],
                 alias: {
-                    "$": 's/global/jquery',
                     template: 'sea/xiongsongsong/template/1.1.0/template',
-                    'popup':'sea/arale/popup/1.1.5/popup'
-                },
-                preload: ['$']
+                    'popup':'sea/arale/popup/1.1.5/popup',
+                    '$':'s/global/jquery.js'
+                }
             });
-        script(src="#{assetsCDN}/s/global/dist/??init.js,login/login.js,crypto/sha3.js")
+        script(src="#{assetsCDN}/s/??global/dist/init.js,global/dist/login/login.js,global/dist/crypto/sha3.js,sea-modules/xiongsongsong/template/1.1.0/template.js,sea-modules//arale/popup/1.1.5/popup.js")
         script.
             seajs.use([
                 'sjplus/global/0.0.1/init',

@@ -5,7 +5,7 @@
 define(function (require, exports, module) {
 
     var template = require('template')
-    var login = require('s/global/login/login')
+    var login = require('sjplus/global/0.0.1/login/login')
 
     var $wrapper = $('#J-comment-wrapper')
     //非常重要：留言所属的ID
@@ -30,11 +30,10 @@ define(function (require, exports, module) {
     scrollCheck()
 
     function init() {
-        require.async('./comment.css', function () {
-            $h2 = $wrapper.find('h2')
-            initWaterfall()
-        })
+        require('./comment.css')
+        initWaterfall()
         $('#J-comment-wrapper').html(require('./comment-textarea.tpl'))
+        $h2 = $wrapper.find('h2')
     }
 
     function initWaterfall() {
