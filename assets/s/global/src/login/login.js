@@ -12,7 +12,7 @@ define(function (require, exports, module) {
 
     var $loginNode = $('#login-register-area')
     var Popup = require('popup')
-    var sha3 = require('sha3')
+    var sha3 = require('sjplus/global/0.0.1/crypto/sha3')
 
     $loginNode.mouseenter(function () {
         $loginNode.find('.J-spector').stop(true, true)

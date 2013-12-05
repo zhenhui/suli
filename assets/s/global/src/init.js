@@ -9,9 +9,6 @@
 
 define(function (require, exports, module) {
     KISSY.ready(function () {
-        require('./login/login')
-        require('./publish-type/init')
-        require('./weixin-weibo-float-menu/init')
 
         $('<div id="feedback"><h4>反馈</h4>' +
             '<div><a id="feedback1" href="">1：页面、优化、功能性建议</a><br>hangzhenhui@beyondsoft.com</div>' +
