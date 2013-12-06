@@ -81,9 +81,13 @@ app.get(/^\/article\/(.+)/, helper.csrf, function (req, res) {
     var title = req.params[0]
     var article = new db.mongodb.Collection(db.Client, 'article')
     article.findOne({title: title, status: {$gte: 1}}, function (err, result) {
-        //删除空余的P标签
-        result.content = result.content.replace(/<p>\s*?&nbsp;\s*?<\/p>/gmi, '')
-        res.render('article/detail', result)
+        if (!err && result) {
+            //删除空余的P标签
+            result.content = result.content.replace(/<p>\s*?&nbsp;\s*?<\/p>/gmi, '')
+            res.render('article/detail', result)
+        } else {
+            res.redirect('/article')
+        }
     })
 })
 
