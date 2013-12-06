@@ -49,9 +49,9 @@ function start() {
 
     if ('production' == app.get('env')) {
         console.log("生产环境")
-        global.assetsCDN = 'http://a.sjplus.cn'
-        global.imgCDN = 'http://img.sjplus.cn'
-        global.hostDOMAIN = 'http://www.sjplus.cn'
+        global.assetsCDN = ''
+        global.imgCDN = ''
+        global.hostDOMAIN = ''
     }
 
     http.createServer(app).listen(app.get('port'), function () {
