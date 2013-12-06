@@ -7,9 +7,7 @@ html
         link(rel="icon",href="/favicon.ico",type="image/x-icon")
         link(rel="shortcut icon",href="/favicon.ico",type="image/x-icon")
         title 视界 Beta
-        link(rel='stylesheet', href='#{assetsCDN}/s/reset.css')
-        link(rel='stylesheet', href='#{assetsCDN}/s/global.css')
-        link(rel='stylesheet', href='#{assetsCDN}/s/font.css')
+        link(rel='stylesheet', href='#{assetsCDN}/s/??reset.css,global.css,font.css')
         | <!--[if lte IE 7]><script src="#{assetsCDN}/s/fonts/lte-ie7.js"></script><![endif]-->
         script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js",data-config="{combine:true}")
         script(src="/_csrf_token?t=#{Date.now()}")
@@ -135,5 +133,5 @@ html
 
         block js
         script.
-            //var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-            //document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F03fa9269ff13e7c3893916e712b703ee' type='text/javascript'%3E%3C/script%3E"));
+            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F03fa9269ff13e7c3893916e712b703ee' type='text/javascript'%3E%3C/script%3E"));
