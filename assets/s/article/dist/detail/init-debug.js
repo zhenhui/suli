@@ -1,5 +1,5 @@
 /**
- * Created by root on 12/5/13.
+ * Created by xiongsongsong on 12/5/13.
  */
 define("sjplus/article/0.0.1/detail/init-debug", [ "sjplus/global/0.0.1/comment/comment-debug", "sjplus/global/0.0.1/like/init-debug" ], function(require, exports, module) {
     require("sjplus/global/0.0.1/comment/comment-debug");

@@ -29,7 +29,7 @@
             </form>
 
         </div>
-        <div class="item">
+        <div class="item" id="modify-pwd">
             <h2>密码管理</h2>
 
             <form action="/admin/user/update/password" method="post" id="admin-user-update-password">

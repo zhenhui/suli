@@ -12,7 +12,7 @@ var app = express();
 global.assetsDir = path.join(__dirname, 'assets')
 exports.projectRootDir = __dirname
 
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = 'development';
 
 function start() {
 // all environments
@@ -45,9 +45,9 @@ function start() {
     if ('development' == process.env.NODE_ENV) {
         console.log("开发环境")
         app.use(express.errorHandler());
-        global.assetsCDN = 'http://localhost:8001'
-        global.imgCDN = 'http://localhost'
-        global.hostDOMAIN = 'http://localhost'
+        global.assetsCDN = 'http://a.sj.cn'
+        global.imgCDN = 'http://img.sj.cn'
+        global.hostDOMAIN = 'http://www.sj.cn'
     }
 
     if ('production' == process.env.NODE_ENV) {
@@ -61,6 +61,12 @@ function start() {
         console.log('Express server listening on port ' + app.get('port'));
     });
     exports.app = app
+
+    app.use(function (req, res, next) {
+        res.locals.req = req;
+        next();
+    });
+
     require('./routes')
 }
 

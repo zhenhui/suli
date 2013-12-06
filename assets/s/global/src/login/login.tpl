@@ -7,13 +7,13 @@
 
         <div id="login-trigger">
             <div class="trigger">
-                <a id="domain-login" href=""><span><!--域帐号--></span></a>
+                <a id="domain-login"><span><!--域帐号--></span></a>
             </div>
             <!--<div class="trigger">
-                <a id="email-login" href=""><span>邮箱登陆</span></a>
+                <a id="email-login"><span>邮箱登陆</span></a>
             </div>-->
             <!--<div class="trigger">
-                <a id="weibo-login" href=""><span>微博登陆</span></a>
+                <a id="weibo-login"><span>微博登陆</span></a>
             </div>-->
 
         </div>

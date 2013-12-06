@@ -11,6 +11,7 @@
             "crypto/sha3.js",
             "like/init.js",
             "login/login.js",
+            "login/require_modify_pwd.js",
             "publish-type/init.js",
             "tab/init.js",
             "weixin-weibo-float-menu/init"

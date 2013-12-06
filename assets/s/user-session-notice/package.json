@@ -1,0 +1,13 @@
+{
+    "family": "sjplus",
+    "name": "user-session-notice",
+    "version": "0.0.1",
+    "description": "",
+    "spm": {
+        "include":"relative",
+        "output": [
+            "require_modify_pwd/init.js"
+        ]
+
+    }
+}

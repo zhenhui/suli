@@ -16,7 +16,7 @@ define(function (require, exports, module) {
     //生成一个回调函数名
     var callback = module.id + '_uploadCallBack'
 
-    exports.init = function () {
+    exports.init = function (data,hash) {
         $.getJSON('/admin/user/get/personal-information?r' + Math.random(), function (docs) {
             if (docs.status > 0) {
                 $container.html(template.render(tpl, docs))
@@ -38,6 +38,11 @@ define(function (require, exports, module) {
                         }
                     }
                 }
+
+                if(data.highlight){
+                    $('#modify-pwd').css({'border':'solid 1px #ff3b35',padding:'12',margin:'12px 0',borderLeft:'solid 5px #ff3b35'}).find('input[name="origin-pwd"]').focus()
+                }
+
             } else {
                 $container.html('登陆失效，请刷新页面重新登陆')
             }
@@ -69,6 +74,8 @@ define(function (require, exports, module) {
         }, function (data) {
             if (data.status > 0) {
                 alert('更新成功！')
+                location.hash='#account-setting'
+                window.location.reload()
             } else {
                 alert('发生错误：' + data.err.join(','))
             }

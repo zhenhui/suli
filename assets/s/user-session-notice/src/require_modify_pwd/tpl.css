@@ -1,0 +1,13 @@
+#require-modify-pwd-tips-container {
+    background: #ff3b35;
+    text-align: center;
+    padding: 16px 0;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#require-modify-pwd-tips-container,
+#require-modify-pwd-tips-container a {
+    color: #fff;
+    text-decoration: underline;
+}

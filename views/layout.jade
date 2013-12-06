@@ -13,9 +13,6 @@ html
         script(src="/_csrf_token?t=#{Date.now()}")
         block css
         script.
-            if(location.host==='192.168.155.100'){
-                window.location.href='http://www.sjplus.cn'
-            }
             window.onerror=function(msg,url,line){
                 var r = window.ActiveXObject ? new window.ActiveXObject("Microsoft.XMLHTTP") : new window.XMLHttpRequest()
                 r.open("POST", '/admin/log/browser-log', true)
@@ -132,6 +129,14 @@ html
                     |  &copy; beyondsoft 2013~
 
         block js
+
+        - if(req.session && req.session.userSessionNotice)
+            - Object.keys(req.session.userSessionNotice).forEach(function(item){
+                script(src="#{assetsCDN}/s/user-session-notice/dist/#{item}/init.js")
+                script.
+                    seajs.use(['sjplus/user-session-notice/0.0.1/require_modify_pwd/init'])
+            -})
+
         script.
-            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F03fa9269ff13e7c3893916e712b703ee' type='text/javascript'%3E%3C/script%3E"));
+            //var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            //document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F03fa9269ff13e7c3893916e712b703ee' type='text/javascript'%3E%3C/script%3E"));
