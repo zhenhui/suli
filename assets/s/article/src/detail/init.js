@@ -1,5 +1,5 @@
 /**
- * Created by root on 12/5/13.
+ * Created by xiongsongsong on 12/5/13.
  */
 
 define(function (require, exports, module) {

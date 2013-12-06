@@ -202,6 +202,7 @@ app.post('/admin/user/update/password', function (req, res) {
     user.update({_id: id, pwd: req.body.p1}, {$set: {pwd: req.body.p2}}, {}, function (err, _result) {
         if (!err && _result > 0) {
             result.status = 1
+            helper.removeUserSessionNotice(req,'require_modify_pwd')
         } else {
             result.status = -6
             result.err.push('请检查原密码是否正确')

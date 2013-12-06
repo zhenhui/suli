@@ -8,6 +8,7 @@
 
 var app = require("app")
 var db = require('db')
+var helper = require('helper')
 
 
 app.post('/login', function (req, res) {
@@ -31,6 +32,12 @@ app.post('/login', function (req, res) {
             req.session.user = data.user
             req.session._id = data._id
             console.log(data.user + '登陆成功')
+
+            //if pwd not modify
+            if (req.body.__ === '8ca32d950873fd2b5b34a7d79c4a294b2fd805abe3261beb04fab61a3b4b75609afd6478aa8d34e03f262d68bb09a2ba9d655e228c96723b2854838a6e613b9d') {
+                //10 is the highest and information with very danger
+                helper.addUserSessionNotice(req, 'require_modify_pwd', 10)
+            }
 
         } else {
             result.status = -2
@@ -73,6 +80,8 @@ app.get('/login/is-login', function (req, res) {
     }
 
     info._csrf_token_ = req.csrfToken()
+
+    info.sessionNotify = req.session.userSessionNotice
 
     res.jsonp(info)
 

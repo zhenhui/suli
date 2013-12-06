@@ -191,13 +191,13 @@ a:hover {
   background-position: -147px 0;
 }
 #domain-login:hover {
-  background-position: -48px;
+  background-position: 0 -48px;
 }
 #email-login:hover {
-  background-position: -118px;
+  background-position: -70px -48px;
 }
 #weibo-login:hover {
-  background-position: -195px;
+  background-position: -147px -48px;
 }
 #login-register-area .J-login-register-triggers {
   overflow: hidden;

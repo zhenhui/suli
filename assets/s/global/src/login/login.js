@@ -14,6 +14,8 @@ define(function (require, exports, module) {
     var Popup = require('popup')
     var sha3 = require('sjplus/global/0.0.1/crypto/sha3')
 
+    var S=KISSY
+
     $loginNode.mouseenter(function () {
         $loginNode.find('.J-spector').stop(true, true)
         $loginNode.find('.J-spector').animate({opacity: 0}, 200)
