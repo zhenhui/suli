@@ -6,11 +6,6 @@ define("sjplus/user-session-notice/0.0.1/require_modify_pwd/init-debug", [ "./in
     require("./tpl-debug.css");
     var div = document.getElementsByTagName("div")[0];
     $(div).before($(tpl));
-    setTimeout(function() {
-        $("#require-modify-pwd-tips-container").animate({
-            opacity: .5
-        });
-    }, 3e3);
 });
 
 define("sjplus/user-session-notice/0.0.1/require_modify_pwd/init-debug.tpl", [], '<p id="require-modify-pwd-tips-container">\n <a href=\'/personal#account-setting{"highlight":"#modify-pwd"}\'>您目前使用默认密码登陆，请及时修改。</a>\n</p>');
