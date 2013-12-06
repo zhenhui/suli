@@ -12,7 +12,7 @@ var app = express();
 global.assetsDir = path.join(__dirname, 'assets')
 exports.projectRootDir = __dirname
 
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'production';
 
 function start() {
 // all environments
