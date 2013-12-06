@@ -1,0 +1,111 @@
+.main-content {
+  width: 790px;
+  float: left;
+  padding: 20px 0;
+}
+.main-content h1 {
+  font-size: 20px;
+}
+.main-content h1 span.title {
+  font-weight: bold;
+  margin-right: 22px;
+}
+.main-content h1 a.avatar {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.main-content h1 a.avatar img {
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+}
+.main-content h1 span.category,
+.main-content h1 span.date {
+  color: #999;
+  font-size: 12px;
+}
+.main-pic-container {
+  background: #fff;
+  padding: 5px 0 8px 0;
+}
+.main-pic-container .main-pic {
+  width: 780px;
+  overflow: hidden;
+  background: #fff;
+  margin: auto;
+}
+.main-pic-container .main-pic img {
+  display: block;
+  margin: 0 auto;
+}
+.main-pic-container .ps {
+  margin-left: 5px;
+  padding-top: 6px;
+  font-size: 12px;
+}
+.main-pic-container .ps a {
+  margin: 0 6px 0 6px;
+}
+.sidebar {
+  width: 190px;
+  float: right;
+  padding: 54px 0 0 0;
+  font-size: 12px;
+}
+.sidebar h2 {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+.sidebar .des {
+  line-height: 230%;
+}
+.sidebar .describe {
+  word-break: break-all;
+}
+.sidebar .banner {
+  margin: 21px 0 12px 0;
+}
+.sidebar .banner p {
+  margin: 12px 0;
+}
+.sidebar .banner p a {
+  display: block;
+  margin: 6px 0;
+}
+.sidebar .banner p a img {
+  vertical-align: top;
+}
+.sidebar .tag {
+  margin: 17px 0 0 0;
+}
+.sidebar .tag h2 {
+  margin-bottom: 8px;
+}
+.like-comment {
+  padding: 8px 0 0 0;
+  margin: 12px 0 0 0;
+  border-radius: 1px;
+}
+.like-comment .active {
+  color: #ff3b35;
+}
+.like-comment .trigger {
+  float: left;
+  width: 50%;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+}
+.like-comment .trigger span.data-icon {
+  font-size: 35px;
+  display: block;
+  height: 62px;
+}
+.like-comment .trigger span.text {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: 5px;
+  font-size: 14px;
+}

@@ -11,7 +11,7 @@ var app = express();
 
 global.assetsDir = path.join(__dirname, 'assets')
 exports.projectRootDir = __dirname
-
+app.set('env','production')
 function start() {
 // all environments
     app.set('port', process.env.PORT || 80);

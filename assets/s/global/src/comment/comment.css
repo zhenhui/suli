@@ -1,0 +1,109 @@
+.comment-container {
+  position: relative;
+}
+.J-comment-container {
+  width: 790px;
+  overflow: hidden;
+  margin-top: 23px;
+}
+.J-comment-container h2 {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.comment-container .ks-waterfall-col-0 {
+  left: 0 !important;
+}
+.comment-container .ks-waterfall-col-1 {
+  margin-left: 5px;
+}
+.comment-container .item-container {
+  width: 390px;
+  overflow: hidden;
+  position: absolute;
+}
+.comment-container .item-container .user-info {
+  padding: 11px 13px;
+}
+.comment-container .container {
+  position: relative;
+  background: #fff;
+  padding-bottom: 13px;
+  margin-bottom: 10px;
+}
+.comment-container .container .content {
+  margin: 0 13px;
+  white-space: pre;
+}
+.comment-container .container .reply-trigger {
+  text-align: right;
+  padding: 12px 0;
+  display: none;
+}
+.comment-container .container .reply a {
+  color: #999;
+}
+.comment-container a.avatar {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.comment-container a.avatar img {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+.comment-container span.user-name {
+  margin-left: 5px;
+  color: #999;
+}
+.comment-container .container .date {
+  position: absolute;
+  right: 13px;
+  top: 11px;
+  color: #999;
+}
+.comment-container .container ul {
+  margin: 0 13px 0 13px;
+}
+.comment-container .container ul li {
+  line-height: normal;
+  padding: 5px 0;
+}
+.J-reply-container {
+  text-align: right;
+  margin: 12px 0;
+}
+.J-reply-container textarea {
+  width: 352px;
+  height: 46px;
+  background: #bebfb3;
+  border: none;
+  padding: 10px 0 0 10px;
+  color: #333;
+  resize: none;
+}
+.new-comment {
+  margin-bottom: 10px;
+  background: #fff;
+  padding-bottom: 10px;
+}
+.new-comment textarea {
+  margin: 10px 0 0 10px;
+  width: 365px;
+  border: none;
+  resize: none;
+  background: #bebfb3;
+  border: none;
+  padding: 10px 0 0 10px;
+  height: 63px;
+  overflow: auto;
+}
+.new-comment .btn {
+  margin-right: 5px;
+  margin-top: 5px;
+}
+.J-send-new-comment {
+  text-align: right;
+}
