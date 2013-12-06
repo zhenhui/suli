@@ -16,7 +16,7 @@ process.env.NODE_ENV = 'production';
 
 function start() {
 // all environments
-    app.set('port', process.env.PORT || 8000);
+    app.set('port', process.env.PORT || 9000);
     app.set('view engine', 'jade');
     app.set('view cache', true);
     app.locals.basedir = './views'
