@@ -15,6 +15,9 @@ html
         script(src="/_csrf_token?t=#{Date.now()}")
         block css
         script.
+            if(location.host==='192.168.155.100'){
+                window.location.href='http://www.sjplus.cn'
+            }
             window.onerror=function(msg,url,line){
                 var r = window.ActiveXObject ? new window.ActiveXObject("Microsoft.XMLHTTP") : new window.XMLHttpRequest()
                 r.open("POST", '/admin/log/browser-log', true)
