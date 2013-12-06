@@ -11,10 +11,12 @@ var app = express();
 
 global.assetsDir = path.join(__dirname, 'assets')
 exports.projectRootDir = __dirname
-app.set('env','production')
+
+process.env.NODE_ENV = 'production';
+
 function start() {
 // all environments
-    app.set('port', process.env.PORT || 80);
+    app.set('port', process.env.PORT || 8000);
     app.set('view engine', 'jade');
     app.locals.basedir = './views'
     app.use(express.compress())
@@ -39,7 +41,7 @@ function start() {
     app.use(express.static(path.join(__dirname, 'assets')))
 
     // development only
-    if ('development' == app.get('env')) {
+    if ('development' == process.env.NODE_ENV) {
         console.log("开发环境")
         app.use(express.errorHandler());
         global.assetsCDN = 'http://localhost:8001'
@@ -47,9 +49,9 @@ function start() {
         global.hostDOMAIN = 'http://localhost'
     }
 
-    if ('production' == app.get('env')) {
+    if ('production' == process.env.NODE_ENV) {
         console.log("生产环境")
-        global.assetsCDN = 'http://a.sjplus.cn:10218'
+        global.assetsCDN = 'http://a.sjplus.cn'
         global.imgCDN = 'http://img.sjplus.cn'
         global.hostDOMAIN = 'http://www.sjplus.cn'
     }
