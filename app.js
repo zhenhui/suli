@@ -49,7 +49,7 @@ function start() {
 
     if ('production' == app.get('env')) {
         console.log("生产环境")
-        global.assetsCDN = 'http://a.sjplus.cn:10361'
+        global.assetsCDN = 'http://a.sjplus.cn:10218'
         global.imgCDN = 'http://img.sjplus.cn'
         global.hostDOMAIN = 'http://www.sjplus.cn'
     }
