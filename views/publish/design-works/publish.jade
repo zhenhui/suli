@@ -1,11 +1,7 @@
 extends /layout
 
 block css
-    link(rel='stylesheet', href='#{assetsCDN}/s/publish/design-works/publish.css')
-
-block js
-    script.
-        seajs.use('s/publish/design-works/init')
+    link(rel='stylesheet', href='#{assetsCDN}/s/publish/src/design-works/publish.css')
 
 block content
     #publish.wrapper
@@ -78,3 +74,8 @@ block content
                         td(colspan=2)
                             //button.btn.btn-large(type="submit",name="preview") 预览
                             button.btn.btn-large(type="submit",name="publish") 发布
+block js
+    script(src="#{assetsCDN}/s/publish/dist/design-works/init.js")
+    script.
+        seajs.use('sjplus/publish/0.0.1/design-works/init')
+

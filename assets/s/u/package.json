@@ -1,0 +1,15 @@
+{
+    "family": "sjplus",
+    "name": "u",
+    "version": "0.0.1",
+    "description": "user qzone",
+    "spm": {
+        "include":"relative",
+        "output": [
+            "init.js",
+            "article.js",
+            "design-works.js"
+        ]
+
+    }
+}

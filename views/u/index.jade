@@ -1,9 +1,6 @@
 extends /layout
 block css
     link(rel="stylesheet",href="#{assetsCDN}/s/u/home.css")
-block js
-    script.
-        seajs.use('s/u/init')
 block content
     .wrapper
         .wrapper-990
@@ -13,3 +10,7 @@ block content
         .wrapper-990
             #main-container-wrapper
 
+block js
+    script(src="#{assetsCDN}/s/u/dist/??init.js,article.js,design-works.js")
+    script.
+        seajs.use('sjplus/u/0.0.1/init')

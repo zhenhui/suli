@@ -1,10 +1,6 @@
 extends /layout
 block css
     link(rel="stylesheet",href="#{assetsCDN}/s/article/detail.css")
-block js
-    script.
-        var articleId="#{_id}"
-        seajs.use('s/article/init')
 block content
     .wrapper
         .wrapper-990.clearfix
@@ -40,3 +36,8 @@ block content
                                     | )
         .wrapper-990
             #J-comment-wrapper(data-page-id="#{_id}",data-type="article")
+block js
+    script(src="#{assetsCDN}/s/??article/dist/detail/init.js,global/dist/like/init.js,global/dist/comment/comment.js")
+    script.
+        var articleId="#{_id}"
+        seajs.use('sjplus/article/0.0.1/detail/init')

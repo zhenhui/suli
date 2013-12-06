@@ -1,0 +1,14 @@
+{
+    "family": "sjplus",
+    "name": "article",
+    "version": "0.0.1",
+    "description": "article",
+    "spm": {
+        "include":"relative",
+        "output": [
+            "list/init.js",
+            "detail/init.js"
+        ]
+
+    }
+}

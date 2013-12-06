@@ -26,7 +26,7 @@ html
             window['assetsCDN']='#{assetsCDN}'
             window['imgCDN']='#{imgCDN}'
             if(!window.console)window.console={log:function(){}}
-        script(id="seajsnode",src="#{assetsCDN}/s/sea.js")
+        script(id="seajsnode",src="#{assetsCDN}/s/??sea.js,seajs-combo.js,sea-style.js,global/jquery.js")
         script.
             KISSY.config({
                 modules: {
@@ -53,14 +53,19 @@ html
                     [/(.*\.(css|js))(?:.*)$/i, "$1?2013124.$2"]
                 ],
                 alias: {
-                    "$": 's/global/jquery',
-                    'sha3':'s/global/crypto/sha3',
                     template: 'sea/xiongsongsong/template/1.1.0/template',
-                    'popup':'sea/arale/popup/1.1.5/popup'
-                },
-                preload: ['$']
+                    'popup':'sea/arale/popup/1.1.5/popup',
+                    '$':'s/global/jquery.js'
+                }
             });
-            seajs.use('s/global/init')
+        script(src="#{assetsCDN}/s/??global/dist/init.js,global/dist/login/login.js,global/dist/publish-type/init.js,global/dist/crypto/sha3.js,sea-modules/xiongsongsong/template/1.1.0/template.js,sea-modules//arale/popup/1.1.5/popup.js")
+        script.
+            seajs.use([
+                'sjplus/global/0.0.1/init',
+                'sjplus/global/0.0.1/login/login',
+                'sjplus/global/0.0.1/publish-type/init'
+            ])
+
     body
         #navigation
             .wrapper
@@ -127,5 +132,5 @@ html
 
         block js
         script.
-            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F03fa9269ff13e7c3893916e712b703ee' type='text/javascript'%3E%3C/script%3E"));
+            //var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            //document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F03fa9269ff13e7c3893916e712b703ee' type='text/javascript'%3E%3C/script%3E"));

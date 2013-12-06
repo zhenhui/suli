@@ -1,9 +1,6 @@
 extends /layout
 block css
     link(rel="stylesheet",href="#{assetsCDN}/s/design-works/tag.css")
-block js
-    script.
-        seajs.use('s/design-works/tag')
 block content
     .wrapper
         .wrapper-990
@@ -23,3 +20,7 @@ block content
                     ul.design-works-list.clearfix#J-design-works-list
                 .show-more
                     a.btn.btn-large.btn-disabled.show-more.J-show-more 查看更多
+block js
+    script(src="#{assetsCDN}/s/design-works/dist/tag/tag.js")
+    script.
+        seajs.use('sjplus/design-works/0.0.1/tag/tag')

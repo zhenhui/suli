@@ -1,9 +1,6 @@
 extends /layout
 block css
     link(rel="stylesheet",href="#{assetsCDN}/s/article/article.css")
-block js
-    script.
-        seajs.use('s/article/init')
 block content
     .wrapper
         .wrapper-990.clearfix
@@ -28,3 +25,9 @@ block content
             #sidebar
                 h2 分类
                 #category-container
+block js
+    script(src="#{assetsCDN}/s/article/dist/list/init.js")
+    script.
+        seajs.use([
+            'sjplus/article/0.0.1/list/init'
+        ])
