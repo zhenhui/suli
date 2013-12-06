@@ -5,8 +5,6 @@ define("sjplus/article/0.0.1/list/init-debug", [ "./category-debug", "template-d
     var category = require("./category-debug");
     var template = require("template-debug");
     var tpl = require("./category-debug.tpl");
-    alert(tpl);
-    alert(123);
     var $categoryContainer = $("#category-container");
     //加载侧边分类
     category.getCategoryResult(function(result) {

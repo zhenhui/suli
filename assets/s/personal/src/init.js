@@ -13,10 +13,10 @@ define(function (require, exports, module) {
 
         },
         'all-works': {
-            path: './all-works/init'
+            path: 'sjplus/personal/0.0.1/all-works/init'
         },
         'like': {
-            path: './like/init'
+            path: 'sjplus/personal/0.0.1/like/init'
         },
         'follow': {
 
@@ -25,13 +25,13 @@ define(function (require, exports, module) {
 
         },
         'account-setting': {
-            path: './account/init'
+            path: 'sjplus/personal/0.0.1/account/init'
         },
         'authenticate': {
 
         },
         'publish-pic': {
-            path: './public-pic/init'
+            path: 'sjplus/personal/0.0.1/public-pic/init'
         }
     }
 

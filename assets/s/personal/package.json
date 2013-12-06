@@ -1,0 +1,18 @@
+{
+    "family": "sjplus",
+    "name": "personal",
+    "version": "0.0.1",
+    "description": "package.json",
+    "spm": {
+        "include":"relative",
+        "output": [
+            "init.js",
+            "account/init.js",
+            "all-works/init.js",
+            "design-works/init.js",
+            "like/init.js",
+            "public-pic/init.js"
+        ]
+
+    }
+}
