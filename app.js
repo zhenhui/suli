@@ -18,6 +18,7 @@ function start() {
 // all environments
     app.set('port', process.env.PORT || 8000);
     app.set('view engine', 'jade');
+    app.set('view cache', true);
     app.locals.basedir = './views'
     app.use(express.compress())
     app.use(express.logger('dev'));
