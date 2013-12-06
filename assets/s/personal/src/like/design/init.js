@@ -48,7 +48,7 @@ define(function (require, exports, module) {
     $('#' + deletePopup.get('id')).on('click', '.J-unlike-design-works-of-own-trigger', function (ev) {
         ev.preventDefault()
         var id = $(ev.currentTarget).data('id')
-        $.get('/index/unlike', {id: $(ev.currentTarget).data('id')}, function (data) {
+        $.get('/index/unlike', {id: $(ev.currentTarget).data('id') , type : 'design-works' }, function (data) {
             var $li = $('#J-design-works-' + id)
             $li.fadeOut(function () {
                 $li.remove()
