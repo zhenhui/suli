@@ -69,7 +69,7 @@ app.get('/design-works/own/list', function (req, res) {
 })
 
 //设计师作品展示页面
-app.get(/\/design-works\/detail\/(\w{24})/, helper.csrf, function (req, res) {
+app.get(/\/design-works\/detail\/(\w{24})/, function (req, res) {
 
     try {
         var id = ObjectID(req.params[0])

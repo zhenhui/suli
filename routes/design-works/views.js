@@ -13,7 +13,7 @@ var helper = require('helper')
 //尽管如此，用户也可以通过删除Cookie来增加浏览量
 //所以并不是完美的就解决办法
 
-app.post('/index/add-view', helper.csrf, function (req, res) {
+app.post('/index/add-view', function (req, res) {
 
     res.end()
 

@@ -44,6 +44,7 @@ app.post('/login', function (req, res) {
             result.msg = '用户名或密码不正确'
             console.log(req.body._ + '登陆失败')
         }
+        result.userSessionNotice = req.session.userSessionNotice
         result._csrf_token_ = req.csrfToken()
         res.json(result)
 

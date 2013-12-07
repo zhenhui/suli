@@ -14,7 +14,7 @@ define(function (require, exports, module) {
     var Popup = require('popup')
     var sha3 = require('sjplus/global/0.0.1/crypto/sha3')
 
-    var S=KISSY
+    var S = KISSY
 
     $loginNode.mouseenter(function () {
         $loginNode.find('.J-spector').stop(true, true)
@@ -55,6 +55,11 @@ define(function (require, exports, module) {
                     return window._csrf_token_
                 })()
             }, function (data) {
+
+                if (data && S.keys(data.userSessionNotice).length > 0) {
+                    window.location.reload()
+                    return
+                }
 
                 updateCsrfToken(data._csrf_token_)
 

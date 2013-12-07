@@ -30,7 +30,7 @@ require('./rollback-data-source')
 var db = require('db')
 
 //CMS系统首页
-app.get('/cms', helper.csrf, function (req, res) {
+app.get('/cms', function (req, res) {
 
     if (!helper.isLogin(req)) {
         res.render('invalid-group', {title: '您没有登陆', status: -10, err: ['CMS需要登陆方可使用']})

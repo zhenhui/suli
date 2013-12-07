@@ -8,7 +8,7 @@
         </div>
 
         <div id="tab-container">
-            <h1>容器</h1> <a class="J-tab-trigger" data-behavior="all-works" href="#view=design&full_redirect=true" tabindex="0">所有作品</a>
+            <h1></h1> <a class="J-tab-trigger" data-behavior="all-works" href="#view=design&full_redirect=true" tabindex="0"></a>
         </div>
     </div>
 </div>

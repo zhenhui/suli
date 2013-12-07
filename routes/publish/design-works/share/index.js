@@ -10,7 +10,7 @@ var app = require('app')
 var helper = require('helper')
 
 //上传作品的界面
-app.get('/publish/design-works', helper.csrf, function (req, res) {
+app.get('/publish/design-works', function (req, res) {
 
     var result = {err: []}
     if (require('helper').isLogin(req) === false) {
@@ -44,16 +44,16 @@ app.get('/publish/design-works', helper.csrf, function (req, res) {
 require('./save-file')
 
 //保存主图
-app.post('/publish/design-works/save-main-file', helper.csrf, require('./save-file').saveFile)
+app.post('/publish/design-works/save-main-file', require('./save-file').saveFile)
 
 //保存缩略图
-app.post('/publish/design-works/save-thumbnails', helper.csrf, require('./save-thumbnails').saveFile)
+app.post('/publish/design-works/save-thumbnails', require('./save-thumbnails').saveFile)
 
 //保存附件
-app.post('/publish/design-works/save-ps', helper.csrf, require('./save-ps').saveFile)
+app.post('/publish/design-works/save-ps', require('./save-ps').saveFile)
 
 //删除文件
 app.get('/publish/design-works/delete', require('./delete').delete)
 
 //保存共享的作品
-app.post('/publish/design-works/save', helper.csrf, require('./save').save)
+app.post('/publish/design-works/save', require('./save').save)

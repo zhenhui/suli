@@ -1,7 +1,7 @@
 var app = require('app')
 var helper = require('helper')
 
-app.get('/publish/article', helper.csrf, function (req, res) {
+app.get('/publish/article', function (req, res) {
 
     var result = {err: []}
     if (require('helper').isLogin(req) === false) {
