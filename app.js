@@ -39,7 +39,7 @@ function start() {
     app.use(require('stylus').middleware(__dirname + '/assets'))
     app.use(express.static(path.join(__dirname, 'assets')))
 
-    process.env.NODE_ENV = 'development';
+    process.env.NODE_ENV = 'production';
 
     // development only
     if ('development' == process.env.NODE_ENV) {
