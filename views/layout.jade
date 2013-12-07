@@ -56,14 +56,6 @@ html
                     '$':'s/global/jquery.js'
                 }
             });
-        script(src="#{assetsCDN}/s/??global/dist/init.js,global/dist/login/login.js,global/dist/publish-type/init.js,global/dist/crypto/sha3.js,sea-modules/xiongsongsong/template/1.1.0/template.js,sea-modules//arale/popup/1.1.5/popup.js")
-        script.
-            seajs.use([
-                'sjplus/global/0.0.1/init',
-                'sjplus/global/0.0.1/login/login',
-                'sjplus/global/0.0.1/publish-type/init'
-            ])
-
     body
         #navigation
             .wrapper
@@ -128,8 +120,16 @@ html
                 .wrapper-990
                     |  &copy; beyondsoft 2013~
 
-        block js
+        script(src="#{assetsCDN}/s/??global/dist/init.js,global/dist/login/login.js,global/dist/publish-type/init.js,global/dist/crypto/sha3.js,global/dist/weixin-weibo-float-menu/init.js,sea-modules/xiongsongsong/template/1.1.0/template.js,sea-modules/arale/popup/1.1.5/popup.js")
+        script.
+            seajs.use([
+                'sjplus/global/0.0.1/init',
+                'sjplus/global/0.0.1/login/login',
+                'sjplus/global/0.0.1/publish-type/init',
+                'sjplus/global/0.0.1/weixin-weibo-float-menu/init'
+            ])
 
+        block js
         - if(req.session && req.session.userSessionNotice)
             - Object.keys(req.session.userSessionNotice).forEach(function(item){
                 script(src="#{assetsCDN}/s/user-session-notice/dist/#{item}/init.js")

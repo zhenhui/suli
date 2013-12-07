@@ -14,7 +14,7 @@
             "login/require_modify_pwd.js",
             "publish-type/init.js",
             "tab/init.js",
-            "weixin-weibo-float-menu/init"
+            "weixin-weibo-float-menu/init.js"
         ]
 
     }
