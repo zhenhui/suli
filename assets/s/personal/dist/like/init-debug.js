@@ -23,7 +23,7 @@ define("sjplus/personal/0.0.1/like/init-debug", [ "./tab-debug.tpl", "./like-deb
     };
 });
 
-define("sjplus/personal/0.0.1/like/tab-debug.tpl", [], '<div id="like">\n    <div class="container">\n        <div class="tab J-tab">\n            <div class="trigger">\n                <a class="J-tab-trigger" data-behavior="like" href="#view=design&full_redirect=true" tabindex="0">喜欢的作品</a>\n                <!--<a class="J-tab-trigger" data-behavior="like" href="#view=article&full_redirect=true" tabindex="0">喜欢的文章</a>-->\n            </div>\n        </div>\n\n        <div id="tab-container">\n            <h1>容器</h1> <a class="J-tab-trigger" data-behavior="like" href="#view=design&full_redirect=true" tabindex="0">所有作品</a>\n        </div>\n    </div>\n</div>');
+define("sjplus/personal/0.0.1/like/tab-debug.tpl", [], '<div id="like">\n    <div class="container">\n        <div class="tab J-tab">\n            <div class="trigger">\n                <a class="J-tab-trigger" data-behavior="like" href="#view=design&full_redirect=true" tabindex="0">喜欢的作品</a>\n                <!--<a class="J-tab-trigger" data-behavior="like" href="#view=article&full_redirect=true" tabindex="0">喜欢的文章</a>-->\n            </div>\n        </div>\n\n        <div id="tab-container">\n            <h1></h1> <a class="J-tab-trigger" data-behavior="like" href="#view=design&full_redirect=true" tabindex="0"></a>\n        </div>\n    </div>\n</div>');
 
 define("sjplus/personal/0.0.1/like/like-debug.css", [], function() {
     seajs.importStyle("#like .container{padding:12px}");

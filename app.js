@@ -12,8 +12,6 @@ var app = express();
 global.assetsDir = path.join(__dirname, 'assets')
 exports.projectRootDir = __dirname
 
-process.env.NODE_ENV = 'production';
-
 function start() {
 // all environments
     app.set('port', process.env.PORT || 9000);
@@ -40,6 +38,8 @@ function start() {
     app.use(express.csrf());
     app.use(require('stylus').middleware(__dirname + '/assets'))
     app.use(express.static(path.join(__dirname, 'assets')))
+
+    process.env.NODE_ENV = 'development';
 
     // development only
     if ('development' == process.env.NODE_ENV) {

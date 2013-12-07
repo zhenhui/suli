@@ -10,7 +10,7 @@ var ObjectID = db.mongodb.ObjectID
 var helper = require('helper')
 
 //作品的喜欢数据
-app.post('/index/add-like', helper.csrf, function (req, res) {
+app.post('/index/add-like', function (req, res) {
 
     var result = {err: []}
 
