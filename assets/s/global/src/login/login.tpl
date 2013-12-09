@@ -1,5 +1,3 @@
-#if(status<1)
-
 <div id="loginSmallDialog" class="login-small-dialog">
     <div class="wrapper">
 
@@ -25,27 +23,3 @@
         </form>
     </div>
 </div>
-
-#elseif(status==1)
-
-<div class="login-user-info J-logged-list-triggers">
-
-    <span class="avatar">
-        <a><img class="J-avatar-own-20" src="#{imgCDN}/avatar/#{_id}_20x20"><i></i></a>
-    </span>
-    <span class="J-user-name">#{user}</span>
-</div>
-
-#elseif(status=="logged")
-<div class="logged-list J-logged-list">
-    <div class="list">
-        <ul>
-            <li><a href="/u/#{_id}">我的主页</a></li>
-            <li><a class="J-publish-work">发布作品</a></li>
-            <li><a href='/personal#all-works{"view":"design"}'>管理设计作品</a></li>
-            <li><a href="/personal#account-setting">帐号设置，头像</a></li>
-            <li><a href="/login/login-out">退出</a></li>
-        </ul>
-    </div>
-</div>
-#end

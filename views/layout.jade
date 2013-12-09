@@ -62,37 +62,42 @@ html
     body
         #navigation
             .wrapper
-                .wrapper-990
+                .wrapper-990.clearfix
                     h1
                         a(href="/")
                             img(src="/s/logo.png")
                     ul
                         li
+                            #login-register-area
+                                - if(!req.session._id)
+                                    .J-login-register-triggers
+                                        a.J-login-triggers(href="javascript:void(0)") 登陆
+                                        span.J-spector.spector /
+                                        a(href="#") 注册
+                                - else
+                                    .login-user-info.J-logged-list-triggers
+                                        span.avatar
+                                            img.J-avatar-own-20(src="#{imgCDN}/avatar/#{req.session._id}_20x20")
+                                        span.J-user-name #{req.session.user}
+                                        #logged-wrapper.hide
+                                            .logged-list.J-logged-list
+                                                .list
+                                                    ul
+                                                        li
+                                                            a(href="/u/#{req.session._id}") 我的主页
+                                                        li
+                                                            a.J-publish-work 发布作品
+                                                        li
+                                                            a(href='/personal#all-works{"view":"design"}') 管理设计作品
+                                                        li
+                                                            a(href="/personal#account-setting") 帐号设置，头像
+                                                        li
+                                                            a(href="/login/login-out") 退出
+                        li
                             a(href="/design-works") 作品展
                         li
                             a(href="/article") 文章
-                        //li
-                            a 关于我们
-                        //li
-                            a 招聘
-                        li
-                            #login-register-area
-                                //#user-info
-                                    span
-                                        img(src="http://dribbble.s3.amazonaws.com/users/49563/avatars/original/f7c80d46.jpg?1325837502")
-                                    span.user_name Jakon
-                                    .list
-                                        a 信息
-                                        a("/publish/design-works") 发布作品
-                                        a 设置帐号
-                                        a 退出
-
-                                .J-login-register-triggers
-                                    a.J-login-triggers(href="javascript:void(0)") 登陆
-                                    //span.J-spector.spector /
-                                    //a(href="#") 注册
-
-
+s
         block content
         #footer
             .main-wrapper
