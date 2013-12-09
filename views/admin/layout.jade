@@ -3,17 +3,15 @@ html
     head
         meta(charset="utf-8")
         title= title
-        script(src='http://g.tbcdn.cn/tb/tlabs/0.0.3/js/??jquery/1.10.2.min.js')
         link(rel="stylesheet",href="/s/bootstrap.min.css")
-        script(src="/s/bootstrap.min.js")
         script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js",data-config="{combine:true}")
-        script(id="seajsnode",src="/s/sea.js")
+        script(id="seajsnode",src="#{assetsCDN}/s/??sea.js,seajs-combo.js,sea-style.js,global/jquery.js,bootstrap.min.js")
         block css
     body
         block content
 
         script.
-            window._csrf_token_='#{token}'
+            window._csrf_token_='#{req.csrfToken()}'
             KISSY.config({
                 modules: {
                     'sizzle': { alias: ['node'] },
@@ -39,9 +37,9 @@ html
                     [/(.*\.(css|js))(?:.*)$/i, "$1?20131129.$2"]
                 ],*/
                 alias:{
-                    'sha3':'s/global/crypto/sha3',
                     template: 'sea/xiongsongsong/template/1.1.0/template'
                 }
             });
             window['imgCDN']='#{imgCDN}'
+        script(src="#{assetsCDN}/s/??global/dist/crypto/sha3.js,sea-modules/xiongsongsong/template/1.1.0/template.js")
         block js

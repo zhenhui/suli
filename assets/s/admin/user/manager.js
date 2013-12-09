@@ -1,8 +1,9 @@
+
 define(function (require, exports, module) {
 
     var form = document.forms['add-user'];
     var $form = $(form);
-    var sha3 = require('sha3')
+    var sha3 = require('sjplus/global/0.0.1/crypto/sha3')
 
     $form.on('submit', function (ev) {
 
