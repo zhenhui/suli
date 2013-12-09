@@ -37,7 +37,7 @@ exports.save = function (req, res) {
         content: _xss(req.body.content),
         thumbnails_id: _xss(req.body.thumbnails_id),
         file_id: _xss(req.body['mail-file_id']),
-        ps_id: _xss(req.body.ps_id),
+        //ps_id: _xss(req.body.ps_id),
         //指标，喜欢数量，回复数量
         //喜欢和回复有单独的集合，在这里存储是为了增加冗余后提高查询性能
         index: {
@@ -47,7 +47,7 @@ exports.save = function (req, res) {
         },
         category: _xss(req.body.category),
         tag: _xss(req.body.tag),
-        type: _xss(req.body.type),
+        type: 'own',
         owner_id: req.session._id,
         //状态，>0表示可用的作品，负为删除或禁用的作品
         status: 1,
@@ -67,14 +67,14 @@ exports.save = function (req, res) {
         result.err.push('您必须上传缩略图')
     }
 
-    if (typeof data.ps_id === 'string') {
+    /*if (typeof data.ps_id === 'string') {
         data.ps_id = data.ps_id.split(/[\r\n]/gmi).filter(function (item) {
             return item.trim().length > 0
         })
         if (data.ps_id.length > 3) {
             result.err.push('超过上传文件的上限')
         }
-    }
+    }*/
 
     if (typeof data.tag === 'string') {
         data.tag = data.tag.split(' ').filter(function (item) {
@@ -94,24 +94,6 @@ exports.save = function (req, res) {
     if (allowCategory.indexOf(data.category) < 0) {
         result.err.push('请选择作品分类')
         result.errType = 'category'
-    }
-
-    //作品共享&个人
-    //share共享
-    //own个人
-    switch (data.type) {
-        case 'share':
-            data.type = 'share'
-            break;
-        case 'own':
-            data.type = 'own'
-            break;
-        case undefined:
-            data.type = 'own'
-            break;
-        default:
-            data.type = 'own'
-            break;
     }
 
     if (result.err.length > 0) {

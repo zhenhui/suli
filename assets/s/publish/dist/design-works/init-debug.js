@@ -5,13 +5,13 @@
  * Time: 上午10:48
  * To change this template use File | Settings | File Templates.
  */
-define("sjplus/publish/0.0.1/design-works/init-debug", [ "./upload-main-file-debug", "sea/upload/upload-debug", "./upload-thumbnails-debug", "./upload-ps-debug", "./tag-debug" ], function(require, exports, module) {
+define("sjplus/publish/0.0.1/design-works/init-debug", [ "./upload-main-file-debug", "sea/upload/upload-debug", "./upload-thumbnails-debug", "./tag-debug" ], function(require, exports, module) {
     //上传主图
     require("./upload-main-file-debug");
     //上传缩略图
     require("./upload-thumbnails-debug");
     //上传附件
-    require("./upload-ps-debug");
+    //require('./upload-ps')
     //标签
     require("./tag-debug");
     var form = document.forms["publish"];
@@ -105,61 +105,6 @@ define("sjplus/publish/0.0.1/design-works/upload-thumbnails-debug", [ "sea/uploa
             alert("服务器出错");
         }
     });
-});
-
-/**
- * Created with JetBrains WebStorm.
- * User: 松松
- * Date: 13-9-10
- * Time: 下午8:53
- * 上传共享的缩略图
- */
-define("sjplus/publish/0.0.1/design-works/upload-ps-debug", [ "sea/upload/upload-debug" ], function(require, exports, module) {
-    var url = "/publish/design-works/save-ps";
-    var $psList = $("#ps-list");
-    var Uploader = require("sea/upload/upload-debug");
-    var psId;
-    var $psArr = $("#ps_id");
-    var $ps;
-    var uploader = new Uploader({
-        trigger: "#upload-ps",
-        name: "file",
-        action: url,
-        data: {
-            _csrf: window._csrf_token_
-        }
-    }).change(function(fileName) {
-        psId = "ps_file" + (Math.random() * 1e8, 10);
-        $psList.innerHTML = "";
-        $('<div class="j-ps-file" id="' + psId + '">' + fileName + '<span class="J-process J-process-running" ><b style="color: red;">正在上传...</b></span></div>').appendTo($psList);
-        $ps = $("#" + psId);
-        uploader.submit();
-    }).success(function(response) {
-        try {
-            var serverInfo = $.parseJSON(response);
-            if (serverInfo._id && !serverInfo.err) {
-                $ps.addClass("J-success").data("id", serverInfo._id);
-                $ps.find(".J-process").html('<b style="color: green;">上传成功</b>');
-                $ps.find(".J-process-running").removeClass("J-process-running");
-                getPsList();
-            } else {
-                $ps.find(".J-process").html("上传失败：" + serverInfo.err.join(","));
-            }
-        } catch (e) {
-            $ps.find(".J-process").html("服务器异常" + response);
-        }
-    }).error(function(err) {
-        $ps.find(".J-process").html("上传失败，请确认文件小于200Mb");
-    });
-    function getPsList() {
-        $psArr.val("");
-        //将上传成功的id  放置到textarea中
-        var ps = [];
-        $psList.find(".J-success").each(function(i, item) {
-            ps.push($(item).data("id"));
-        });
-        $psArr.val(ps.join("\r\n"));
-    }
 });
 
 /**

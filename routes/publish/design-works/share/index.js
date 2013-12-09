@@ -50,7 +50,7 @@ app.post('/publish/design-works/save-main-file', require('./save-file').saveFile
 app.post('/publish/design-works/save-thumbnails', require('./save-thumbnails').saveFile)
 
 //保存附件
-app.post('/publish/design-works/save-ps', require('./save-ps').saveFile)
+//app.post('/publish/design-works/save-ps', require('./save-ps').saveFile)
 
 //删除文件
 app.get('/publish/design-works/delete', require('./delete').delete)

@@ -14,7 +14,7 @@ define(function (require, exports, module) {
     require('./upload-thumbnails')
 
     //上传附件
-    require('./upload-ps')
+    //require('./upload-ps')
 
     //标签
     require('./tag')
