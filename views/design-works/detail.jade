@@ -16,12 +16,6 @@ block content
             .main-pic-container
                 .main-pic
                     img(src="#{imgCDN}/read/#{docs.file_id.split(':')[0]}")
-                -if(docs.ps_id.length>0)
-                    .ps 附件下载
-                        -docs.ps_id.forEach(function(item,index){
-                            -item=item.split(':')
-                                a(href="#{imgCDN}/read/#{item[0]}",download="#{item[1]}") #{item[1]}
-                        -})
             #J-comment-wrapper(data-page-id="#{docs._id}",data-type="design-works")
         .sidebar
             .des
