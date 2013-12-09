@@ -12,6 +12,9 @@ html
         script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js",data-config="{combine:true}")
         block css
         script.
+           if(location.host==='192.168.151.100'){
+           location.href='http://www.sjplus.cn/'
+           }
             window._csrf_token_='#{req.csrfToken()}';
             window.onerror=function(msg,url,line){
                 var r = window.ActiveXObject ? new window.ActiveXObject("Microsoft.XMLHTTP") : new window.XMLHttpRequest()
