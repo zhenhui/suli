@@ -16,7 +16,7 @@ function start() {
 // all environments
     app.set('port', process.env.PORT || 9000);
     app.set('view engine', 'jade');
-    app.set('view cache', true);
+    app.set('view cache', false);
     app.locals.basedir = './views'
     app.use(express.compress())
     app.use(express.logger('dev'));
@@ -39,7 +39,7 @@ function start() {
     app.use(require('stylus').middleware(__dirname + '/assets'))
     app.use(express.static(path.join(__dirname, 'assets')))
 
-    process.env.NODE_ENV = 'production';
+    process.env.NODE_ENV = 'development';
 
     // development only
     if ('development' == process.env.NODE_ENV) {

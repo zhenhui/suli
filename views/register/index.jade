@@ -1,0 +1,31 @@
+extends /layout
+block css
+    link(rel="stylesheet",href="#{assetsCDN}/s/register/index.css")
+block content
+    .wrapper
+        .wrapper-990
+
+            #register-wrapper
+                #register-type-container
+                    img(src="#{assetsCDN}/s/register/img/email-type.png")
+                    h2 Email Register
+                    p use  email account register
+                form#register-form(name="register",action="/register",method="post")
+                    .requier-field
+                        input(type="text",name="_",placeholder="user account")
+                        input(type="text",name="__",placeholder="email account")
+                        input(type="text",name="___",placeholder="Password")
+                    .submit
+                        span.captcha
+                            input(type="text",name="captcha",maxlength="4")
+                            a(href="javascript:void(0)")#captchaTrigger
+                                img#captchaImg(src="/captcha?t=#{Date.now()}")
+                        span.label
+                            input#read-rule(type="checkbox",name="read-rule",value="yes")
+                            label(for="read-rule") 同意注册协议
+                        input(type="button",value="Cancel").btn.btn-large
+                        input(type="submit",value="Register").btn.btn-large.btn-highlight
+block js
+    script(src="#{assetsCDN}/s/register/dist/init.js")
+    script.
+        seajs.use(["sjplus/register/0.0.1/init"])
