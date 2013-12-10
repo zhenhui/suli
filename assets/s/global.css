@@ -240,6 +240,8 @@ a:hover {
 }
 .login-user-info .J-user-name {
   margin-left: 24px;
+  display: inline-block;
+  vertical-align: middle;
 }
 .logged-list {
   background: #f3f3f3;

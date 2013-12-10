@@ -56,7 +56,7 @@ define(function (require, exports, module) {
                 })()
             }, function (data) {
 
-                if (data && S.keys(data.userSessionNotice).length > 0) {
+                if (data && data.userSessionNotice && S.keys(data.userSessionNotice).length > 0) {
                     window.location.reload()
                     return
                 }
