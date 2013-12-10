@@ -3,7 +3,7 @@ CryptoJS v3.1.2
 code.google.com/p/crypto-js
 (c) 2009-2013 by Jeff Mott. All rights reserved.
 code.google.com/p/crypto-js/wiki/License
-*/
+ */
 define("sjplus/global/0.0.1/crypto/sha3-debug", [], function(require, exports, module) {
     var CryptoJS = CryptoJS || function(v, p) {
         var d = {}, u = d.lib = {}, r = function() {}, f = u.Base = {
