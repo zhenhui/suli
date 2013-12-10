@@ -11,11 +11,13 @@ block content
                     h2 Email Register
                     p use  email account register
                 form#register-form(name="register",action="/register",method="post")
-                    .requier-field
+                    .require-field
                         input(type="text",name="_",placeholder="user account")
                         input(type="text",name="__",placeholder="email account")
                         input(type="text",name="___",placeholder="Password")
-                    .submit
+                    #tips-wrapper
+                        .tips-content
+                    #submit-wrapper.submit
                         span.captcha
                             input(type="text",name="captcha",maxlength="4")
                             a(href="javascript:void(0)")#captchaTrigger

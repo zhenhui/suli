@@ -7,9 +7,7 @@ var db = require('db')
 var crypto = require('sha3')
 
 app.get('/register', function (req, res) {
-
     res.render('register/index')
-
 })
 
 var emailRe = /(?:[a-z0-9!#$%&'*+/=?^_{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
@@ -19,6 +17,21 @@ var userNameRe = /^[\u4e00-\u9fa5a-z][\u4e00-\u9fa5a-z0-9]{2,}$/
 app.post('/register', function (req, res) {
 
     var errResult = {err: []}
+
+
+    var sessionCaptcha = req.session.captcha && req.session.captcha.toString()
+    var captcha = req.body.captcha
+    if (captcha && captcha.length !== 4 || captcha.toLowerCase() !== sessionCaptcha) {
+        errResult.err.push({
+            'captcha': 'captche fail'
+        })
+        errResult.status = -10
+        res.json(errResult)
+        return
+    }
+
+    delete req.session.captcha
+
 
     if (!userNameRe.test(req.body._) || req.body._.length > 8) {
         errResult.err.push({
@@ -37,11 +50,7 @@ app.post('/register', function (req, res) {
             '_': 'pwd fail'
         })
     }
-    if (!/^[a-z0-9]{4}$/i.test(req.body.captcha)) {
-        errResult.err.push({
-            '_': 'captche fail'
-        })
-    }
+
     if (req.body.readRule !== 'yes') {
         errResult.err.push({
             '_': 'unread rule'
@@ -49,6 +58,7 @@ app.post('/register', function (req, res) {
     }
 
     if (errResult.err.length > 0) {
+        errResult.status = -1
         res.json(errResult)
         return
     }
@@ -77,10 +87,11 @@ app.post('/register', function (req, res) {
             //check register logs
 
             if (!err && count > 0) {
-                errResult.err.push({'_': 'email exist'})
+                errResult.err.push({'__': 'email exist'})
             }
 
             if (errResult.err.length > 0) {
+                errResult.status = -1
                 res.json(errResult)
                 return
             }
@@ -90,7 +101,7 @@ app.post('/register', function (req, res) {
 
                 if (!err && count > 0) {
                     errResult.err.push({'_': 'user not yet completed the registration verification'})
-                    errResult.stauts = -2
+                    errResult.stauts = -1
                     res.json(errResult)
                     return
                 }
@@ -99,8 +110,8 @@ app.post('/register', function (req, res) {
                 registerList.count({email: emailFindRe, count: 0}, function (err, count) {
 
                     if (!err && count > 0) {
-                        errResult.err.push({'_': 'email not yet completed the registration verification'})
-                        errResult.stauts = -3
+                        errResult.err.push({'__': 'email not yet completed the registration verification'})
+                        errResult.stauts = -1
                         res.json(errResult)
                         return
                     }
@@ -121,7 +132,7 @@ app.post('/register', function (req, res) {
 
                     registerList.insert(log, {w: 1}, function (err) {
                         if (err) {
-                            res.json({status: -10, err: "Fail: on insert register-list"})
+                            res.json({status: -2, err: "Fail: on insert register-list"})
                             return
                         }
 
@@ -148,22 +159,16 @@ app.post('/register', function (req, res) {
 
                         user.insert(newUser, {w: 1}, function (err) {
                             if (err) {
-                                res.json({status: -10, err: "create user fail"})
+                                res.json({status: -4, err: "create user fail"})
                                 return
                             }
                             sendEmail(req, res, id, registerList)
                         })
-
-
                     })
                 })
-
             })
-
         })
-
     })
-
 })
 
 
@@ -171,38 +176,36 @@ var nodemailer = require("nodemailer");
 
 function sendEmail(req, res, id, registerList) {
 
-    console.log('init SMTP Server')
-
     var transport = nodemailer.createTransport("SMTP", {
         host: "smtp.163.com",
         secureConnection: true, // use SSL
         port: 465, // port for secure SMTP
         auth: {
             user: "sjplus@163.com",
-            pass: "Hello1234"
+            pass: "******"
         }
     });
 
-    console.log('Start send email')
+    var url = 'http://' + req.headers.host + '/register/validator/' + id.toString()
 
     transport.sendMail({
         from: "sjplus@163.com",
-        to: "xiongsongsong@beyondsoft.com",
-        subject: "Please click url complete register",
+        to: req.body.__,
+        subject: "视界+需要验证您的邮箱",
         generateTextFromHTML: true,
-        html: '<h1>' + req.body._ + '</h1>' +
-            '<p>Thanks you register sjplus:Please click on the link below to complete registration.</p>' +
-            '<p><a href="http://' + req.headers.host + '/register/validator/' + id.toString() + '">Complete registration!</a></p>'
+        html: '<h3>' + req.body._ + '，请点击下方链接完成注册</h3>' +
+            '<p>如果您的浏览器不支持链接，请复制到地址栏中进行访问</p>' +
+            '<p><a href="' + url + '" target="_blank">' + url + '</a></p>'
     }, function (error, response) {
         if (error) {
             console.log('Send Fail :', error);
-            res.json({status: -11, err: "Fail,Send Email fail"})
+            res.json({status: -5, err: "Fail,Send Email fail"})
             registerList.remove({id: id.toString}, {w: 1}, function (err) {
                 console.log('remove register id:', id.toString())
             })
         } else {
             console.log("Message sent success: " + response.message);
-
+            res.json({status: 1, msg: "Success"})
         }
         transport.close();
     });
