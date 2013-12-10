@@ -44,7 +44,7 @@ define("sjplus/global/0.0.1/login/login-debug", [ "popup-debug", "sjplus/global/
                     return window._csrf_token_;
                 }()
             }, function(data) {
-                if (data && S.keys(data.userSessionNotice).length > 0) {
+                if (data && data.userSessionNotice && S.keys(data.userSessionNotice).length > 0) {
                     window.location.reload();
                     return;
                 }
