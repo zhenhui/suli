@@ -89,7 +89,7 @@ define(function (require, exports, module) {
 
     function reflushCaptcha(ev) {
         ev.preventDefault()
-        $captchaTrigger[0].src = '/captcha?t=' + new Date().getTime()
+        $(this).find('img')[0].src = '/captcha?t=' + new Date().getTime()
     }
 
 
