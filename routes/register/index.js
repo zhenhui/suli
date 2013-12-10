@@ -151,8 +151,7 @@ app.post('/register', function (req, res) {
                                 res.json({status: -10, err: "create user fail"})
                                 return
                             }
-                            sendEmail(req, res, id, user)
-
+                            sendEmail(req, res, id, registerList)
                         })
 
 
@@ -170,7 +169,7 @@ app.post('/register', function (req, res) {
 
 var nodemailer = require("nodemailer");
 
-function sendEmail(req, res, id, user) {
+function sendEmail(req, res, id, registerList) {
 
     console.log('init SMTP Server')
 
@@ -198,6 +197,9 @@ function sendEmail(req, res, id, user) {
         if (error) {
             console.log('Send Fail :', error);
             res.json({status: -11, err: "Fail,Send Email fail"})
+            registerList.remove({id: id.toString}, {w: 1}, function (err) {
+                console.log('remove register id:', id.toString())
+            })
         } else {
             console.log("Message sent success: " + response.message);
 
