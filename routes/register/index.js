@@ -116,55 +116,8 @@ app.post('/register', function (req, res) {
                         return
                     }
 
+                    sendEmail(req, res, user, registerList)
 
-                    //Create register url
-                    var id = crypto.sha3(req.body._ + req.body.__ + Math.random() + Date.now().toString(), {outputLength: 224 })
-                    var log = {
-                        id: id.toString(),
-                        user: req.body._,
-                        email: req.body.__,
-                        body: req.body,
-                        headers: req.headers,
-                        //Click count
-                        count: 0,
-                        ts: Date.now()
-                    }
-
-                    registerList.insert(log, {w: 1}, function (err) {
-                        if (err) {
-                            res.json({status: -2, err: "Fail: on insert register-list"})
-                            return
-                        }
-
-                        //insert user
-
-                        //Start insert user
-                        var newUser = {
-                            "user": req.body._,
-                            "pwd": req.body.___,
-                            "email": req.body.__,
-                            "group": [
-                                "上传个人作品"
-                            ],
-                            "index": {
-                                "design-works": 0,
-                                "article": 0,
-                                "follow": 0,
-                                "follower": 0
-                            },
-                            //0 means that the freezing of accounts
-                            "status": 0,
-                            "ts": Date.now()
-                        }
-
-                        user.insert(newUser, {w: 1}, function (err) {
-                            if (err) {
-                                res.json({status: -4, err: "create user fail"})
-                                return
-                            }
-                            sendEmail(req, res, id, registerList)
-                        })
-                    })
                 })
             })
         })
@@ -174,7 +127,9 @@ app.post('/register', function (req, res) {
 
 var nodemailer = require("nodemailer");
 
-function sendEmail(req, res, id, registerList) {
+function sendEmail(req, res, user, registerList) {
+
+    var id = crypto.sha3(req.body._ + req.body.__ + Math.random() + Date.now().toString(), {outputLength: 224 })
 
     var transport = nodemailer.createTransport("SMTP", {
         host: "smtp.163.com",
@@ -182,7 +137,7 @@ function sendEmail(req, res, id, registerList) {
         port: 465, // port for secure SMTP
         auth: {
             user: "sjplus@163.com",
-            pass: "******"
+            pass: "Hello1234"
         }
     });
 
@@ -200,14 +155,67 @@ function sendEmail(req, res, id, registerList) {
         if (error) {
             console.log('Send Fail :', error);
             res.json({status: -5, err: "Fail,Send Email fail"})
-            registerList.remove({id: id.toString}, {w: 1}, function (err) {
-                console.log('remove register id:', id.toString())
-            })
+
         } else {
             console.log("Message sent success: " + response.message);
             res.json({status: 1, msg: "Success"})
+
+
+            //发送成功后才进行数据库的插入和添加
+            var log = {
+                id: id.toString(),
+                user: req.body._,
+                email: req.body.__,
+                body: req.body,
+                headers: req.headers,
+                //Click count
+                count: 0,
+                ts: Date.now()
+            }
+
+            registerList.insert(log, {w: 1}, function (err) {
+                if (err) {
+                    res.json({status: -2, err: "Fail: on insert register-list"})
+                    return
+                }
+
+                //insert user
+
+                //Start insert user
+                var newUser = {
+                    "user": req.body._,
+                    "pwd": req.body.___,
+                    "email": req.body.__,
+                    "group": [
+                        "上传个人作品"
+                    ],
+                    "index": {
+                        "design-works": 0,
+                        "article": 0,
+                        "follow": 0,
+                        "follower": 0
+                    },
+                    //0 means that the freezing of accounts
+                    "status": 0,
+                    "ts": Date.now()
+                }
+
+                user.insert(newUser, {w: 1}, function (err) {
+                    if (err) {
+                        res.json({status: -4, err: "create user fail"})
+                        registerList.remove({id: id.toString}, {w: 1}, function (err) {
+                            console.log('remove register id:', id.toString(), err)
+                        })
+                        return
+                    }
+                    res.json({status: 1, msg: "success"})
+                });
+            });
+
         }
         transport.close();
     });
 
 }
+
+
