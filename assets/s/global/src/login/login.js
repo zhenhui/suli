@@ -96,6 +96,8 @@ define(function (require, exports, module) {
         }
     })
 
+    exports.loginPopup = popup
+
     exports.login = function (callback) {
         popup.show()
         if (typeof callback === 'function') loginCallBack.push(callback)

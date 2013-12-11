@@ -79,6 +79,7 @@ define("sjplus/global/0.0.1/login/login-debug", [ "popup-debug", "sjplus/global/
             baseXY: [ -180, -20 ]
         }
     });
+    exports.loginPopup = popup;
     exports.login = function(callback) {
         popup.show();
         if (typeof callback === "function") loginCallBack.push(callback);

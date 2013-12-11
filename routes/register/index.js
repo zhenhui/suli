@@ -219,3 +219,51 @@ function sendEmail(req, res, user, registerList) {
 }
 
 
+app.get(/\/register\/validator\/([a-z0-9]{56})/, function (req, res) {
+
+    //Check Unique
+    //var user = new db.Collection(db.userClient, 'user')
+    var registerList = new db.Collection(db.userClient, 'register-list')
+
+    registerList.findOne({id: req.params[0]}, function (err, docs) {
+
+        var result = {}
+
+
+        if (!err && docs) {
+            //2天内有效
+            if (docs.ts + (48 * 3600 * 1000) > Date.now()) {
+                result.status = 1
+                result.user = docs.user
+                result.email = docs.email
+
+                //激活用户账户
+                if (docs.count === 0) {
+                    var user = new db.Collection(db.userClient, 'user')
+                    user.update({email: docs.email}, {$set: {status: 1}}, {}, function (err, docs) {
+                        if (err) console.log('Fail:激活账户是发生错误')
+                        if (docs) {
+                            console.log('成功激活账户')
+                        } else {
+                            console.log('Fail:无法激活账户')
+                        }
+                    })
+                }
+
+                //如果重复打开完成注册页面的URL，则+1
+                registerList.update({id: req.params[0]}, {$inc: {count: 1}}, {}, function (err, docs) {
+
+                })
+            } else {
+                result.status = -2
+            }
+        } else {
+            result.status = -2
+        }
+
+
+        res.render('register/validator', result)
+
+    })
+
+})
