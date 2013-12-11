@@ -43,7 +43,7 @@ block content
                     input.form-control(type="text",name="page_name",placeholder="页面名称",size="100")
                 .form-group
                     input.form-control(type="text",name="page_url",placeholder="页面访问的URL",size="150")
-                    input(type="hidden",name="_csrf",value="#{token}")
+                    input(type="hidden",name="_csrf",value="#{req.csrfToken()}")
                 .form-group
                     textarea.form-control#textarea(name="content",rows=10,cols=150)
                 .form-group
