@@ -1,0 +1,8 @@
+.active-info {
+  margin: 12px auto;
+  padding: 40px 12px;
+  font-size: 14px;
+  min-height: 400px;
+  background: #fff;
+  line-height: 230%;
+}
