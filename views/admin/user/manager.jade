@@ -15,7 +15,7 @@ block content
             a(href="#fixed-bug",data-toggle="tab") 进程操作
     .tab-content
         form#add-user.tab-pane.active(action="/admin/user/add-user",method="post",name="add-user")
-            input(type="hidden",name="_csrf",value="#{token}")
+            input(type="hidden",name="_csrf",value="#{req.csrfToken()}")
             table.table.table-bordered.table-striped.table-condensed
                 tr
                     th(width) 用户名
