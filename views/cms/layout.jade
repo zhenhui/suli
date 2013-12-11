@@ -13,7 +13,7 @@ html
         block content
 
         script.
-            window._csrf_token_='#{token}'
+            window._csrf_token_='#{req.csrfToken()}'
             KISSY.config({
                 modules: {
                     'sizzle': { alias: ['node'] },
