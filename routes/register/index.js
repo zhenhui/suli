@@ -5,6 +5,7 @@
 var app = require('app')
 var db = require('db')
 var crypto = require('sha3')
+var helper = require('helper')
 
 app.get('/register', function (req, res) {
     res.render('register/index')
@@ -221,14 +222,19 @@ function sendEmail(req, res, user, registerList) {
 
 app.get(/\/register\/validator\/([a-z0-9]{56})/, function (req, res) {
 
+    var result = {}
+
+    if (helper.isLogin(req)) {
+        result.status = -3
+        res.render('register/validator', result)
+        return
+    }
+
     //Check Unique
     //var user = new db.Collection(db.userClient, 'user')
     var registerList = new db.Collection(db.userClient, 'register-list')
 
     registerList.findOne({id: req.params[0]}, function (err, docs) {
-
-        var result = {}
-
 
         if (!err && docs) {
             //2天内有效

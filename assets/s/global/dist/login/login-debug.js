@@ -51,7 +51,7 @@ define("sjplus/global/0.0.1/login/login-debug", [ "popup-debug", "sjplus/global/
                 updateCsrfToken(data._csrf_token_);
                 switch (data.status) {
                   case 1:
-                    loginSuccess(data);
+                    location.reload(true);
                     break;
 
                   case -1:
@@ -106,17 +106,6 @@ define("sjplus/global/0.0.1/login/login-debug", [ "popup-debug", "sjplus/global/
     });
     function loginSuccess(data) {
         if (popup && popup.element) popup.element.fadeOut(100);
-        $(".J-login-register-triggers").css({
-            marginTop: -19
-        });
-        $(".login-user-info").css({
-            top: 0
-        });
-        $(".login-user-info img").css({
-            width: 20,
-            height: 20,
-            opacity: 1
-        });
         initPersonMenu(data);
     }
     function loginFail() {

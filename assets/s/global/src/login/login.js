@@ -65,7 +65,7 @@ define(function (require, exports, module) {
 
                 switch (data.status) {
                     case 1:
-                        loginSuccess(data)
+                        location.reload(true)
                         break
                     case -1:
                         loginFail()
@@ -123,14 +123,8 @@ define(function (require, exports, module) {
 
 
     function loginSuccess(data) {
-
         if (popup && popup.element) popup.element.fadeOut(100)
-
-        $('.J-login-register-triggers').css({ marginTop: -19 })
-        $('.login-user-info').css({top: 0})
-        $('.login-user-info img').css({width: 20, height: 20, opacity: 1})
         initPersonMenu(data)
-
     }
 
     function loginFail() {
