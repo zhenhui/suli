@@ -17,7 +17,7 @@ app.get('/design-works/json/category', function (req, res) {
     designWorks.distinct('category', {status: {$gte: 1}}, function (err, docs) {
         var readyNum = 0
         docs.forEach(function (_category) {
-            designWorks.count({category: _category}, function (err, count) {
+            designWorks.count({category: _category,status: {$gte: 1}}, function (err, count) {
                 readyNum++
                 if (!err) {
                     category[_category] = count
