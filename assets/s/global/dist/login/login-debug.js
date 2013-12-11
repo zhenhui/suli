@@ -44,14 +44,14 @@ define("sjplus/global/0.0.1/login/login-debug", [ "popup-debug", "sjplus/global/
                     return window._csrf_token_;
                 }()
             }, function(data) {
-                if (data && data.userSessionNotice && S.keys(data.userSessionNotice).length > 0) {
-                    window.location.reload();
-                    return;
+                var length = loginCallBack.length;
+                for (var i = 0; i < length; i++) {
+                    loginCallBack[i](data);
                 }
                 updateCsrfToken(data._csrf_token_);
                 switch (data.status) {
                   case 1:
-                    location.reload(true);
+                    if (loginCallBack.length < 1) location.reload(true);
                     break;
 
                   case -1:
@@ -61,9 +61,6 @@ define("sjplus/global/0.0.1/login/login-debug", [ "popup-debug", "sjplus/global/
                   case -2:
                     loginFail();
                     break;
-                }
-                for (var i = 0, length = loginCallBack.length; i < length; i++) {
-                    loginCallBack.shift()(data);
                 }
             }, "json");
         }

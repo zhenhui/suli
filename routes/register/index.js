@@ -8,12 +8,15 @@ var crypto = require('sha3')
 var helper = require('helper')
 
 app.get('/register', function (req, res) {
+    if (!helper.isLogin(req)) {
+
+    }
     res.render('register/index')
 })
 
 var emailRe = /(?:[a-z0-9!#$%&'*+/=?^_{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
 
-var userNameRe = /^[\u4e00-\u9fa5a-z][\u4e00-\u9fa5a-z0-9]{2,}$/
+var userNameRe = /^[\u4e00-\u9fa5a-z][\u4e00-\u9fa5a-z0-9_-]{2,28}$/
 
 app.post('/register', function (req, res) {
 
@@ -34,7 +37,7 @@ app.post('/register', function (req, res) {
     delete req.session.captcha
 
 
-    if (!userNameRe.test(req.body._) || req.body._.length > 8) {
+    if (!userNameRe.test(req.body._)) {
         errResult.err.push({
             '_': 'user name fail'
         })
@@ -77,7 +80,7 @@ app.post('/register', function (req, res) {
     }, {user: 1}, function (err, count) {
 
         if (!err && count > 0) {
-            errResult.err.push({'_': 'user exist'})
+            errResult.err.push({'_': req.body._ + ' 已被使用。'})
         }
 
         // step 2
@@ -88,7 +91,7 @@ app.post('/register', function (req, res) {
             //check register logs
 
             if (!err && count > 0) {
-                errResult.err.push({'__': 'email exist'})
+                errResult.err.push({'__': req.body.__ + ' 已被注册。'})
             }
 
             if (errResult.err.length > 0) {

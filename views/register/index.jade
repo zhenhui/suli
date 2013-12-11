@@ -8,13 +8,13 @@ block content
             #register-wrapper
                 #register-type-container
                     img(src="#{assetsCDN}/s/register/img/email-type.png")
-                    h2 Email Register
-                    p use  email account register
+                    h2 视界+账户注册
+                    p 使用用户名和邮箱注册
                 form#register-form(name="register",action="/register",method="post")
                     .require-field
-                        input(type="text",name="_",placeholder="user account")
-                        input(type="text",name="__",placeholder="email account")
-                        input(type="text",name="___",placeholder="Password")
+                        input(type="text",name="_",placeholder="用户名，至少3个字符")
+                        input(type="text",name="__",placeholder="常用邮箱")
+                        input(type="text",name="___",placeholder="密码，至少3位")
                     #tips-wrapper
                         .tips-content
                     #submit-wrapper.submit
@@ -25,8 +25,8 @@ block content
                         span.label
                             input#read-rule(type="checkbox",name="read-rule",value="yes")
                             label(for="read-rule") 同意注册协议
-                        input(type="button",value="Cancel").btn.btn-large
-                        input(type="submit",value="Register").btn.btn-large.btn-highlight
+                        input(type="button",value="取消注册").btn.btn-large
+                        input(type="submit",value="提交注册").btn.btn-large.btn-highlight
 block js
     script(src="#{assetsCDN}/s/register/dist/init.js")
     script.

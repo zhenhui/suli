@@ -14,7 +14,7 @@ define(function (require, exports, module) {
     var ele = form.elements
 
     var emailRe = /(?:[a-z0-9!#$%&'*+/=?^_{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
-    var userNameRe = /^[\u4e00-\u9fa5a-z][\u4e00-\u9fa5a-z0-9]{2,}$/
+    var userNameRe = /^[\u4e00-\u9fa5a-z][\u4e00-\u9fa5a-z0-9_-]{2,28}$/
 
     var $tipsWrapper = $('#tips-wrapper')
     var $tips = $tipsWrapper.find('.tips-content')
@@ -51,47 +51,46 @@ define(function (require, exports, module) {
         var captcha = ele['captcha'].value              //captcha
         var readRule = ele['read-rule']
 
-        var err = 0
+        var err = []
 
         //validator user name
         if (!userNameRe.test(_)) {
-            console.log('user name fail')
             $(ele['_']).addClass('error')
-            err++
+            err.push('用户名不符合规则')
         }
 
         //validator email
         if (!emailRe.test(__)) {
-            console.log('email fail')
+            err.push('邮箱格式不正确')
             $(ele['__']).addClass('error')
-            err++
         }
 
         //validator password
         if (!/^[^\s]{3,}$/.test(___)) {
-            console.log('password fail')
+            err.push('密码不符合规则')
             $(ele['___']).addClass('error')
-            err++
         }
 
         //validator captcha
         if (!/^[^\s]{4}$/.test(captcha)) {
-            console.log('captcha fail')
+            err.push('验证码请输入正确')
             $(ele['___']).addClass('error')
-            err++
         }
 
         //validator rule
         if (!readRule.checked || readRule.value !== 'yes') {
-            console.log('rule fail')
+            err.push('请同意注册协议')
             $(ele['___']).addClass('error')
-            err++
         }
 
-        if (err > 0) {
+        if (err.length > 0) {
+            showInfo(S.map(err, function (str, index) {
+                return '<p>' + (index + 1) + '：' + str + '</p>'
+            }))
             console.log('register abort')
             return
         }
+
 
         $.ajax({
             url: form.action,
@@ -116,45 +115,59 @@ define(function (require, exports, module) {
                     $('.require-field').slideUp(100)
 
                     if (mailMap[emailHost]) {
-                        $tips.html('视界+发送了一封邮件到您的邮箱中， ' + '<a href="' + mailMap[emailHost] + '" style="text-decoration:underline;">现在就去验证!</a> ')
+                        showInfo('视界+发送了一封邮件到您的邮箱中， ' + '<a href="' + mailMap[emailHost] + '" style="text-decoration:underline;">现在就去验证!</a> ')
                     } else {
-                        $tips.html('视界+发送了一封邮件到您的邮箱中，请点击里面的链接完成注册。')
+                        showInfo('<p>视界+发送了一封邮件到：' + __ + '。</p><p>如未找到，请检查垃圾邮箱中是否存在。</p>')
                     }
+                    $tipsWrapper.slideDown()
                     return
                 }
 
                 reflushCaptcha()
+                form.elements['captcha'].value = ''
 
                 switch (data.status) {
                     case -1:
                         var str = []
                         S.each(data.err, function (obj) {
                             S.each(S.keys(obj), function (err) {
-                                str.push(obj[err])
+                                str.push('<p>' + obj[err] + '</p>')
                             })
                         })
-                        $tips.html(str.join(','))
+                        showInfo(str.join(''))
                         break;
                     case -2:
-                        $tips.html('Fail: on insert register-list')
+                        showInfo('生成注册详情时出错')
                         break;
                     case -4:
-                        $tips.html('create user fail')
+                        showInfo('创建用户失败')
                         break;
                     case -5:
-                        $tips.html('send mail fail')
+                        showInfo('无法发送注册邮件，请联系管理员')
                         break;
                     case -10:
-                        $tips.html('captcha fail')
+                        showInfo('验证码错误')
                         break;
                 }
 
 
             }).error(function () {
                 reflushCaptcha()
-                $tips.html('Server Error')
+                showInfo('服务器内部错误，请联系管理员。')
+
             })
     })
+
+
+    function showInfo(txt) {
+        $tips.html(txt)
+        $tipsWrapper.show()
+    }
+
+    function hideInfo() {
+        $tipsWrapper.hide()
+    }
+
 
     var $captchaTrigger = $('#captchaTrigger')
     $captchaTrigger.on('click', reflushCaptcha)

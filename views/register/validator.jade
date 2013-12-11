@@ -21,8 +21,17 @@ block js
             $('#start-login-trigger').on('click',function(ev){
                 ev.stopPropagation()
                 ev.preventDefault()
-                login.login(function(){
-                    location.href='/'
-                })
+                var $this=$(this)
+                if(!$this.data('is-bind')){
+                    login.login(function(data){
+                        if(data.status===1){
+                            location.href='/'
+                        }
+                    })
+                    console.log('done')
+                    $this.data('is-bind',true)
+                }else{
+                    login.login()
+                }
             })
         })
