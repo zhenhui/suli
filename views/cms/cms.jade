@@ -1,7 +1,11 @@
 extends layout
 block js
+    script(src='#{assetsCDN}/s/cms/dist/??init.js,rollback/init.js,compile-template.js')
     script.
-        seajs.use('s/cms/compile-template')
+        seajs.use([
+            'sjplus/cms/stable/compile-template',
+            'sjplus/cms/stable/rollback/init'
+        ])
 block css
     link(rel="stylesheet",type="text/css",href="/s/cms/cms.css")
 block content
@@ -48,6 +52,3 @@ block content
                     textarea.form-control#textarea(name="content",rows=10,cols=150)
                 .form-group
                     input.btn.btn-danger(type="submit",value="创建页面")
-
-        script.
-            seajs.use('/s/cms/init')

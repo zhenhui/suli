@@ -28,91 +28,6 @@ app.get('/admin/user', function (req, res) {
     })
 })
 
-
-//保存新用户
-app.post('/admin/user/add-user', function (req, res) {
-
-    var result = {err: []}
-
-    if (require('helper').isLogin(req) === false) {
-        result.status = -1
-        result.err.push('未登陆')
-        res.json(result)
-        return
-    }
-
-    var body = req.body
-
-    var info = {}
-
-    var user_name = (typeof req.body._ === 'string' ? req.body._ : '').trim()
-    var pwd = (typeof req.body.__ === 'string' ? req.body.__ : '').trim()
-
-    if (user_name.length < 2 || user_name.length > 50) {
-        info.msg = '用户名长度不符合要求'
-        info.success = false
-        res.json(info)
-        return
-    }
-
-    if (/^[a-z\d]{128}$/.test(pwd) === false) {
-        info.msg = '密码非法'
-        info.success = false
-        res.json(info)
-        return
-    }
-
-    var new_user = {
-        user: user_name,
-        pwd: pwd,
-        index: {
-            //作品数量
-            'design-works': 0,
-            //文章数量
-            article: 0,
-            //我关注的人数
-            follow: 0,
-            //关注了我的人数
-            follower: 0
-        },
-        status: 1,
-        ts: Date.now()
-    }
-
-    if (body.group) new_user.group = body.group.trim().split(/\s+/)
-
-    helper.getGroup(req, function (group) {
-        if (Array.isArray(group) === false) {
-            res.render('invalid-group', {title: '无权限', err: [ '无法获取权限信息']})
-            return
-        }
-        if (group.indexOf('管理员') >= 0) {
-            var user = new db.Collection(db.userClient, 'user')
-            user.findOne({user: user_name}, {_id: 1}, function (err, isExist) {
-                if (!err && !isExist) {
-                    user.insert(new_user, {safe: true}, function (err, docs) {
-                        if (!err && docs) {
-                            info.success = true
-                        } else {
-                            info.msg = '无法新建用户'
-                            info.success = false
-                        }
-                        res.json(info)
-                    })
-                } else {
-                    info.msg = '用户已经存在'
-                    info.success = false
-                    res.json(info)
-                }
-            })
-        } else {
-            info.msg = '您没有权限'
-            info.success = false
-            res.json(info)
-        }
-    })
-})
-
 //更新用户组的权限
 app.post('/admin/user/update/group', function (req, res) {
 
@@ -202,7 +117,7 @@ app.post('/admin/user/update/password', function (req, res) {
     user.update({_id: id, pwd: req.body.p1}, {$set: {pwd: req.body.p2}}, {}, function (err, _result) {
         if (!err && _result > 0) {
             result.status = 1
-            helper.removeUserSessionNotice(req,'require_modify_pwd')
+            helper.removeUserSessionNotice(req, 'require_modify_pwd')
         } else {
             result.status = -6
             result.err.push('请检查原密码是否正确')

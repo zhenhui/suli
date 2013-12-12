@@ -1,0 +1,16 @@
+{
+    "family": "sjplus",
+    "name": "cms",
+    "version": "stable",
+    "description": "cms",
+    "spm": {
+        "include": "relative",
+        "output": [
+            "init.js",
+            "compile-template.js",
+            "data/init.js",
+            "rollback/init.js"
+        ]
+
+    }
+}
