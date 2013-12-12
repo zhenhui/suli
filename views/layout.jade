@@ -6,7 +6,7 @@ html
         link(rel="icon",href="/favicon.ico",type="image/x-icon")
         link(rel="shortcut icon",href="/favicon.ico",type="image/x-icon")
         title 视界 Beta
-        link(rel='stylesheet', href='#{assetsCDN}/s/??reset.css,global.css,font.css?t=20131209.css')
+        link(rel='stylesheet', href='#{assetsCDN}/s/??reset.css,global.css,font.css?t=20131213.css')
         | <!--[if lte IE 7]><script src="#{assetsCDN}/s/fonts/lte-ie7.js"></script><![endif]-->
         script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js",data-config="{combine:true}")
         block css
@@ -26,7 +26,7 @@ html
             window['assetsCDN']='#{assetsCDN}'
             window['imgCDN']='#{imgCDN}'
             if(!window.console)window.console={log:function(){}}
-        script(id="seajsnode",src="#{assetsCDN}/s/??sea.js,seajs-combo.js,sea-style.js,global/jquery.js,config.js?t=20131209.js")
+        script(id="seajsnode",src="#{assetsCDN}/s/??sea.js,seajs-combo.js,sea-style.js,global/jquery.js,config.js?t=20131213.js")
     body
         #navigation
             .wrapper
@@ -94,5 +94,5 @@ html
             -})
 
         script.
-            //var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-            //document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F03fa9269ff13e7c3893916e712b703ee' type='text/javascript'%3E%3C/script%3E"));
+            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F03fa9269ff13e7c3893916e712b703ee' type='text/javascript'%3E%3C/script%3E"));
