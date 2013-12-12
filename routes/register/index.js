@@ -16,7 +16,7 @@ app.get('/register', function (req, res) {
 
 var emailRe = /^(?:\w+\.?)*\w+@(?:\w+\.)+\w+$/
 
-var userNameRe = /^[\u4e00-\u9fa5A-Za-z][\u4e00-\u9fa5A-Za-z0-9_-]{2,28}$/
+var userNameRe = /^[\u4e00-\u9fa5A-Za-z][\u4e00-\u9fa5A-Za-z0-9_-]{1,28}$/
 
 app.post('/register', function (req, res) {
 
