@@ -21,8 +21,8 @@ var fileSize = 10 * 1024 * 1000
 //缩略图规格
 var resizeParam = [
     {
-        width: 230,
-        height: 175,
+        width: 460,
+        height: 350,
         quality: 90
     },
     {
@@ -168,14 +168,16 @@ exports.saveFile = function (req, res) {
                 break;
         }
 
-        _gm.resize(460, 350, '!').write(qualityPath, function (err) {
+        var defaultWidth = 230
+        var defaultHeight = 175
+        _gm.resize(defaultWidth, defaultHeight, '!').write(qualityPath, function (err) {
                 if (!err) {
-                    var fileName = file.fileId + '_' + size.width + 'x' + size.height + '.' + file.format
+                    var fileName = file.fileId + '_' + defaultWidth + 'x' + defaultHeight + '.' + file.format
                     var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
                     gs.writeFile(qualityPath, function (err) {
                         if (!err) {
                             //此ID用作返回给客户端
-                            uploadInfo._id = file.fileId + '_' + resizeParam[0].width + 'x' + resizeParam[0].height + '.' + file.format
+                            uploadInfo._id = fileName
                             console.log('成功保存原图' + fileName)
                         } else {
                             uploadInfo.err.push('无法保存优化后的图片到数据库中')

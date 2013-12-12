@@ -136,19 +136,19 @@ function sendEmail(req, res, user, registerList) {
     var id = crypto.sha3(req.body._ + req.body.__ + Math.random() + Date.now().toString(), {outputLength: 224 })
 
     var transport = nodemailer.createTransport("SMTP", {
-        host: "smtp.163.com",
+        host: "smtp.exmail.qq.com",
         secureConnection: true, // use SSL
         port: 465, // port for secure SMTP
         auth: {
-            user: "sjplus@163.com",
-            pass: "Hello1234"
+            user: "sjplus@sjplus.cn",
+            pass: ""
         }
     });
 
     var url = 'http://' + req.headers.host + '/register/validator/' + id.toString()
 
     transport.sendMail({
-        from: "sjplus@163.com",
+        from: "视界+ <sjplus@sjplus.cn>",
         to: req.body.__,
         subject: "视界+需要验证您的邮箱",
         generateTextFromHTML: true,
