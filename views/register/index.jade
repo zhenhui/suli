@@ -25,7 +25,7 @@ block content
                         span.label
                             input#read-rule(type="checkbox",name="read-rule",value="yes")
                             label(for="read-rule") 同意注册协议
-                        input(type="button",value="取消").btn.btn-large
+                        input(type="button",value="取消",onclick="location,history.back()").btn.btn-large
                         input(type="submit",value="申请注册").btn.btn-large.btn-highlight
 block js
     script(src="#{assetsCDN}/s/register/dist/init.js")

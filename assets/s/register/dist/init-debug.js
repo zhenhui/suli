@@ -32,6 +32,10 @@ define("sjplus/register/0.0.1/init-debug", [ "sjplus/global/0.0.1/crypto/sha3-de
         "wo.com.cn": "http://mail.wo.com.cn/",
         "263.net": "http://www.263.net/"
     };
+    $form.on("keydown", function(ev) {
+        console.log(ev.target);
+        hideInfo();
+    });
     $form.on("submit", function(ev) {
         ev.preventDefault();
         var _ = $.trim(ele["_"].value);
@@ -139,10 +143,10 @@ define("sjplus/register/0.0.1/init-debug", [ "sjplus/global/0.0.1/crypto/sha3-de
     });
     function showInfo(txt) {
         $tips.html(txt);
-        $tipsWrapper.show();
+        $tipsWrapper.slideDown();
     }
     function hideInfo() {
-        $tipsWrapper.hide();
+        $tipsWrapper.slideUp();
     }
     var $captchaTrigger = $("#captchaTrigger");
     $captchaTrigger.on("click", reflushCaptcha);

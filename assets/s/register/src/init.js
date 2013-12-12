@@ -41,6 +41,11 @@ define(function (require, exports, module) {
         "263.net": "http://www.263.net/"
     }
 
+    $form.on('keydown', function (ev) {
+        console.log(ev.target)
+        hideInfo()
+    })
+
     $form.on('submit', function (ev) {
 
         ev.preventDefault()
@@ -161,11 +166,11 @@ define(function (require, exports, module) {
 
     function showInfo(txt) {
         $tips.html(txt)
-        $tipsWrapper.show()
+        $tipsWrapper.slideDown()
     }
 
     function hideInfo() {
-        $tipsWrapper.hide()
+        $tipsWrapper.slideUp()
     }
 
 
