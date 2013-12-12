@@ -7,8 +7,8 @@ define("sjplus/register/0.0.1/init-debug", [ "sjplus/global/0.0.1/crypto/sha3-de
     var sha3 = require("sjplus/global/0.0.1/crypto/sha3-debug");
     var $form = $(form);
     var ele = form.elements;
-    var emailRe = /(?:[a-z0-9!#$%&'*+/=?^_{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-    var userNameRe = /^[\u4e00-\u9fa5a-z][\u4e00-\u9fa5a-z0-9_-]{2,28}$/;
+    var emailRe = /^(?:\w+\.?)*\w+@(?:\w+\.)+\w+$/;
+    var userNameRe = /^[\u4e00-\u9fa5A-Za-z][\u4e00-\u9fa5A-Za-z0-9_-]{2,28}$/;
     var $tipsWrapper = $("#tips-wrapper");
     var $tips = $tipsWrapper.find(".tips-content");
     var mailMap = {

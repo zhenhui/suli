@@ -12,9 +12,9 @@ block content
                     p 使用用户名和邮箱注册
                 form#register-form(name="register",action="/register",method="post")
                     .require-field
-                        input(type="text",name="_",placeholder="用户名，至少3个字符")
-                        input(type="text",name="__",placeholder="常用邮箱")
-                        input(type="password",name="___",placeholder="密码，至少3位")
+                        input(type="text",autocomplete="off",name="_",placeholder="用户名，至少3个字符")
+                        input(type="text",autocomplete="off",name="__",placeholder="常用邮箱")
+                        input(type="password",autocomplete="off",name="___",placeholder="密码，至少3位")
                     #tips-wrapper
                         .tips-content
                     #submit-wrapper.submit
