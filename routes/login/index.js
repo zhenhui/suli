@@ -17,52 +17,70 @@ app.post('/login', function (req, res) {
 
     var result = {}
 
-    user.findOne({
-        user: req.body._,
-        pwd: req.body.__
-    }, {_id: 1, user: 1, ts: 1}, function (err, data) {
-        if (err === null && data !== null) {
-            result._id = data._id
-            result.status = 1
-            result.msg = '登陆成功'
-            result.user = data.user;
+    if (typeof req.body._ === 'string' && typeof req.body.__ === 'string') {
+
+
+        user.findOne({
+            user: req.body._,
+            pwd: req.body.__
+        }, {_id: 1, user: 1, ts: 1}, function (err, data) {
+            if (err === null && data !== null) {
+                result._id = data._id
+                result.status = 1
+                result.msg = '登陆成功'
+                result.user = data.user;
+                result._csrf_token_ = req.csrfToken()
+
+                req.session.login_ts = Date.now()
+                req.session.user = data.user
+                req.session._id = data._id
+                console.log(data.user + '登陆成功')
+
+                //if pwd not modify
+                if (req.body.__ === '8ca32d950873fd2b5b34a7d79c4a294b2fd805abe3261beb04fab61a3b4b75609afd6478aa8d34e03f262d68bb09a2ba9d655e228c96723b2854838a6e613b9d') {
+                    //10 is the highest and information with very danger
+                    helper.addUserSessionNotice(req, 'require_modify_pwd', 10)
+                }
+
+            } else {
+                result.status = -2
+                result.msg = '用户名或密码不正确'
+                console.log(req.body._ + '登陆失败')
+            }
+            result.userSessionNotice = req.session.userSessionNotice
             result._csrf_token_ = req.csrfToken()
-
-            req.session.login_ts = Date.now()
-            req.session.user = data.user
-            req.session._id = data._id
-            console.log(data.user + '登陆成功')
-
-            //if pwd not modify
-            if (req.body.__ === '8ca32d950873fd2b5b34a7d79c4a294b2fd805abe3261beb04fab61a3b4b75609afd6478aa8d34e03f262d68bb09a2ba9d655e228c96723b2854838a6e613b9d') {
-                //10 is the highest and information with very danger
-                helper.addUserSessionNotice(req, 'require_modify_pwd', 10)
-            }
-
-        } else {
-            result.status = -2
-            result.msg = '用户名或密码不正确'
-            console.log(req.body._ + '登陆失败')
-        }
-        result.userSessionNotice = req.session.userSessionNotice
-        result._csrf_token_ = req.csrfToken()
-        res.json(result)
+            res.json(result)
 
 
-        //保存用户登陆日志
-        delete result._csrf_token_
-        var log = {body: req.body, headers: req.headers, result: result, ts: Date.now()}
-        var logCollection = new db.Collection(db.userClient, 'login-log')
-        console.log('开始保存登陆日志：', Date.now())
-        logCollection.insert(log, {w: 1}, function (err) {
-            if (err) {
-                console.log('失败：无法保存登陆日志', log)
-            }
+            //保存用户登陆日志
+            delete result._csrf_token_
+            var log = {body: req.body, headers: req.headers, result: result, ts: Date.now()}
+            var logCollection = new db.Collection(db.userClient, 'login-log')
+            console.log('开始保存登陆日志：', Date.now())
+            logCollection.insert(log, {w: 1}, function (err) {
+                if (err) {
+                    console.log('失败：无法保存登陆日志', log)
+                }
+            })
+
         })
-
-    })
-
+    } else {
+        saveLoginLog()
+    }
 })
+
+function saveLoginLog() {
+    //保存用户登陆日志
+    var log = {body: req.body, headers: req.headers, ts: Date.now()}
+    var logCollection = new db.Collection(db.userClient, 'login-log')
+    console.log('Fail,非法登陆,开始保存登陆日志：', Date.now())
+    logCollection.insert(log, {w: 1}, function (err) {
+        if (err) {
+            console.log('失败：无法保存登陆日志', log)
+        }
+    })
+}
+
 
 //判断当前是否为登陆状态
 app.get('/login/is-login', function (req, res) {
