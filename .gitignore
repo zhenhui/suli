@@ -3,3 +3,4 @@ D:
 test.html
 test*.html
 node_modules/captcha/*.img
+static
