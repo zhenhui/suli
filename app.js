@@ -9,8 +9,11 @@ var db = require('db')
 
 var app = express();
 
+//Assets目錄
 global.assetsDir = path.join(__dirname, 'assets')
-exports.projectRootDir = __dirname
+
+//項目根目錄
+global.projectRootDir = __dirname
 
 function start() {
 // all environments

@@ -9,7 +9,10 @@ var idRe = /[\{\s,]id[\s]*:[\s]*([a-z0-9]{40})/
 var crypto = require('crypto')
 var maxNum = 6000
 var path = require('path')
-exports.staticBaseDir = path.join('D:', 'static')
+var app = require('app')
+
+
+exports.staticBaseDir = path.join(global.projectRootDir, 'cms-static')
 
 exports.isDynmaic = '#run //@SOURCE_TYPE=AMS_DYNAMIC\r\n'
 
