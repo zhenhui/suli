@@ -124,7 +124,7 @@ define(function (require, exports, module) {
                     } else {
                         showInfo('<p>视界+发送了一封邮件到：' + __ + '。</p><p>如未找到，请检查垃圾邮箱中是否存在。</p>')
                     }
-                    $tipsWrapper.slideDown()
+                    $tipsWrapper.addClass('success').slideDown()
                     return
                 }
 
