@@ -154,7 +154,8 @@ function sendEmail(req, res, user, registerList) {
         generateTextFromHTML: true,
         html: '<h3>' + req.body._ + '，请点击下方链接完成注册</h3>' +
             '<p>如果您的浏览器不支持链接，请复制到地址栏中进行访问</p>' +
-            '<p><a href="' + url + '" target="_blank">' + url + '</a></p>'
+            '<p><a href="' + url + '" target="_blank">' + url + '</a></p>' +
+            '<br><p>请不要删除此邮件,如果您遗忘了密码,可通过上方链接提供的信息来找回.</p>'
     }, function (error, response) {
         if (error) {
             console.log('Send Fail :', error);
