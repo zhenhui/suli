@@ -48,7 +48,7 @@ app.get('/admin/system/git-pull', function (req, res) {
 
             res.header('content-type', 'text/plain;charset=utf-8')
 
-            exec('git pull', {cwd: app.projectRootDir, timeout: 40000},
+            exec('git pull', {cwd: global.projectRootDir, timeout: 40000},
                 function (error, stdout, stderr) {
 
                     console.log('pm2 restart:', error, stdout, stderr)
@@ -106,7 +106,8 @@ app.get('/admin/system/pm2-restart', function (req, res) {
 
             console.log('开始pm2 restart')
 
-            exec('pm2 restart ' + pm2id, {cwd: app.projectRootDir, timeout: 10000},
+
+            exec('pm2 restart ' + pm2id, {cwd: global.projectRootDir, timeout: 10000},
                 function (error, stdout, stderr) {
 
                     console.log('pm2 restart:', error, stdout, stderr)

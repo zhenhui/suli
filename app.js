@@ -9,20 +9,23 @@ var db = require('db')
 
 var app = express();
 
+//Assets目錄
 global.assetsDir = path.join(__dirname, 'assets')
-exports.projectRootDir = __dirname
+
+//項目根目錄
+global.projectRootDir = __dirname
 
 function start() {
 // all environments
     app.set('port', process.env.PORT || 9000);
     app.set('view engine', 'jade');
-    app.set('view cache', true);
+    app.set('view cache', false);
     app.locals.basedir = './views'
     app.use(express.compress())
     app.use(express.logger('dev'));
     app.use(express.urlencoded());
-    //req.body实体大小为210M（大多数文件为200M内，多余的10M预留给req.body参数）
-    app.use(express.limit(210 * 1024 * 1000));
+    //req.body实体大小为10M
+    app.use(express.limit(11 * 1024 * 1000));
     app.use(express.bodyParser({keepExtensions: false, uploadDir: __dirname + '/temp'}));
     app.use(express.methodOverride());
     app.use(express.cookieParser('sjplus'));
@@ -39,7 +42,7 @@ function start() {
     app.use(require('stylus').middleware(__dirname + '/assets'))
     app.use(express.static(path.join(__dirname, 'assets')))
 
-    process.env.NODE_ENV = 'production';
+    process.env.NODE_ENV = 'development';
 
     // development only
     if ('development' == process.env.NODE_ENV) {

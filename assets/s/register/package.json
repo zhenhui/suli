@@ -1,0 +1,13 @@
+{
+    "family": "sjplus",
+    "name": "register",
+    "version": "0.0.1",
+    "description": "",
+    "spm": {
+        "include": "relative",
+        "output": [
+            "init.js"
+        ]
+
+    }
+}

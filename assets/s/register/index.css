@@ -1,0 +1,88 @@
+#register-type-container {
+  position: absolute;
+  left: 107px;
+  top: 40px;
+  width: 700px;
+}
+#register-type-container h2 {
+  position: absolute;
+  font-size: 20px;
+  left: 150px;
+  top: 40px;
+}
+#register-type-container p {
+  position: absolute;
+  left: 150px;
+  top: 73px;
+}
+#register-wrapper {
+  height: 530px;
+  position: relative;
+}
+#register-form {
+  position: absolute;
+  left: 50%;
+  top: 200px;
+  padding: 24px;
+  width: 776px;
+  background: #bebfb3;
+  margin-left: -388px;
+}
+#register-form .submit span.label input,
+#register-form .submit span.label label {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 2px;
+}
+#register-form .submit span.label {
+  margin: 0 12px;
+}
+#register-form .submit span.captcha {
+  display: inline-block;
+  vertical-align: middle;
+  height: 30px;
+}
+#register-form .submit span.captcha img {
+  display: inline-block;
+  height: 30px;
+  width: 80px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+#register-form .submit span.captcha input {
+  height: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  border: none;
+  width: 80px;
+  text-align: center;
+  font-size: 26px;
+  font-family: arial;
+  color: #666;
+}
+#register-form .submit {
+  position: absolute;
+  bottom: -60px;
+  right: 0;
+}
+#register-form .submit .btn {
+  margin-left: 24px;
+}
+#register-form .require-field input {
+  width: 220px;
+  height: 36px;
+  border: solid 1px #85857d;
+  margin: 0 0 0 23px;
+  padding-left: 4px;
+}
+#tips-wrapper {
+  display: none;
+}
+#tips-wrapper.success .tips-content {
+  font-size: 14px;
+}
+.tips-content {
+  padding: 12px 25px 0 25px;
+  line-height: 230%;
+  font-size: 12px;
+}

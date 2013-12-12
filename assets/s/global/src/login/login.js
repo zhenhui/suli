@@ -56,16 +56,16 @@ define(function (require, exports, module) {
                 })()
             }, function (data) {
 
-                if (data && data.userSessionNotice && S.keys(data.userSessionNotice).length > 0) {
-                    window.location.reload()
-                    return
+                var length = loginCallBack.length
+                for (var i = 0; i < length; i++) {
+                    loginCallBack[i](data)
                 }
 
                 updateCsrfToken(data._csrf_token_)
 
                 switch (data.status) {
                     case 1:
-                        loginSuccess(data)
+                        if (loginCallBack.length < 1) location.reload(true)
                         break
                     case -1:
                         loginFail()
@@ -75,25 +75,25 @@ define(function (require, exports, module) {
                         break
                 }
 
-                for (var i = 0, length = loginCallBack.length; i < length; i++) {
-                    loginCallBack.shift()(data)
-                }
 
             }, 'json')
         }
 
     }
 
+    //Login trigger
     var popup = new Popup({
         trigger: '.J-login-triggers',
         triggerType: 'click',
-        element: template.render(tpl, {status: '0'}),
+        element: template.render(tpl, {}),
         delegateNode: document.body,
         effect: "slide",
         align: {
             baseXY: [-180, -20]
         }
     })
+
+    exports.loginPopup = popup
 
     exports.login = function (callback) {
         popup.show()
@@ -120,18 +120,8 @@ define(function (require, exports, module) {
 
 
     function loginSuccess(data) {
-
         if (popup && popup.element) popup.element.fadeOut(100)
-
-        var html = template.render(tpl, data)
-        $loginNode.append($(html))
-
-
-        $('.J-login-register-triggers').css({ marginTop: -19 })
-        $('.login-user-info').css({top: 0})
-        $('.login-user-info img').css({width: 20, height: 20, opacity: 1})
         initPersonMenu(data)
-
     }
 
     function loginFail() {
@@ -155,7 +145,6 @@ define(function (require, exports, module) {
         data: {},
         dataType: 'jsonp'
     }).done(function (data) {
-            $('#login-register-area').addClass('show')
             updateCsrfToken(data._csrf_token_)
             $(document).on('submit', 'form', loginFormSubmitFn)
             if (data.status == 1) {
@@ -167,9 +156,12 @@ define(function (require, exports, module) {
         new Popup({
             trigger: '.J-logged-list-triggers',
             triggerType: 'click',
-            element: template.render(tpl, {_id: data._id, status: 'logged'}),
+            element: $('#logged-wrapper').html(),
             delegateNode: document.body,
-            effect: "slide"
+            effect: "slide",
+            align: {
+                baseXY: [-56, 16]
+            }
         })
     }
 

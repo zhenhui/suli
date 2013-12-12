@@ -48,6 +48,7 @@ a:hover
   border: none
   padding: 3px 12px
   font-family: "华文细黑", "Microsoft Yahei", sans-serif
+  cursor default
 
 .btn-normal
   padding: 5px 12px
@@ -58,6 +59,7 @@ a:hover
   border: solid 1px border-color
 
 .btn:hover
+.btn.btn-highlight
   background hover-color
   color #fff
 
@@ -98,11 +100,14 @@ a:hover
 //导航
 #navigation
   background: #fff
-  height: 80px
 
 #navigation .wrapper-990
   position: relative
   margin-top: 0
+  height 80px
+  width auto
+  min-width 400px
+  max-width 990px
 
 #navigation h1
   position: absolute
@@ -115,12 +120,14 @@ a:hover
 
 #navigation ul
   position: absolute
-  top: 37px
-  right: 0
+  top: 34px
+  right: 8px
+  line-height 20px
 
 #navigation ul li {
-  float: left
+  float: right
   margin-left: 32px
+  white-space nowrap
 }
 
 //面包屑
@@ -132,11 +139,6 @@ a:hover
   font-size: 20px
 
 //登陆
-#login-register-area
-  visibility hidden
-
-#login-register-area.show
-  visibility visible
 
 #login-register-area .J-spector
   margin: 0 1px
@@ -213,43 +215,18 @@ a:hover
 
 #login-register-area
   height 22px
-  position relative
-  overflow hidden
-  width 140px
-
-//登陆后的用户信息
-.login-user-info
-  position: absolute
-  top: 20px
-  left: 0
-  cursor: pointer
 
 .login-user-info span.avatar
+  display inline-block
   height: 20px
   width: 20px
-  overflow: hidden
-  text-align: center
-  position: absolute
-  left: 0
-  top: 0
-
-.login-user-info span.avatar i
-  display: inline-block
-  height: 20px
-  overflow: hidden
-  width: 0
-  position: relative
-  vertical-align: middle
+  vertical-align middle
 
 .login-user-info span.avatar img
-  width: 0
-  height: 0
-  display: inline-block
-  vertical-align: middle
-  border-radius: 2px
+  border-radius 2px
 
 .login-user-info .J-user-name
-  margin-left: 24px
+  margin-left 4px
   display inline-block
   vertical-align middle
 

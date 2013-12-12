@@ -44,14 +44,14 @@ define("sjplus/global/0.0.1/login/login-debug", [ "popup-debug", "sjplus/global/
                     return window._csrf_token_;
                 }()
             }, function(data) {
-                if (data && data.userSessionNotice && S.keys(data.userSessionNotice).length > 0) {
-                    window.location.reload();
-                    return;
+                var length = loginCallBack.length;
+                for (var i = 0; i < length; i++) {
+                    loginCallBack[i](data);
                 }
                 updateCsrfToken(data._csrf_token_);
                 switch (data.status) {
                   case 1:
-                    loginSuccess(data);
+                    if (loginCallBack.length < 1) location.reload(true);
                     break;
 
                   case -1:
@@ -62,24 +62,21 @@ define("sjplus/global/0.0.1/login/login-debug", [ "popup-debug", "sjplus/global/
                     loginFail();
                     break;
                 }
-                for (var i = 0, length = loginCallBack.length; i < length; i++) {
-                    loginCallBack.shift()(data);
-                }
             }, "json");
         }
     }
+    //Login trigger
     var popup = new Popup({
         trigger: ".J-login-triggers",
         triggerType: "click",
-        element: template.render(tpl, {
-            status: "0"
-        }),
+        element: template.render(tpl, {}),
         delegateNode: document.body,
         effect: "slide",
         align: {
             baseXY: [ -180, -20 ]
         }
     });
+    exports.loginPopup = popup;
     exports.login = function(callback) {
         popup.show();
         if (typeof callback === "function") loginCallBack.push(callback);
@@ -106,19 +103,6 @@ define("sjplus/global/0.0.1/login/login-debug", [ "popup-debug", "sjplus/global/
     });
     function loginSuccess(data) {
         if (popup && popup.element) popup.element.fadeOut(100);
-        var html = template.render(tpl, data);
-        $loginNode.append($(html));
-        $(".J-login-register-triggers").css({
-            marginTop: -19
-        });
-        $(".login-user-info").css({
-            top: 0
-        });
-        $(".login-user-info img").css({
-            width: 20,
-            height: 20,
-            opacity: 1
-        });
         initPersonMenu(data);
     }
     function loginFail() {
@@ -152,7 +136,6 @@ define("sjplus/global/0.0.1/login/login-debug", [ "popup-debug", "sjplus/global/
         data: {},
         dataType: "jsonp"
     }).done(function(data) {
-        $("#login-register-area").addClass("show");
         updateCsrfToken(data._csrf_token_);
         $(document).on("submit", "form", loginFormSubmitFn);
         if (data.status == 1) {
@@ -163,12 +146,12 @@ define("sjplus/global/0.0.1/login/login-debug", [ "popup-debug", "sjplus/global/
         new Popup({
             trigger: ".J-logged-list-triggers",
             triggerType: "click",
-            element: template.render(tpl, {
-                _id: data._id,
-                status: "logged"
-            }),
+            element: $("#logged-wrapper").html(),
             delegateNode: document.body,
-            effect: "slide"
+            effect: "slide",
+            align: {
+                baseXY: [ -56, 16 ]
+            }
         });
     }
     //更新页面上的token
@@ -179,4 +162,4 @@ define("sjplus/global/0.0.1/login/login-debug", [ "popup-debug", "sjplus/global/
     exports.updateCsrfToken = updateCsrfToken;
 });
 
-define("sjplus/global/0.0.1/login/login-debug.tpl", [], '#if(status<1)\n\n<div id="loginSmallDialog" class="login-small-dialog">\n    <div class="wrapper">\n\n        <h2>登 陆</h2>\n\n        <div id="login-trigger">\n            <div class="trigger">\n                <a id="domain-login"><span><!--域帐号--></span></a>\n            </div>\n            <!--<div class="trigger">\n                <a id="email-login"><span>邮箱登陆</span></a>\n            </div>-->\n            <!--<div class="trigger">\n                <a id="weibo-login"><span>微博登陆</span></a>\n            </div>-->\n\n        </div>\n\n        <form action="/login" method="post">\n            <input class="text" type="text" name="user-name" placeholder="用户名" id="J-login-user-name-field">\n            <input class="text" type="password" name="pwd" placeholder="密码">\n            <input class="btn J-login-submit-triggers" type="submit" value="登陆"/>\n        </form>\n    </div>\n</div>\n\n#elseif(status==1)\n\n<div class="login-user-info J-logged-list-triggers">\n\n    <span class="avatar">\n        <a><img class="J-avatar-own-20" src="#{imgCDN}/avatar/#{_id}_20x20"><i></i></a>\n    </span>\n    <span class="J-user-name">#{user}</span>\n</div>\n\n#elseif(status=="logged")\n<div class="logged-list J-logged-list">\n    <div class="list">\n        <ul>\n            <li><a href="/u/#{_id}">我的主页</a></li>\n            <li><a class="J-publish-work">发布作品</a></li>\n            <li><a href=\'/personal#all-works{"view":"design"}\'>管理设计作品</a></li>\n            <li><a href="/personal#account-setting">帐号设置，头像</a></li>\n            <li><a href="/login/login-out">退出</a></li>\n        </ul>\n    </div>\n</div>\n#end');
+define("sjplus/global/0.0.1/login/login-debug.tpl", [], '<div id="loginSmallDialog" class="login-small-dialog">\n    <div class="wrapper">\n\n        <h2>登 陆</h2>\n\n        <div id="login-trigger">\n            <div class="trigger">\n                <a id="domain-login"><span><!--域帐号--></span></a>\n            </div>\n            <!--<div class="trigger">\n                <a id="email-login"><span>邮箱登陆</span></a>\n            </div>-->\n            <!--<div class="trigger">\n                <a id="weibo-login"><span>微博登陆</span></a>\n            </div>-->\n\n        </div>\n\n        <form action="/login" method="post">\n            <input class="text" type="text" name="user-name" placeholder="用户名" id="J-login-user-name-field">\n            <input class="text" type="password" name="pwd" placeholder="密码">\n            <input class="btn J-login-submit-triggers" type="submit" value="登陆"/>\n        </form>\n    </div>\n</div>\n');

@@ -17,6 +17,7 @@ function _xss(val) {
 
 var tagRe = /^[\u4e00-\u9fa5A-Za-z0-9]{2,}$/
 var allowCategory = ['视觉设计', '界面设计', '图标设计']
+var objectIdRe = /^[a-z0-9]{24}/
 
 exports.save = function (req, res) {
 
@@ -37,7 +38,6 @@ exports.save = function (req, res) {
         content: _xss(req.body.content),
         thumbnails_id: _xss(req.body.thumbnails_id),
         file_id: _xss(req.body['mail-file_id']),
-        //ps_id: _xss(req.body.ps_id),
         //指标，喜欢数量，回复数量
         //喜欢和回复有单独的集合，在这里存储是为了增加冗余后提高查询性能
         index: {
@@ -66,15 +66,6 @@ exports.save = function (req, res) {
     if (typeof data.thumbnails_id !== 'string' || data.thumbnails_id.length < 1) {
         result.err.push('您必须上传缩略图')
     }
-
-    /*if (typeof data.ps_id === 'string') {
-        data.ps_id = data.ps_id.split(/[\r\n]/gmi).filter(function (item) {
-            return item.trim().length > 0
-        })
-        if (data.ps_id.length > 3) {
-            result.err.push('超过上传文件的上限')
-        }
-    }*/
 
     if (typeof data.tag === 'string') {
         data.tag = data.tag.split(' ').filter(function (item) {
@@ -123,11 +114,12 @@ exports.save = function (req, res) {
         //检查是否有上传共享作品的权限
         if (data.type === 'own' && group.indexOf('上传个人作品') < 0) {
             result.status = -2
-            result.err.push('您没有上传共享作品的权限')
+            result.err.push('您没有上传个人作品的权限')
             res.json(result)
             return
         }
 
+        console.log('开始保存作品,owner:' + req.session._id)
         var share = new DB.mongodb.Collection(DB.Client, 'design-works')
         share.insert(data, {safe: true}, function (err, docs) {
             if (!err && docs.length > 0) {
@@ -135,6 +127,33 @@ exports.save = function (req, res) {
 
                 //更新作品
                 userIndicators.update(req.session._id, 'design-works')
+
+
+                //将gs中图片文件的temp标记remove
+                //否则,文件会被标记为临时文件,将会被清理程序处理掉
+                var files = new DB.mongodb.Collection(DB.Client, 'fs.files')
+
+
+                var fileId = []
+
+                if (objectIdRe.test(data.thumbnails_id)) fileId.push(data.thumbnails_id.substring(0, 24))
+                if (objectIdRe.test(data.file_id)) fileId.push(data.file_id.substring(0, 24))
+
+                if (fileId.length > 0) {
+                    files.update({
+                            filename: new RegExp(fileId.join('|')),
+                            'metadata.owner': req.session._id
+                        }, {$unset: {'metadata.temp': 1}},
+                        { w: 1, multi: true }, function (err, numberUpdated) {
+                            if (err) {
+                                console.log('Fail 无法去掉temp标记', fileId.join(','))
+                            } else {
+                                console.log('success: 成功去除' + numberUpdated + '个temp标记', fileId.join(','))
+                            }
+                        })
+                }
+
+
             } else {
                 res.json({status: -10, err: '无法保存共享，请联系管理员'})
             }

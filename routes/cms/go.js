@@ -59,13 +59,12 @@ exports.readPage = function (page_url, callback) {
 
     memServer.get(page_url, function (err, data) {
 
-
         if (!err && data) {
             console.log(page_url + '命中缓存')
             callback(data)
         } else {
             console.log(page_url + '开始从磁盘读取')
-            var filePath = path.join(helper.staticBaseDir, page_url + '.jstpl')
+            var filePath = path.join('cms-static', page_url + '.jstpl')
             fs.readFile(filePath, function (err, buffer) {
                 if (err) {
                     console.log(page_url + '读取失败')
