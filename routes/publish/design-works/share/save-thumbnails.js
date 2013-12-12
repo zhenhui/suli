@@ -99,6 +99,7 @@ exports.saveFile = function (req, res) {
     var options = {
         chunk_size: 1024 * 256 * 10,
         metadata: {
+            temp: true,
             owner: ownerID,
             type: '作品缩略图'
         }
@@ -279,6 +280,7 @@ exports.saveFile = function (req, res) {
                             owner: ownerID,
                             width: size.width,
                             height: size.height,
+                            temp: true,
                             type: "作品缩略图"
                         }
                     }
