@@ -21,8 +21,8 @@ function start() {
     app.use(express.compress())
     app.use(express.logger('dev'));
     app.use(express.urlencoded());
-    //req.body实体大小为210M（大多数文件为200M内，多余的10M预留给req.body参数）
-    app.use(express.limit(210 * 1024 * 1000));
+    //req.body实体大小为10M
+    app.use(express.limit(11 * 1024 * 1000));
     app.use(express.bodyParser({keepExtensions: false, uploadDir: __dirname + '/temp'}));
     app.use(express.methodOverride());
     app.use(express.cookieParser('sjplus'));
