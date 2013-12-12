@@ -8,7 +8,7 @@ define("sjplus/register/0.0.1/init-debug", [ "sjplus/global/0.0.1/crypto/sha3-de
     var $form = $(form);
     var ele = form.elements;
     var emailRe = /^(?:\w+\.?)*\w+@(?:\w+\.)+\w+$/;
-    var userNameRe = /^[\u4e00-\u9fa5A-Za-z][\u4e00-\u9fa5A-Za-z0-9_-]{2,28}$/;
+    var userNameRe = /^[\u4e00-\u9fa5A-Za-z][\u4e00-\u9fa5A-Za-z0-9_-]{1,28}$/;
     var $tipsWrapper = $("#tips-wrapper");
     var $tips = $tipsWrapper.find(".tips-content");
     var mailMap = {
