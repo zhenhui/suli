@@ -122,7 +122,7 @@ function compileTemplate(doc, eachResult, res, req) {
         })
     }
 
-    var pageUrl = path.join(helper.staticBaseDir, doc.page_url)
+    var pageUrl = path.join('cms-static', doc.page_url)
     var stream
     //负责存储数据
     var Data = '#run '

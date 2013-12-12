@@ -98,7 +98,8 @@ exports.saveFile = function (req, res) {
     var options = {
         chunk_size: 1024 * 256 * 10,
         metadata: {
-            owner: ownerID
+            owner: ownerID,
+            temp: true
         }
     }
 
@@ -122,7 +123,7 @@ exports.saveFile = function (req, res) {
 
                 file.format = format
 
-                console.log('图片格式为' + format, '开始获取文件大小')
+                console.log('图片格式为' + format, '开始获开始创建目录取文件大小')
 
                 //获取大小
 
