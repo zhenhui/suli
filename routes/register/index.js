@@ -141,7 +141,7 @@ function sendEmail(req, res, user, registerList) {
         port: 465, // port for secure SMTP
         auth: {
             user: "sjplus@sjplus.cn",
-            pass: ""
+            pass: "Hello1234"
         }
     });
 
