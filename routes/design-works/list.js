@@ -88,7 +88,7 @@ app.get('/design-works/hot/list', function (req, res) {
 })
 
 
-//查询最近的50个作品
+//最新上传作品，支持分页
 app.get('/design-works/latest/list', function (req, res) {
 
     var design = new db.mongodb.Collection(db.Client, 'design-works')
@@ -112,7 +112,8 @@ app.get('/design-works/latest/list', function (req, res) {
 
         result.page = page
 
-        design.find(defaultFindParam, {_id: 1, title: 1, content: 1, thumbnails_id: 1, owner_id: 1, index: 1}).sort({ts: -1}).
+        design.find(defaultFindParam, {
+            _id: 1, title: 1, content: 1, thumbnails_id: 1, file_id: 1, owner_id: 1, index: 1}).sort({ts: -1}).
             skip((page - 1) * pageCount).limit(pageCount).toArray(function (err, docs) {
                 result.data = docs
                 res.jsonp(result)
@@ -120,6 +121,75 @@ app.get('/design-works/latest/list', function (req, res) {
     })
 })
 
+
+function tempHelper(res) {
+    var design = new db.mongodb.Collection(db.Client, 'design-works')
+
+    var designArr
+    design.distinct('owner_id', function (err, data) {
+        designArr = data
+        setName()
+    })
+
+    var user = new db.Collection(db.userClient, 'user')
+    var info = []
+
+    function setName() {
+        if (designArr.length === 0) {
+            res.end(info.join('<br>'))
+            update原图调查优化后的全尺寸()
+            return
+        }
+        var _item = designArr.shift()
+        user.findOne({_id: db.mongodb.ObjectID(_item)}, {_id: 1, user: 1}, function (err, docs) {
+            //将用户名写入作品中
+            info.push(docs.user)
+            design.update({owner_id: _item}, {$set: {owner_user: docs.user}}, {w: 1, multi: true}, function (err, count) {
+                info.push('成功更新了' + count + '条记录')
+                setName()
+            })
+        })
+    }
+
+
+}
+
+function update原图调查优化后的全尺寸() {
+    var design = new db.mongodb.Collection(db.Client, 'design-works')
+    var id
+    design.find({type: 'own', status: {$gte: 1}}, {file_id: 1}).toArray(function (err, docs) {
+        id = docs.map(function (item) {
+            return item.file_id.substring(0, 24)
+        })
+        loop()
+    })
+
+    var fs = new db.mongodb.Collection(db.Client, 'fs.files')
+
+    function loop() {
+        var current = id.shift()
+        if (!current) return
+        fs.find({filename: new RegExp(current)}, {'metadata.type': 1, filename: 1}).toArray(function (err, list) {
+            var isOk
+            list.forEach(function (item) {
+                if (item.metadata.type === '原图' && /_quality_/.test(item.filename) && item.filename.indexOf('790') < 0) {
+                    console.log(item, '需要优化')
+                    fs.update({filename: item.filename}, {$set: {"metadata.type": "优化后的全尺寸"}}, {w: 1}, function (err, count) {
+                        console.log(item, '已经优化')
+                        loop()
+                    })
+                }
+            })
+        })
+    }
+}
+
+
+app.get('/update/temp/set-owner-name', function (req, res) {
+    tempHelper(res)
+    update原图调查优化后的全尺寸()
+
+})
 
 //根据作品id返回作品的相关数据
 app.get('/design-works/fromid/list', function (req, res) {
