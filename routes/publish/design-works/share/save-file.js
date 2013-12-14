@@ -233,7 +233,7 @@ exports.saveFile = function (req, res) {
                     return
                 }
                 var fileName = file.fileId + '_quality_' + size.width + 'x' + size.height + '.' + file.format
-                options.type = '优化后的原图'
+                options.metadata.type = '优化后的原图'
                 var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
                 gs.writeFile(quality90Path, function (err) {
                     if (!err) {
@@ -279,7 +279,7 @@ exports.saveFile = function (req, res) {
                 return
             }
             var fileName = file.fileId + '_full' + '_' + file.width + 'x' + file.height + '.' + file.format
-            options.type = '优化后的全尺寸'
+            options.metadata.type = '优化后的全尺寸'
             var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
             gs.writeFile(fullPath, function (err) {
                 if (err) {
