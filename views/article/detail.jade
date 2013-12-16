@@ -9,7 +9,7 @@ block content
                     #article-content
                         #article-title
                             h1
-                               a(href="/u/#{owner_id}")
+                               a.J-user-card(href="/u/#{owner_id}",data-user-id="#{owner_id}")
                                     img.avatar(src="#{imgCDN}/avatar/#{owner_id}_30x30")
                                a(href="/article/#{title}")=title
                         #article-img

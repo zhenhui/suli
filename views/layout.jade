@@ -44,7 +44,7 @@ html
                                         a(href="/register") 注册
                                 - else
                                     .login-user-info.J-logged-list-triggers
-                                        span.avatar
+                                        span.avatar.J-user-card(data-user-id="#{req.session._id}")
                                             img.J-avatar-own-20(src="#{imgCDN}/avatar/#{req.session._id}_20x20")
                                         span.J-user-name #{req.session.user}
                                         #logged-wrapper.hide
@@ -76,13 +76,14 @@ html
                 .wrapper-990
                     | &copy; beyondsoft 2013~
 
-        script(src="#{assetsCDN}/s/??global/dist/init.js,global/dist/login/login.js,global/dist/publish-type/init.js,global/dist/crypto/sha3.js,global/dist/weixin-weibo-float-menu/init.js,sea-modules/xiongsongsong/template/1.1.0/template.js,sea-modules/arale/popup/1.1.5/popup.js,sea-modules/arale/position/1.0.1/position.js")
+        script(src="#{assetsCDN}/s/??global/dist/init.js,global/dist/login/login.js,global/dist/publish-type/init.js,global/dist/crypto/sha3.js,global/dist/weixin-weibo-float-menu/init.js,sea-modules/xiongsongsong/template/1.1.0/template.js,sea-modules/arale/popup/1.1.5/popup.js,sea-modules/arale/position/1.0.1/position.js,global/dist/card/init.js")
         script.
             seajs.use([
                 'sjplus/global/0.0.1/init',
                 'sjplus/global/0.0.1/login/login',
                 'sjplus/global/0.0.1/publish-type/init',
-                'sjplus/global/0.0.1/weixin-weibo-float-menu/init'
+                'sjplus/global/0.0.1/weixin-weibo-float-menu/init',
+                'sjplus/global/0.0.1/card/init'
             ])
 
         block js
@@ -94,8 +95,5 @@ html
             -})
 
         script.
-            seajs.use('#{assetsCDN}/s/global/dist/card/init.js',function(){
-                seajs.use('sjplus/global/0.0.1/card/init')
-            })
             var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
             document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F03fa9269ff13e7c3893916e712b703ee' type='text/javascript'%3E%3C/script%3E"));

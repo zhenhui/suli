@@ -149,9 +149,7 @@ define("sjplus/global/0.0.1/login/login-debug", [ "popup-debug", "sjplus/global/
             element: $("#logged-wrapper").html(),
             delegateNode: document.body,
             effect: "slide",
-            align: {
-                baseXY: [ -56, 16 ]
-            }
+            align: {}
         });
     }
     //更新页面上的token
