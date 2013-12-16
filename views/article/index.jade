@@ -8,7 +8,7 @@ block content
                 -data.forEach(function(item){
                     .article
                         h2
-                            a(href="/u/#{item.owner_id}")
+                            a.J-user-card(href="/u/#{owner_id}",data-user-id="#{item.owner_id}")
                                 img.avatar(src="#{imgCDN}/avatar/#{item.owner_id}_30x30")
                             span.title
                                 a(href="/article/#{item.title}")=item.title

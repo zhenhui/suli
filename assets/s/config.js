@@ -30,6 +30,7 @@ seajs.config({
     alias: {
         template: 'sea/xiongsongsong/template/1.1.0/template',
         'popup':'sea/arale/popup/1.1.5/popup',
+        'position':'sea/arale/position/1.0.1/position',
         '$':'s/global/jquery.js'
     }
 });

@@ -1,7 +1,7 @@
 .sidebar
     .manage-control
         .user-info
-            a(href="/u/#{user_id}")
+            a.J-user-card(href="/u/#{user_id}",data-user-id="#{user_id}")
                 img.J-avatar-own-80.avatar(src="#{imgCDN}/avatar/#{user_id}_80x80")
             .info
                 h2 #{user_name}

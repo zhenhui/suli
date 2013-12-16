@@ -7,10 +7,9 @@
                 #each(item,index in docs)
                 <li><a href="/design-works/detail/#{item._id}"><img
                         src="#{imgCDN}/read/#{item.thumbnails_id.split(':')[0]}" alt="#{item.content.replace(/[\r\n]/gmi,'')}"
-                        width="230" height="175"
-                        class="avatar"></a>
+                        width="230" height="175" class="avatar J-user-card" data-user-id="#{item.owner_id}"></a>
 
-                    <div class="user"><a class="avatar" href="/u/#{item.owner_id}"><img src="#{imgCDN}/avatar/#{item.owner_id}_20x20"></a><span class="info">#{item.title}</span></div>
+                    <div class="user"><a class="avatar J-user-card" data-user-id="#{item.owner_id}" href="/u/#{item.owner_id}"><img src="#{imgCDN}/avatar/#{item.owner_id}_20x20"></a><span class="info">#{item.title}</span></div>
                 </li>
                 #end
                 #else

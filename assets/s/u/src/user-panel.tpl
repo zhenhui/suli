@@ -1,4 +1,4 @@
-<a href="/u/#{_id}" class="avatar">
+<a href="/u/#{_id}" class="avatar J-user-card" data-user-id="#{_id}">
     <img src="/avatar/#{_id}_80x80">
 </a>
 <div class="info">
