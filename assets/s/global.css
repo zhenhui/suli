@@ -192,19 +192,20 @@ a:hover {
   background-position: -147px 0;
 }
 #domain-login:hover {
-  background-position: 0 -48px;
+  background-position: -48px;
 }
 #email-login:hover {
-  background-position: -70px -48px;
+  background-position: -118px;
 }
 #weibo-login:hover {
-  background-position: -147px -48px;
+  background-position: -195px;
 }
 #login-register-area .J-login-register-triggers {
   overflow: hidden;
 }
 #login-register-area {
   height: 22px;
+  cursor: pointer;
 }
 .login-user-info span.avatar {
   display: inline-block;

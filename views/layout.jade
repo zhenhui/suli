@@ -74,9 +74,9 @@ html
                             img(src="/read/52959f11d6fa886445000040.png")
             .copyright
                 .wrapper-990
-                    |  &copy; beyondsoft 2013~
+                    | &copy; beyondsoft 2013~
 
-        script(src="#{assetsCDN}/s/??global/dist/init.js,global/dist/login/login.js,global/dist/publish-type/init.js,global/dist/crypto/sha3.js,global/dist/weixin-weibo-float-menu/init.js,sea-modules/xiongsongsong/template/1.1.0/template.js,sea-modules/arale/popup/1.1.5/popup.js")
+        script(src="#{assetsCDN}/s/??global/dist/init.js,global/dist/login/login.js,global/dist/publish-type/init.js,global/dist/crypto/sha3.js,global/dist/weixin-weibo-float-menu/init.js,sea-modules/xiongsongsong/template/1.1.0/template.js,sea-modules/arale/popup/1.1.5/popup.js,sea-modules/arale/position/1.0.1/position.js")
         script.
             seajs.use([
                 'sjplus/global/0.0.1/init',
@@ -94,5 +94,8 @@ html
             -})
 
         script.
+            seajs.use('#{assetsCDN}/s/global/dist/card/init.js',function(){
+                seajs.use('sjplus/global/0.0.1/card/init')
+            })
             var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
             document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F03fa9269ff13e7c3893916e712b703ee' type='text/javascript'%3E%3C/script%3E"));
