@@ -1,4 +1,4 @@
-<a id="global-user-card-avatar" style="background-image:url(/avatar/#{_id}_80x80)"></a>
+<a id="global-user-card-avatar" href="/u/#{_id}" style="background-image:url(/avatar/#{_id}_80x80)"></a>
     <p class="user">#{user}</p>
 #if(typeof privacy_information!=='undefined')
 #run var user=privacy_information

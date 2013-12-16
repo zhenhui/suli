@@ -44,7 +44,7 @@ html
                                         a(href="/register") 注册
                                 - else
                                     .login-user-info.J-logged-list-triggers
-                                        span.avatar.J-user-card(data-user-id="#{req.session._id}")
+                                        span.avatar
                                             img.J-avatar-own-20(src="#{imgCDN}/avatar/#{req.session._id}_20x20")
                                         span.J-user-name #{req.session.user}
                                         #logged-wrapper.hide
