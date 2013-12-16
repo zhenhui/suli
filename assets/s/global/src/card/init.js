@@ -17,6 +17,7 @@ define(function (require, exports, module) {
     var $cardNode = $('#global-user-card')
 
     var cl
+    var popupCl
 
     $(document).on('mouseenter mouseleave', '.J-user-card', function (ev) {
         clearTimeout(cl)
@@ -27,18 +28,38 @@ define(function (require, exports, module) {
             }, 300)
         } else {
             clearTimeout(cl)
+            clearTimeout(popupCl)
+            popupCl = setTimeout(function () {
+                console.log('card hide')
+                $cardNode.fadeOut(200)
+            }, 1000)
         }
+    })
+
+    $cardNode.on('mouseenter mouseleave', function (ev) {
+
+        if (ev.type === 'mouseenter') {
+            clearTimeout(popupCl)
+        } else {
+            popupCl = setTimeout(function () {
+                $cardNode.fadeOut(100)
+            }, 400)
+        }
+
     })
 
     var $window = $(window)
 
+
     function init(target, id) {
         getUserData(id, function (data) {
 
-            $cardNode.html(template.render(compileTpl, data[id]))
+            $cardNode.html(template.render(compileTpl, data[id])).fadeIn(200)
+            clearTimeout(popupCl)
 
             //开始判断各种坐标
             var offset = target.offset();
+
 
             //判断是应该在左边和右边显示
             var x
@@ -79,7 +100,6 @@ define(function (require, exports, module) {
                     y: '100%'
                 })
             }
-
 
         })
     }
