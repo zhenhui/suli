@@ -2,7 +2,7 @@ block variables
     -var pageTitle = docs.title
     -var date=new Date(docs.ts)
     -var createDate=date.getFullYear()+'年'+date.getMonth()+1+'月'+date.getDate()+'日'+date.getHours()+':'+date.getMinutes()
-    -var pageDescribe = '设计师：'+docs.owner_name+'，描述：'+docs.content+'，分类：'+docs.category+'，上传日期：'+createDate
+    -var pageDescribe = '设计师：'+docs.owner_user+'，描述：'+docs.content+'，分类：'+docs.category+'，上传日期：'+createDate
 
 extends /layout
 block css

@@ -49,7 +49,7 @@ exports.save = function (req, res) {
         tag: _xss(req.body.tag),
         type: 'own',
         owner_id: req.session._id,
-        owner_name: req.session.user,
+        owner_user: req.session.user,
         //状态，>0表示可用的作品，负为删除或禁用的作品
         status: 1,
         ts: Date.now()
