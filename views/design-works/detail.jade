@@ -15,7 +15,7 @@ block content
 
             .main-pic-container
                 .main-pic
-                    img(src="#{imgCDN}/read/#{docs.file_id.split(':')[0]}")
+                    img.J-preview-image(src="#{imgCDN}/read/#{docs.file_id.split(':')[0]}")
             #J-comment-wrapper(data-page-id="#{docs._id}",data-type="design-works")
         .sidebar
             .des
@@ -50,7 +50,12 @@ block content
                         - docs.tag.forEach(function(item){
                             a=item
                         - })
+    #preview-img(style="position:fixed;left:0;top:0;z-index:12;")
+    #preview-close(style="display:none;background#:aaa;position:fixed;cursor:pointer;right:0;top:0;line-height:50px;font-size:50px;z-index:13;color:#fff;padding:0 12px;background:#000;filter:alpha(opacity=40);opacity:.5;") &times
+    #preview-img-mask(style="display:none;position:fixed;left:0;top:0;bottom:0;right:0;z-index:11;background:#000;filter:alpha(opacity=40);opacity:.5;")
 block js
+    script(src='#{assetsCDN}/s/global/jquery-drag-ui.js')
+    script(src='#{assetsCDN}/s/design-works/drag.js')
     script(src="#{assetsCDN}/s/??design-works/dist/detail/detail.js,global/dist/like/init.js,global/dist/comment/comment.js")
     script.
         var designWorksId="#{docs._id}"

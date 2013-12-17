@@ -4,6 +4,7 @@ html {
 body {
   font: 12px "微软雅黑", simhei, simsun, "Lucida Grande", Helvetica, Arial, sans-serif;
   color: #333;
+  min-width: 990px;
 }
 html,
 body {
@@ -286,7 +287,7 @@ a:hover {
 .publish-control a span.title {
   position: absolute;
   left: 0;
-  top: 240px;
+  top: 222px;
   width: 100%;
   text-align: center;
   font-size: 20px;
