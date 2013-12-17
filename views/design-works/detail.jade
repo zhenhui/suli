@@ -1,5 +1,9 @@
 block variables
     -var pageTitle = docs.title
+    -var date=new Date(docs.ts)
+    -var createDate=date.getFullYear()+'年'+date.getMonth()+1+'月'+date.getDate()+'日'+date.getHours()+':'+date.getMinutes()
+    -var pageDescribe = '设计师：'+docs.owner_user+'，描述：'+docs.content+'，分类：'+docs.category+'，上传日期：'+createDate
+
 extends /layout
 block css
     link(rel="stylesheet",href="#{assetsCDN}/s/design-works/detail.css")
@@ -11,8 +15,7 @@ block content
                     img(src="#{imgCDN}/avatar/#{docs.owner_id}_80x80")
                 span.title=docs.title
                 span.category 【#{docs.category}】
-                - var date=new Date(docs.ts)
-                    span.date #{date.getFullYear()}年#{date.getMonth()+1}月#{date.getDate()}日 #{date.getHours()} : #{date.getMinutes()}
+                    span.date=createDate
 
             .main-pic-container
                 .main-pic

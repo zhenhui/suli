@@ -1,5 +1,7 @@
 block variables
     -var pageTitle = title
+    -var pageDescribe = content.replace(/(?:<[^>]*>|&nbsp(?:;)?|[\r\n\s])/gm,'').substring(0,202)+'...'
+
 extends /layout
 block css
     link(rel="stylesheet",href="#{assetsCDN}/s/article/detail.css")

@@ -1,5 +1,7 @@
 block variables
-    -var pageTitle='文章列表页'
+    -var pageTitle='视界Beta文章列表'
+    -var pageDescribe = '最新文章：'+data[0].title+'。'+data[0].content
+
 extends /layout
 block css
     link(rel="stylesheet",href="#{assetsCDN}/s/article/article.css")
