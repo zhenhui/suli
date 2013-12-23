@@ -23,7 +23,7 @@ block content
                             a(href="javascript:void(0)")#captchaTrigger
                                 img#captchaImg(src="/captcha?t=#{Date.now()}")
                         span.label
-                            input#read-rule(type="checkbox",name="read-rule",value="yes")
+                            input#read-rule(type="checkbox",name="read-rule",value="yes",checked="checked")
                             label(for="read-rule") 同意注册协议
                         input(type="button",value="取消",onclick="location,history.back()").btn.btn-large
                         input(type="submit",value="申请注册").btn.btn-large.btn-highlight
