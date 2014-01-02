@@ -90,6 +90,17 @@ $(function () {
         $document.off('mousemove', stop)
     }
 
+    if ($preview[0].setCapture) {
+        $document.on('mousedown', function (ev) {
+            $preview[0].setCapture();
+        })
+
+        $document.on('mouseup', function (ev) {
+            $preview[0].releaseCapture();
+        })
+    }
+
+
     $preview.on('mousedown', bindMouseDown)
 
     $preview.on('dragstart', function (ev) {
