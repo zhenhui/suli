@@ -302,13 +302,17 @@ exports.saveFile = function (req, res) {
     }
 
 
+
+
+    
+}
+
     /*
      //清理各种临时文件
      该方法并不能完全解决问题
      此处应该使用定时程序，来做处理
      */
-
-    function unlink(file) {
+function unlink(file) {
         if (!file) return
         console.log('正在删除文件：', file)
         fs.unlink(file, function (err) {
@@ -319,4 +323,3 @@ exports.saveFile = function (req, res) {
             }
         })
     }
-}
