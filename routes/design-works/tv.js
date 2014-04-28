@@ -4,6 +4,13 @@ var app = require('app')
 
 //删除作品
 app.get('/design-works/up-tv', function (req, res) {
+    
+    try {
+        var id = ObjectID(req.query.id)
+    } catch (e) {
+        res.end()
+        return;
+    }
 
     helper.getGroup(req, function (group) {
 
@@ -23,7 +30,7 @@ app.get('/design-works/up-tv', function (req, res) {
         var design = new DB.mongodb.Collection(DB.Client, 'design-works')
 
         //上电视
-        design.update({_id: id, owner_id: req.session._id}, {$set: {tv: req.query.tv === 'true' ? true : false }}, {}, function (err, num) {
+        design.update({_id: id}, {$set: {tv: req.query.tv === 'true' ? true : false }}, {}, function (err, num) {
             if (!err && num > 0) {
                 result.status = 1
                 delete result.err
@@ -32,6 +39,30 @@ app.get('/design-works/up-tv', function (req, res) {
                 result.err.push('无法上电视')
             }
             res.jsonp(result)
+
+        })
+    })
+
+})
+
+//删除作品
+app.get('/design-works/up-tv/delete-all', function (req, res) {
+     
+    helper.getGroup(req, function (group) {
+
+        if (Array.isArray(group) === false) {
+            res.end()
+            return
+        }
+
+        if (group.indexOf('前台电视作品控制') < 0) {
+            res.end()
+            return
+        }
+
+        var design = new DB.mongodb.Collection(DB.Client, 'design-works')
+        design.update({ }, {$set: {tv: false }}, {}, function (err, num) {
+            res.end()
 
         })
     })
