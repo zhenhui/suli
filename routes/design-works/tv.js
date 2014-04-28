@@ -1,6 +1,7 @@
 var helper = require('helper')
 var DB = require('db')
 var app = require('app')
+var ObjectID = DB.mongodb.ObjectID
 
 //删除作品
 app.get('/design-works/up-tv', function (req, res) {
