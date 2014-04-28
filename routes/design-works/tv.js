@@ -8,24 +8,27 @@ app.get('/design-works/up-tv', function (req, res) {
     try {
         var id = ObjectID(req.query.id)
     } catch (e) {
-        res.end()
+        res.end('ID非法')
         return;
     }
 
+    var result = {err: []}
     helper.getGroup(req, function (group) {
 
         if (Array.isArray(group) === false) {
-            res.end('')
+            result.err.push('错误用户')
+            res.jsonp(result)
             return
         }
 
         if (group.indexOf('前台电视作品控制') < 0) {
-            res.end('')
+            result.err.push('没有权限')
+            res.jsonp(result)
             return
         }
 
 
-        var result = {err: []}
+        
 
         var design = new DB.mongodb.Collection(DB.Client, 'design-works')
 
