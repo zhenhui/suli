@@ -102,3 +102,5 @@ require('./views')
 require('./tag')
 
 require('./category')
+
+require('./tv')
