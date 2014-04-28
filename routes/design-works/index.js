@@ -13,7 +13,10 @@ var helper = require('helper')
 
 //设计作品首页
 app.get('/design-works', function (req, res) {
-    res.render('design-works/index')
+    helper.getGroup(req, function (group) {
+        res.render('design-works/index',{ isTvGroup : group && group.indexOf('前台电视作品控制') > -1 })
+    })
+    
 })
 
 //作品共享接口
