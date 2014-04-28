@@ -65,7 +65,7 @@ app.get('/design-works/up-tv/delete-all', function (req, res) {
         }
 
         var design = new DB.mongodb.Collection(DB.Client, 'design-works')
-        design.update({ }, {$set: {tv: false }}, {}, function (err, num) {
+        design.update({ }, {$set: {tv: false }}, {multi:true}, function (err, num) {
             res.end()
 
         })
