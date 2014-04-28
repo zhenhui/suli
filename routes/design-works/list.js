@@ -121,6 +121,22 @@ app.get('/design-works/latest/list', function (req, res) {
     })
 })
 
+
+
+
+//最新上传作品，支持分页
+app.get('/design-works/tv/list', function (req, res) {
+
+    var design = new db.mongodb.Collection(db.Client, 'design-works')
+    design.find({tv : "true" }, {
+        _id: 1, title: 1, content: 1, thumbnails_id: 1, file_id: 1, owner_user: 1, owner_id: 1, index: 1}).sort({ts: -1}).
+        .toArray(function (err, docs) {
+            res.jsonp({data:docs})
+        })
+})
+
+
+
 //根据作品id返回作品的相关数据
 app.get('/design-works/fromid/list', function (req, res) {
 
