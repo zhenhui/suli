@@ -11,7 +11,7 @@ jQuery(function(){
       $.ajax({
           url: '/design-works/up-tv',
           data: {
-              uptv: true,
+              tv: true,
               id: id
           }, success: function (data) {
               if (data && data.status > 0) {
@@ -26,7 +26,7 @@ jQuery(function(){
       $.ajax({
           url: '/design-works/up-tv',
           data: {
-              uptv: false,
+              tv: false,
               id: id
           }, success: function (data) {
               if (data && data.status > 0) {
