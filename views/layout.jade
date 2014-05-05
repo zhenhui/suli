@@ -26,9 +26,7 @@ html
                 r.send('_csrf='+window._csrf_token_+'&msg='+encodeURIComponent(msg)+'&url='+encodeURIComponent(url)+'&line='+line+'&location='+encodeURIComponent(location.href))
                 return false
             }
-            window['hostDOMAIN']='#{hostDOMAIN}';
-            window['assetsCDN']='#{assetsCDN}'
-            window['imgCDN']='#{imgCDN}'
+            var hostDOMAIN='#{hostDOMAIN}',assetsCDN='#{assetsCDN}',imgCDN='#{imgCDN}'
             if(!window.console)window.console={log:function(){}}
         script(id="seajsnode",src="#{assetsCDN}/s/??sea.js,seajs-combo.js,sea-style.js,global/jquery.js,config.js?t=20131213.js")
     body
