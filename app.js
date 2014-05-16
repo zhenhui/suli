@@ -56,7 +56,7 @@ function start() {
     if ('production' == process.env.NODE_ENV) {
         console.log("生产环境")
         global.assetsCDN = 'http://a.sjplus.cn'
-        global.imgCDN = 'http://img.sjplus.cn'
+        global.imgCDN = 'http://www.sjplus.cn'
         global.hostDOMAIN = 'http://www.sjplus.cn'
     }
 
