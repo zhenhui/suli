@@ -1,0 +1,15 @@
+{
+    "family": "sjplus",
+    "name": "design-works",
+    "version": "0.0.1",
+    "description": "design-works",
+    "spm": {
+        "include":"relative",
+        "output": [
+            "home/home.js",
+            "detail/detail.js",
+            "tag/tag.js"
+        ]
+
+    }
+}

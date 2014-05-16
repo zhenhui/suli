@@ -1,11 +1,9 @@
+block variables
+    -var pageTitle='设置页面'
 extends /layout
 
 block css
     link(rel="stylesheet",href="#{assetsCDN}/s/personal/personal.css")
-
-block js
-    script.
-        seajs.use('s/personal/init')
 
 block content
     #manage-container.wrapper-990.clearfix
@@ -16,3 +14,7 @@ block content
                         h3 加载中....
         iframe(name="upload-image",method="post",width=0,height=0,frameborder="no")
         include /person-profile-sidebar-layout
+block js
+    script(src="#{assetsCDN}/s/personal/dist/??init.js,account/init.js,all-works/init.js,design-works/init.js,like/init.js,public-pic/init.js")
+    script.
+        seajs.use('sjplus/personal/0.0.1/init')

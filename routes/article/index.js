@@ -7,7 +7,7 @@ var db = require('db')
 var helper = require('helper')
 var removeHTMLTag = /(?:<[^>]*>|&nbsp(?:;)?|[\r\n\s])/gm
 
-app.get('/article', helper.csrf, function (req, res) {
+app.get('/article', function (req, res) {
 
     var category = req.query.category
     var filter = {status: {$gte: 1}}
@@ -30,7 +30,7 @@ app.get('/article', helper.csrf, function (req, res) {
 app.get('/article/json/category', function (req, res) {
     var article = new db.mongodb.Collection(db.Client, 'article')
     var category = {}
-    article.distinct('category', function (err, docs) {
+    article.distinct('category', {status: {$gte: 1}}, function (err, docs) {
         var readyNum = 0
         docs.forEach(function (_category) {
             article.count({category: _category}, function (err, count) {
@@ -39,7 +39,14 @@ app.get('/article/json/category', function (req, res) {
                     category[_category] = count
                 }
                 if (readyNum >= docs.length) {
-                    res.jsonp(category)
+                    //排序下
+                    var newCategory = {}
+                    Object.keys(category).sort(function (a, b) {
+                        return a < b
+                    }).forEach(function (item) {
+                            newCategory[item] = category[item]
+                        })
+                    res.jsonp(newCategory)
                 }
             })
         })
@@ -74,9 +81,13 @@ app.get(/^\/article\/(.+)/, function (req, res) {
     var title = req.params[0]
     var article = new db.mongodb.Collection(db.Client, 'article')
     article.findOne({title: title, status: {$gte: 1}}, function (err, result) {
-        //删除空余的P标签
-        result.content = result.content.replace(/<p>\s*?&nbsp;\s*?<\/p>/gmi, '')
-        res.render('article/detail', result)
+        if (!err && result) {
+            //删除空余的P标签
+            result.content = result.content.replace(/<p>\s*?&nbsp;\s*?<\/p>/gmi, '')
+            res.render('article/detail', result)
+        } else {
+            res.redirect('/article')
+        }
     })
 })
 

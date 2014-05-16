@@ -10,7 +10,7 @@ var ObjectID = db.mongodb.ObjectID
 var helper = require('helper')
 
 //作品的喜欢数据
-app.post('/design-works/index/add-like', helper.csrf, function (req, res) {
+app.post('/index/add-like', function (req, res) {
 
     var result = {err: []}
 
@@ -29,7 +29,7 @@ app.post('/design-works/index/add-like', helper.csrf, function (req, res) {
     }
 
     //开始添加喜欢
-    var like = new db.mongodb.Collection(db.Client, 'design-works-index-like')
+    var like = new db.mongodb.Collection(db.Client, 'index-like')
 
     like.update({work_id: id.toString(), owner_id: req.session._id},
         {
@@ -50,7 +50,7 @@ app.post('/design-works/index/add-like', helper.csrf, function (req, res) {
             }
             res.json(result)
 
-            updateLike(id.toString())
+            updateLike(id, req.body.type)
 
         })
 })
@@ -59,7 +59,7 @@ app.post('/design-works/index/add-like', helper.csrf, function (req, res) {
 //自己喜欢的列表
 app.get('/design-works/index/like/json/list', function (req, res) {
 
-    var like = new db.mongodb.Collection(db.Client, 'design-works-index-like')
+    var like = new db.mongodb.Collection(db.Client, 'index-like')
     if (require('helper').isLogin(req) === false) {
         res.jsonp(false)
         return
@@ -71,14 +71,14 @@ app.get('/design-works/index/like/json/list', function (req, res) {
             idArr.push(ObjectID(doc.work_id))
         })
         var designWorks = new db.mongodb.Collection(db.Client, 'design-works')
-        designWorks.find({_id: {$in: idArr}}, {_id: 1, thumbnails_id: 1}).sort({ts: -1}).toArray(function (err, doc) {
+        designWorks.find({_id: {$in: idArr}, status: { $gte : 1}}, {_id: 1, title: 1, content: 1, thumbnails_id: 1}).sort({ts: -1}).toArray(function (err, doc) {
             res.jsonp(doc)
         })
     })
 })
 
 //取消喜欢
-app.get('/design-works/index/unlike', function (req, res) {
+app.get('/index/unlike', function (req, res) {
 
     res.end()
 
@@ -86,24 +86,31 @@ app.get('/design-works/index/unlike', function (req, res) {
         return
     }
 
-    var like = new db.mongodb.Collection(db.Client, 'design-works-index-like')
+    try {
+        var id = ObjectID(req.query.id)
+    } catch (e) {
+        res.jsonp({status: -2, err: ['必要的参数不正确']})
+        return;
+    }
+
+    var like = new db.mongodb.Collection(db.Client, 'index-like')
     var fields = {work_id: req.query.id, owner_id: req.session._id}
 
     like.remove(fields, {w: 1}, function (err) {
         if (err) console.log('取消喜欢失败，文档为：', fields, Date.now())
-        updateLike(req.query.id)
+        updateLike(id, req.query.type)
     })
 
 })
 
 //检测自己是否已经喜欢过
-app.get('/design-works/index/liked', function (req, res) {
+app.get('/index/liked', function (req, res) {
     if (require('helper').isLogin(req) === false) {
         res.jsonp(false)
         return
     }
 
-    var like = new db.mongodb.Collection(db.Client, 'design-works-index-like')
+    var like = new db.mongodb.Collection(db.Client, 'index-like')
 
     like.findOne({work_id: req.query.id, owner_id: req.session._id}, {_id: 1}, function (err, docs) {
         res.jsonp(docs ? true : false)
@@ -112,20 +119,61 @@ app.get('/design-works/index/liked', function (req, res) {
 })
 
 //更新喜欢数到design-works.index中
-function updateLike(id) {
+function updateLike(id, type) {
+
+    //只有下方collection方可更新指标
+    var allowType = ['design-works', 'article']
+
+    if (allowType.indexOf(type) < 0) {
+        console.log('更新喜欢数量时失败，type不合法，type为：' + type)
+        return
+    }
+
     //将喜欢的数量汇总到design-works集合中
-    var designWorks = new db.mongodb.Collection(db.Client, 'design-works')
-    var like = new db.mongodb.Collection(db.Client, 'design-works-index-like')
+    var collection = new db.mongodb.Collection(db.Client, type)
+    var like = new db.mongodb.Collection(db.Client, 'index-like')
 
-    console.log('开始刷新' + id + '的喜欢量')
+    console.log('开始刷新' + id.toString() + '的喜欢量')
 
-    like.count({work_id: id}, function (err, count) {
+    like.count({work_id: id.toString()}, function (err, count) {
         if (!err && count >= 0) {
-            designWorks.update({_id: id}, {$set: {'index.love': count}}, {w: 1}, function () {
-                console.log('更新作品' + id.toString() + '的喜欢到：' + count, Date.now())
+            collection.update({_id: id , status:{ $gte : 1 }}, {$set: {'index.like': count}}, {w: 1}, function () {
+                console.log('更新' + type + '的：' + id.toString() + '的喜欢到：' + count, Date.now())
             })
         } else {
             console.log('更新喜欢时出错：' + id.toString(), err, Date.now())
         }
     })
 }
+
+
+//返回某个ID的指标
+app.get('/index/find', function (req, res) {
+
+    //只有下方collection方可更新指标
+    var allowType = ['design-works', 'article']
+    var type = req.query.type
+
+    if (allowType.indexOf(type) < 0) {
+        res.jsonp({status: -1, err: ['不支持' + type + '的指标查询']})
+        return
+    }
+
+    try {
+        var id = ObjectID(req.query.id)
+    } catch (e) {
+        res.jsonp({status: -2, err: ['必要的参数不正确']})
+        return;
+    }
+
+    var collection = new db.mongodb.Collection(db.Client, type)
+
+    collection.findOne({_id: id}, {index: 1}, function (err, result) {
+        if (!err && result) {
+            res.jsonp(result)
+        } else {
+            res.jsonp(null)
+        }
+    })
+
+})

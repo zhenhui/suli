@@ -1,0 +1,14 @@
+{
+    "family": "sjplus",
+    "name": "publish",
+    "version": "0.0.1",
+    "description": "publish",
+    "spm": {
+        "include":"relative",
+        "output": [
+            "article/init.js",
+            "design-works/init.js"
+        ]
+
+    }
+}

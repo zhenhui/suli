@@ -6,7 +6,7 @@ var app = require('app')
 var db = require('db')
 var helper = require('./helper')
 
-app.get(/\/edit\/data\/(.+)/, helper.csrf, function (req, res) {
+app.get(/\/edit\/data\/(.+)/, function (req, res) {
     var tplSource = new db.Collection(db.Client, 'cms-tpl-source')
     var ObjectId = db.mongodb.ObjectID
     try {

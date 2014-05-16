@@ -13,7 +13,10 @@ var helper = require('helper')
 
 //设计作品首页
 app.get('/design-works', function (req, res) {
-    res.render('design-works/index')
+    helper.getGroup(req, function (group) {
+        res.render('design-works/index',{ isTvGroup : group && group.indexOf('前台电视作品控制') > -1 })
+    })
+    
 })
 
 //作品共享接口
@@ -69,7 +72,7 @@ app.get('/design-works/own/list', function (req, res) {
 })
 
 //设计师作品展示页面
-app.get(/\/design-works\/detail\/(\w{24})/, helper.csrf, function (req, res) {
+app.get(/\/design-works\/detail\/(\w{24})/, function (req, res) {
 
     try {
         var id = ObjectID(req.params[0])
@@ -79,7 +82,7 @@ app.get(/\/design-works\/detail\/(\w{24})/, helper.csrf, function (req, res) {
     }
 
     var work = new db.mongodb.Collection(db.Client, 'design-works')
-    work.findOne({_id: id}, {}, function (err, docs) {
+    work.findOne({_id: id, status: {$gte: 1}}, {}, function (err, docs) {
         if (docs) {
             res.render('design-works/detail', {docs: docs})
         } else {
@@ -98,3 +101,9 @@ require('./list')
 require('./like')
 
 require('./views')
+
+require('./tag')
+
+require('./category')
+
+require('./tv')

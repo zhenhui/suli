@@ -1,26 +1,54 @@
 extends layout
-
-block content
-    h1= title
-    form(action="/preview",name="origin-template")
-        input(type="text",name="page_name",placeholder="页面名称",size="100")
-        input(type="text",name="page_url",placeholder="页面访问的URL",size="150")
-        input(type="hidden",name="_csrf",value="#{token}")
-        textarea#textarea(name="content",rows=10,cols=150)
-        input(type="submit",value="开始编译模板并构造表单")
-    form(name="compile-template")
-    ul
-    -docs.forEach(function(item){
-        li
-            a(href="/edit/source/#{item._id}")=item.page_name
-            | |
-            a(href="/edit/data/#{item._id}") 编辑数据
-            | |
-            a(href="/publish/#{item._id}") 发布代码
-            | |
-            a(href="/go/#{item.page_url.replace(/.jstpl$/,'')}") 查看线上地址
-    -})
-
 block js
+    script(src='#{assetsCDN}/s/cms/dist/??init.js,rollback/init.js,compile-template.js')
     script.
-        KISSY.ready(function(){seajs.use('s/cms/compile-template')})
+        seajs.use([
+            'sjplus/cms/stable/compile-template',
+            'sjplus/cms/stable/rollback/init'
+        ])
+block css
+    link(rel="stylesheet",type="text/css",href="/s/cms/cms.css")
+block content
+    ul.nav.nav-tabs
+        li.active
+            a(href="#page-list",data-toggle="tab") 页面列表
+        li
+            a(href="#create-page",data-toggle="tab") 新建页面
+
+    .tab-content
+        #page-list.tab-pane.active
+            h1(type="asdfasdfsadfa") 页面列表
+            table.table.table-striped.table-hover
+                tr
+                    th 页面名称
+                    th 操作
+                -docs.forEach(function(item){
+                    tr
+                        td(width="60%")
+                            a(target="_blank",href="/go/#{item.page_url.replace(/.jstpl$/,'')}")=item.page_name
+                        td
+                            a.btn.btn-primary(href="/edit/source/#{item._id}") 改代码
+                            a.btn.btn-primary(href="/edit/data/#{item._id}") 改数据
+                            .btn-group
+                                button(type="button",data-toggle="dropdown").btn.btn-danger.dropdown-toggle
+                                    | 发布页面
+                                    span.caret
+                                ul.dropdown-menu(role="menu")
+                                    li
+                                        a(href="/publish/#{item._id}?static") 推荐静态（更好性能）
+                                    li
+                                        a(href="/publish/#{item._id}?dynamic") 动态
+                            a.btn.btn-success.J-rollback(data-id="#{item._id}") 回滚代码
+                -})
+        #create-page.tab-pane
+            h1 创建页面
+            form(role="form",action="/preview",name="origin-template",method="post")
+                .form-group
+                    input.form-control(type="text",name="page_name",placeholder="页面名称",size="100")
+                .form-group
+                    input.form-control(type="text",name="page_url",placeholder="页面访问的URL",size="150")
+                    input(type="hidden",name="_csrf",value="#{req.csrfToken()}")
+                .form-group
+                    textarea.form-control#textarea(name="content",rows=10,cols=150)
+                .form-group
+                    input.btn.btn-danger(type="submit",value="创建页面")

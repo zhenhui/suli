@@ -75,7 +75,7 @@ app.get('/design-works/hot/list', function (req, res) {
         //开始查询用户最近上传的8个作品
         var readyNum = 0
         userArr.forEach(function (id) {
-            design.find({owner_id: id.toString() }, {thumbnails_id: 1}).sort({ts: -1}).limit(8).toArray(function (err, thumbnails) {
+            design.find({owner_id: id.toString(), status: {$gte: 1}}, {thumbnails_id: 1}).sort({ts: -1}).limit(8).toArray(function (err, thumbnails) {
                 readyNum++
                 if (result[id.toString()] === undefined) result[id.toString()] = {}
                 result[id.toString()].thumbnails = !err ? thumbnails : []
@@ -88,7 +88,7 @@ app.get('/design-works/hot/list', function (req, res) {
 })
 
 
-//查询最近的50个作品
+//最新上传作品，支持分页
 app.get('/design-works/latest/list', function (req, res) {
 
     var design = new db.mongodb.Collection(db.Client, 'design-works')
@@ -112,12 +112,24 @@ app.get('/design-works/latest/list', function (req, res) {
 
         result.page = page
 
-        design.find(defaultFindParam, {_id: 1, title: 1, content: 1, thumbnails_id: 1, owner_id: 1, index: 1}).sort({ts: -1}).
+        design.find(defaultFindParam, {
+            _id: 1, title: 1, content: 1, thumbnails_id: 1, file_id: 1, owner_user: 1, owner_id: 1, index: 1}).sort({ts: -1}).
             skip((page - 1) * pageCount).limit(pageCount).toArray(function (err, docs) {
                 result.data = docs
                 res.jsonp(result)
             })
     })
+})
+
+
+//最新上传作品，支持分页
+app.get('/design-works/tv/list', function (req, res) {
+    var design = new db.mongodb.Collection(db.Client, 'design-works')
+    design.find({tv: true, status: {$gte: 1} }, {
+        _id: 1, title: 1, content: 1, thumbnails_id: 1, file_id: 1, owner_user: 1, owner_id: 1, index: 1}).sort({ts: -1}).
+        limit(30).toArray(function (err, docs) {
+            res.jsonp({data: docs})
+        })
 })
 
 
@@ -145,7 +157,7 @@ app.get('/design-works/fromid/list', function (req, res) {
     }
 
     var design = new db.mongodb.Collection(db.Client, 'design-works')
-    design.find({_id: {$in: arr}}, {_id: 1, title: 1, content: 1, thumbnails_id: 1, owner_id: 1, index: 1}).toArray(function (err, docs) {
+    design.find({_id: {$in: arr}, status: {$gte: 1}}, {_id: 1, title: 1, content: 1, thumbnails_id: 1, owner_id: 1, index: 1}).toArray(function (err, docs) {
         res.jsonp({data: docs})
     })
 })

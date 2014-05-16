@@ -1,0 +1,112 @@
+#design-container {
+  margin-top: 26px;
+}
+#design-container {
+  overflow: hidden;
+}
+#design-container .list-area {
+  width: 840px;
+}
+.unlike-design-work {
+  background: #ff3b35;
+  color: #fff;
+  padding: 5px 0;
+  text-align: center;
+}
+.unlike-design-work .t {
+  padding: 3px;
+}
+.unlike-design-work a {
+  color: #fff;
+  margin: 0 9px;
+}
+.design-works-list li {
+  width: 230px;
+  height: 210px;
+  position: relative;
+  float: left;
+  margin-right: 23px;
+  margin-bottom: 30px;
+}
+.design-works-list li div.describe {
+  position: absolute;
+  border-radius: 5px;
+  left: 0;
+  top: 0;
+  width: 228px;
+  height: 173px;
+  filter: quote("progidDXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#CCFFFFFF', endColorstr='#CCFFFFFF')");
+  background: #fff;
+  visibility: hidden;
+  overflow: hidden;
+  color: #333;
+  text-align: center;
+  border: 1px solid #ff8680;
+  background: rgba(255,255,255,0.8);
+}
+.design-works-list li:hover div.describe {
+  visibility: visible;
+}
+.design-works-list li a.link {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 175px;
+  z-index: 3;
+  background: url("/read/5281e508e01ac3441b00015d.png");
+}
+.design-works-list li img.thumbnails {
+  border-radius: 5px;
+  width: 230px;
+  height: 175px;
+}
+.design-works-list li:hover div.describe {
+  visibility: visible;
+}
+.design-works-list li h2 {
+  font-size: 20px;
+  margin: 12px 20px 12px 20px;
+  word-break: break-all;
+}
+.design-works-list li p {
+  margin: 0 20px;
+  word-break: break-all;
+}
+.design-works-list li .avatar {
+  position: absolute;
+  left: 0;
+  top: 180px;
+}
+.design-works-list li .avatar img {
+  border-radius: 2px;
+  height: 20px;
+  width: 20px;
+  opacity: 0.7;
+  filter: quote("alpha(opacity=70)");
+}
+.design-works-list li .avatar img:hover {
+  opacity: 1;
+  filter: quote("alpha(opacity=100)");
+}
+.design-works-list li .info {
+  position: absolute;
+  right: 0;
+  top: 184px;
+  color: #999;
+}
+.design-works-list .info {
+  font-size: 12px;
+  font-family: "华文细黑", verdana;
+}
+.design-works-list .data-icon {
+  font-size: 14px;
+  margin-left: 3px;
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.design-works-list li {
+  margin-bottom: 1em;
+  margin-right: 38px;
+}

@@ -1,8 +1,7 @@
+D:
 .idea/
-*.css
-!/assets/s/font.css
-!/assets/s/reset.css
-!/assets/s/sea-modules/*
-!/assets/s/cms/data/edit-excel.css
 test.html
 test*.html
+node_modules/captcha/*.img
+static/
+cms-static/

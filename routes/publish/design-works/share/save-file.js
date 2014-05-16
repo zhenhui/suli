@@ -30,19 +30,7 @@ var allowFile = {
     'png': {
         dstExtName: 'png'
     }
-    /* ,
-     'psd': {
-     dstExtName: 'png'
-     }*/
 }
-
-//缩略图规格
-var resizeParam = [
-    {
-        width: 790,
-        quality: 90
-    }
-]
 
 //移除此次请求中所有的上传文件
 function deleteRequestFile(file) {
@@ -110,7 +98,8 @@ exports.saveFile = function (req, res) {
     var options = {
         chunk_size: 1024 * 256 * 10,
         metadata: {
-            owner: ownerID
+            owner: ownerID,
+            temp: true
         }
     }
 
@@ -134,31 +123,27 @@ exports.saveFile = function (req, res) {
 
                 file.format = format
 
-                console.log('图片格式为' + format, '开始获取文件大小')
+                console.log('图片格式为' + format, '开始获开始创建目录取文件大小')
 
                 //获取大小
 
                 gm(file.path).size(function (err, size) {
                     if (!err) {
-                        //如果是PSD之外的文件，则获取文件描述信息
-                        if (format !== 'psd') {
-                            console.log('开始获取文件描述信息')
-                            gm(file.path).identify(function (err, profile) {
-                                if (!err) {
-                                    console.log('获取到了文件描述信息')
-                                    options.metadata.profile = profile
-                                    saveOriginImageFile(file, size)
-                                } else {
-                                    console.log('读取profile时发生错误', err)
-                                    uploadInfo.err.push('读取profileF时发生错误')
-                                    end()
-                                    unlink(file.path)
-                                }
-                            })
-                        } else {
-                            console.log('开始保存原图')
-                            saveOriginImageFile(file, size)
-                        }
+                        console.log('开始尝试获取文件描述信息')
+                        gm(file.path).identify(function (err, profile) {
+                            if (!err) {
+                                console.log('获取到了文件描述信息')
+                                options.metadata.profile = profile
+                                options.metadata.width = size.width
+                                options.metadata.height = size.height
+                                saveOriginImageFile(file, size)
+                            } else {
+                                console.log('读取profile时发生错误', err)
+                                uploadInfo.err.push('读取profileF时发生错误')
+                                end()
+                                unlink(file.path)
+                            }
+                        })
                     } else {
                         console.log('无法获取文件的尺寸', err)
                         uploadInfo.err.push('无法获取文件的尺寸')
@@ -190,21 +175,14 @@ exports.saveFile = function (req, res) {
         file.height = size.height
 
         options.metadata.origin_name = file.name.substring(0, file.name.lastIndexOf('.') + 1) + file.format
-
         options.metadata.type = "原图"
-
-        //保存原始文件,原图的标志为：_origin
-        var fileName = file.fileId + '_origin' + '_' + size.width + 'x' + size.height + '.' + file.format
-        uploadInfo._id = fileName + ':' + file.name
+        var fileName = file.fileId + '_origin.' + file.format
         console.log('保存原始文件' + fileName)
 
         var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
         gs.writeFile(file.path, function (err) {
             if (!err) {
-                //小于790的图片，可以直接返回，否则需要等待“预处理”后返回
-                if (size.width <= 790) end()
-                //预处理图片，以准备生成缩略图
-                预处理图片(file)
+                save90(file)
             } else {
                 uploadInfo.err.push('无法保存' + file.name)
                 end()
@@ -213,68 +191,104 @@ exports.saveFile = function (req, res) {
         })
     }
 
-    //预处理完成后，方可生成各种规格的缩略图文件
-    function 预处理图片(file) {
+    //保存一个790或内的80%质量图片
+    function save90(file) {
 
-        console.log('开始预处理，图片格式为：' + file.format)
+        var quality90Path = file.path + '_quality90'
+
+        var qualityImg
 
         switch (file.format) {
             //对于jpeg，提供一个原比例90压缩率的版本
             case 'jpg':
-                var qualityPath = file.path + '_quality80'
-                gm(file.path).interlace('Line').noProfile().quality(80).write(qualityPath, function (err) {
-                    var fileName = file.fileId + '_quality' + '_' + file.width + 'x' + file.height + '.' + file.format
-
-                    options.type = '优化后的原图'
-                    var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
-                    gs.writeFile(qualityPath, function (err) {
-                        if (!err) {
-                            //开始生成并保存各种缩略图
-                            resize(file, ownerID)
-                            unlink(qualityPath)
-                        } else {
-                            unlink(file.path)
-                        }
-                    })
-                })
+                qualityImg = gm(file.path).interlace('Line').noProfile().quality(90)
                 break;
             //对于gif，不优化直接进行压缩
             case 'gif':
-                resize(file, ownerID)
+                qualityImg = gm.subClass({ imageMagick: true })(file.path).coalesce().borderColor('white').border(0, 0)
                 break;
-            case 'psd':
-                var dstPath = file.path + '_psd_to_jpg.jpg'
-                console.log('开始预处理PSD', file.path)
-                gm.subClass({ imageMagick: true })(file.path + '[0]').setFormat('jpg').interlace('Line').quality(90).write(dstPath, function (err) {
+            case 'png':
+                qualityImg = gm(file.path).interlace('Line')
+                break;
+        }
+
+        //保存一个790的优化图片版本
+        if (file.width > 790) {
+            console.log('图片大于790,因此添加resize')
+            qualityImg = qualityImg.resize(790)
+        }
+
+        qualityImg.write(quality90Path, function (err) {
+            if (err) {
+                uploadInfo.err.push('无法保存优化后的图片' + file.name)
+                unlink(file.path)
+                end()
+                return
+            }
+            gm(quality90Path).size(function (err, size) {
+                if (err) {
+                    uploadInfo.err.push('无法获取80%质量的原图')
+                    unlink(file.path)
+                    end()
+                    return
+                }
+                var fileName = file.fileId + '_quality_' + size.width + 'x' + size.height + '.' + file.format
+                options.metadata.type = '优化后的原图'
+                var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
+                gs.writeFile(quality90Path, function (err) {
                     if (!err) {
-                        unlink(file.path)
-                        file.path = dstPath
-                        file.format = 'jpg'
-                        var fileName = file.fileId + '_quality' + '_' + file.width + 'x' + file.height + '.' + file.format
-                        //注意case jpg中也使用相同的type
-                        options.metadata.type = "优化后的原图"
-                        var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
-                        gs.writeFile(dstPath, function (err) {
-                            if (!err) {
-                                //开始生成并保存各种缩略图
-                                resize(file, ownerID)
-                            } else {
-                                uploadInfo.err.push('无法保存' + file.name)
-                                unlink(dstPath)
-                            }
-                        })
+                        uploadInfo._id = fileName + ':' + file.name
+                        end()
+                        saveFull(file)
                     } else {
-                        console.log(err)
+                        uploadInfo.err.push('无法写入优化后的原图' + file.name)
                         unlink(file.path)
                     }
+                    unlink(quality90Path)
                 })
-                break;
-            //直接进行尺寸压缩，不进行任何优化
-            case 'png':
-                resize(file, ownerID)
-                break;
+            })
+        })
+    }
 
+
+    //保存一个原尺寸但优化后的图片
+    function saveFull(file) {
+        //保存一个90%质量的原尺寸图片
+        var fullPath = file.path + '_quality90'
+
+        var fullImg
+
+        switch (file.format) {
+            //对于jpeg，提供一个原比例90压缩率的版本
+            case 'jpg':
+                fullImg = gm(file.path).interlace('Line').noProfile().quality(80)
+                break;
+            //对于gif，不优化直接进行压缩
+            case 'gif':
+                fullImg = gm.subClass({ imageMagick: true })(file.path).coalesce().borderColor('white').border(0, 0)
+                break;
+            case 'png':
+                fullImg = gm(file.path).interlace('Line')
+                break;
         }
+
+        fullImg.write(fullPath, function (err) {
+            if (err) {
+                console.log('无法写入全尺寸并优化后的原图' + file.name)
+                unlink(file.path)
+                return
+            }
+            var fileName = file.fileId + '_full' + '_' + file.width + 'x' + file.height + '.' + file.format
+            options.metadata.type = '优化后的全尺寸'
+            var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
+            gs.writeFile(fullPath, function (err) {
+                if (err) {
+                    console.log('无法在gs中写入全尺寸+优化后的原图' + file.name)
+                }
+                unlink(file.path)
+                unlink(fullPath)
+            })
+        })
     }
 
     function end() {
@@ -288,130 +302,24 @@ exports.saveFile = function (req, res) {
     }
 
 
-//对上传的图片生成不同规格的缩略图
-    function resize(file, ownerID) {
-
-        //过滤掉无意义的宽度（避免小图转换为大图）
-        var _resizeParam = resizeParam.filter(function (item) {
-            return file.width > item.width
-        })
-
-        var cur
-
-        function _resize() {
-            if (_resizeParam.length < 1) {
-                unlink(file.path)
-                return
-            }
-            cur = _resizeParam.shift()
-
-            //生成缩略图并存入库中
-            var fileName = file.fileId + '_' + cur.width + 'x' + (cur.height ? cur.height : 'geometric')
-
-            //转换后的图片路径
-            var dstSrc = path.join(path.dirname(file.path), fileName).toString() + '.' + file.format
-
-            fileName += '.' + file.format
-
-            console.log('压缩并生成缩略图', '原图：' + file.path, '现在图片：' + file.path)
-
-            switch (file.format) {
-                //PSD因为压缩后会生成jpg，所以其实是case 'jpg|psd''
-                case 'jpg':
-                    gm(file.path).interlace('Line').resize(cur.width, (cur.height ? cur.height : null)).noProfile().quality(cur.quality).write(dstSrc, function (err) {
-                        if (!err) {
-                            save(fileName, dstSrc)
-                        } else {
-                            console.log(err)
-                            unlink(dstSrc)
-                            _resize()
-                        }
-                    })
-                    break;
-                case 'gif':
-                    //增加背景色是为了减弱gif的锯齿，类似于ps中的杂边
-                    //http://imagemagick.org/Usage/anim_mods/
-                    //Resize with Flatten, A General Solution.
-                    gm.subClass({ imageMagick: true })(file.path).coalesce().borderColor('white').border(0, 0).resize(cur.width, (cur.height ? cur.height : null)).write(dstSrc, function (err) {
-                        if (!err) {
-                            save(fileName, dstSrc)
-                        } else {
-                            console.log(err)
-                            unlink(dstSrc)
-                            _resize()
-                        }
-                    })
-                    break;
-                case 'png':
-                    gm(file.path).interlace('Line').resize(cur.width, (cur.height ? cur.height : null)).write(dstSrc, function (err) {
-                        if (!err) {
-                            save(fileName, dstSrc)
-                        } else {
-                            console.log(err)
-                            unlink(dstSrc)
-                            _resize()
-                        }
-                    })
-                    break;
-            }
-
-        }
-
-        function save(fileName, path) {
-            //获取生成后的图片的实际大小
-            gm(path).size(function (err, size) {
-                if (!err) {
-                    var option = {
-                        chunk_size: 1024 * 256 * 10,
-                        metadata: {
-                            owner: ownerID,
-                            width: size.width,
-                            height: size.height,
-                            type: '缩略图'
-                        }
-                    }
-                    var gs = new GridStore(DB.dbServer, fileName, fileName, "w", option)
-                    gs.writeFile(path, function (err) {
-                        if (!err) {
-                            if (cur.width === 790) {
-                                uploadInfo._id = fileName + ':' + file.name
-                                end()
-                            }
-                            _resize()
-                        } else {
-                            uploadInfo.err.push('无法保存' + path + '文件名为：' + fileName)
-                            end()
-                        }
-                        unlink(path)
-                    })
-                } else {
-                    unlink(path)
-                    console.error('无法获取优化后的图片大小')
-                }
-            })
-        }
-
-        _resize()
-    }
 
 
+    
 }
 
-
-/*
- //清理各种临时文件
- 该方法并不能完全解决问题
- 此处应该使用定时程序，来做处理
- */
-
+    /*
+     //清理各种临时文件
+     该方法并不能完全解决问题
+     此处应该使用定时程序，来做处理
+     */
 function unlink(file) {
-    if (!file) return
-    console.log('正在删除文件：', file)
-    fs.unlink(file, function (err) {
-        if (!err) {
-            console.log('成功删除文件：' + file)
-        } else {
-            console.error('失败失败：', err, file)
-        }
-    })
-}
+        if (!file) return
+        console.log('正在删除文件：', file)
+        fs.unlink(file, function (err) {
+            if (!err) {
+                console.log('成功删除文件：' + file)
+            } else {
+                console.error('失败失败：', err, file)
+            }
+        })
+    }

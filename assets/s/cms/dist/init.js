@@ -1,0 +1,1 @@
+define("sjplus/cms/stable/init",[],function(){var a=$(document.forms["update-source"]);a.on("submit",function(b){b.preventDefault(),$.post("/edit/update-source",a.serialize(),function(a){alert(a)})})});

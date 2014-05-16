@@ -7,7 +7,7 @@ var app = require('app')
 var db = require('db')
 var helper = require('./helper')
 
-app.get(/\/edit\/source\/(.+)/, helper.csrf, function (req, res) {
+app.get(/\/edit\/source\/(.+)/, function (req, res) {
     var ObjectId = db.mongodb.ObjectID
     try {
         var id = ObjectId(req.params[0])
@@ -84,7 +84,7 @@ app.post('/edit/update-source', function (req, res) {
                 page_url: docs.page_url,
                 source: content,
                 owner_id: req.session._id,
-                owner_name: req.session.name,
+                owner_name: req.session.user,
                 ts: Date.now()
             }, {}, function (err, docs) {
                 res.json({status: 1, msg: '成功更新模板'})

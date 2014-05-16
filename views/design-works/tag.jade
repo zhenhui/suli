@@ -1,0 +1,26 @@
+extends /layout
+block css
+    link(rel="stylesheet",href="#{assetsCDN}/s/design-works/tag.css")
+block content
+    .wrapper
+        .wrapper-990
+            #user-panel
+    .wrapper
+        .wrapper-990.clearfix
+            #sidebar-wrapper
+                #sidebar-container
+                    #sidebar
+                        h2 分类
+                        #J-category-container.category
+                            | 加载中...
+                        h2 标签
+                        .tag-control#J-tag-control-container
+            #tag-design-works-wrapper
+                #design-works-container
+                    ul.design-works-list.clearfix#J-design-works-list
+                .show-more
+                    a.btn.btn-large.btn-disabled.show-more.J-show-more 查看更多
+block js
+    script(src="#{assetsCDN}/s/design-works/dist/tag/tag.js")
+    script.
+        seajs.use('sjplus/design-works/0.0.1/tag/tag')

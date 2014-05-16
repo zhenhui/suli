@@ -1,0 +1,1 @@
+define("sjplus/cms/stable/compile-template",[],function(){KISSY.use("json",function(a){var b=document.forms["origin-template"],c=$(b);c.on("submit",function(b){b.preventDefault(),$.post("/compile-template",c.serialize(),function(b){b.err?alert("存在错误：\r\n"+a.JSON.stringify(b,void 0,"    ")):alert("保存成功")})})})});

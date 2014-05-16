@@ -1,116 +1,101 @@
+block variables
 doctype 5
 html
     head
         meta(charset="utf-8")
-        meta(http-equiv="X-UA-Compatible",content="IE=edge")
-        title 视界 Beta
-        link(rel='stylesheet', href='#{assetsCDN}/s/reset.css')
-        link(rel='stylesheet', href='#{assetsCDN}/s/global.css')
-        link(rel='stylesheet', href='#{assetsCDN}/s/font.css')
+        meta(http-equiv="X-UA-Compatible",content="IE=edge,chrome=1")
+        link(rel="icon",href="/favicon.ico",type="image/x-icon")
+        link(rel="shortcut icon",href="/favicon.ico",type="image/x-icon")
+        -var pageTitle = pageTitle || "视界 Beta"
+        title #{pageTitle}
+        -var pageDescribe = pageDescribe || "专注设计、交互、前端转载和分享，您可以上传个人作品让更多人看见，发表文章让更多人参与交流，期待你的参与！让我们一起开拓视界。"
+        meta(name="Description",content="#{pageDescribe}")
+        link(rel='stylesheet', href='#{assetsCDN}/s/??reset.css,global.css,font.css?t=20131213.css')
         | <!--[if lte IE 7]><script src="#{assetsCDN}/s/fonts/lte-ie7.js"></script><![endif]-->
         script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js",data-config="{combine:true}")
         block css
         script.
-            window['hostDOMAIN']='#{hostDOMAIN}'
-            window['assetsCDN']='#{assetsCDN}'
-            window['imgCDN']='#{imgCDN}'
-            if(!window.console)window.console=function(){}
-        script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js")
-        script(id="seajsnode",src="#{assetsCDN}/s/sea.js")
-        script.
-            KISSY.config({
-                modules: {
-                    'sizzle': { alias: ['node'] },
-                    'ajax': { alias: ['io'] },
-                    'calendar': { alias: ['gallery/calendar-deprecated/1.0/']  },
-                    'datalazyload': {  alias: ['gallery/datalazyload/1.0/'] },
-                    'switchable': { alias: ['gallery/switchable/1.3.1/'] },
-                    'imagezoom': { alias: ['gallery/imagezoom/1.0/'] },
-                    'waterfall': { alias: ['gallery/waterfall/1.0/'] },
-                    'flash': { alias: ['gallery/flash/1.0/'] }
-                }
-            });
-            seajs.config({
-                base :"#{assetsCDN}/s/sea-modules/",
-                vars: {
-                    locale: 'zh-cn'
-                },
-                paths:{
-                    s : "#{assetsCDN}/s",
-                    sea:"#{assetsCDN}/s/sea-modules"
-                },
-                alias: {
-                    "$": 's/global/jquery',
-                    'sha3':'s/global/crypto/sha3',
-                    template: 'sea/xiongsongsong/template/1.1.0/template',
-                    'popup':'sea/arale/popup/1.1.5/popup'
-                },
-                preload: ['$']
-            });
-            seajs.use('s/global/init')
-            var _csrf_token_="#{token}"
+           if(location.host==='192.168.155.100'){
+                location.href='http://www.sjplus.cn/'
+           }
+            window._csrf_token_='#{req.csrfToken()}';
+            window.onerror=function(msg,url,line){
+                var r = window.ActiveXObject ? new window.ActiveXObject("Microsoft.XMLHTTP") : new window.XMLHttpRequest()
+                r.open("POST", '/admin/log/browser-log', true)
+                r.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+                r.send('_csrf='+window._csrf_token_+'&msg='+encodeURIComponent(msg)+'&url='+encodeURIComponent(url)+'&line='+line+'&location='+encodeURIComponent(location.href))
+                return false
+            }
+            var hostDOMAIN='#{hostDOMAIN}',assetsCDN='#{assetsCDN}',imgCDN='#{imgCDN}'
+            if(!window.console)window.console={log:function(){}}
+        script(id="seajsnode",src="#{assetsCDN}/s/??sea.js,seajs-combo.js,sea-style.js,global/jquery.js,config.js?t=20131213.js")
     body
         #navigation
             .wrapper
-                .wrapper-990
+                .wrapper-990.clearfix
                     h1
                         a(href="/")
                             img(src="/s/logo.png")
                     ul
                         li
-                            a(href="/design-works") 作品展
+                            #login-register-area
+                                - if(!req.session._id)
+                                    .J-login-register-triggers
+                                        a.J-login-triggers(href="javascript:void(0)") 登陆
+                                        span.J-spector.spector /
+                                        a(href="/register") 注册
+                                - else
+                                    .login-user-info.J-logged-list-triggers
+                                        span.avatar
+                                            img.J-avatar-own-20(src="#{imgCDN}/avatar/#{req.session._id}_20x20")
+                                        span.J-user-name #{req.session.user}
+                                        #logged-wrapper.hide
+                                            .logged-list.J-logged-list
+                                                .list
+                                                    ul
+                                                        li
+                                                            a(href="/u/#{req.session._id}") 我的主页
+                                                        li
+                                                            a.J-publish-work 发布作品
+                                                        li
+                                                            a(href='/personal#all-works{"view":"design"}') 管理设计作品
+                                                        li
+                                                            a(href="/personal#account-setting") 帐号设置，头像
+                                                        li
+                                                            a(href="/login/login-out") 退出
                         li
                             a(href="/article") 文章
-                        //li
-                            a 关于我们
-                        //li
-                            a 招聘
                         li
-                            #login-register-area
-                                //#user-info
-                                    span
-                                        img(src="http://dribbble.s3.amazonaws.com/users/49563/avatars/original/f7c80d46.jpg?1325837502")
-                                    span.user_name Jakon
-                                    .list
-                                        a 信息
-                                        a("/publish/design-works") 发布作品
-                                        a 设置帐号
-                                        a 退出
-
-                                .J-login-register-triggers
-                                    a.J-login-triggers(href="javascript:void(0)") 登陆
-                                    //span.J-spector.spector /
-                                    //a(href="#") 注册
-
-
+                            a(href="/design-works") 作品展
         block content
         #footer
             .main-wrapper
-                .wrapper-990
+                .wrapper-990#footer-container
                     h2
                         a(href="/")
-                            img(src="/s/logo.png")
-                    //p.des 感谢梁云的赐名
-                    //.job
-                        h3 最新招聘
-                        ul.list
-                            li
-                                a [杭州] 杭州UX正在照片：视觉设计师
-                            li
-                                a [杭州] 杭州UX正在照片：视觉设计师
-                            li
-                                a [杭州] 杭州UX正在照片：视觉设计师
-                    //.article
-                        h3 设计资讯
-                        ul.list
-                            li
-                                a 扁平化设计新趋势
-                            li
-                                a [Web页面中的“们”-web端登陆页面的设计]
-                            li
-                                a 界面设计俗称【淘宝UDC】
+                            img(src="/read/52959f11d6fa886445000040.png")
             .copyright
                 .wrapper-990
-                    |  &copy; beyondsoft 2013~
+                    | &copy; beyondsoft 2013~
+
+        script(src="#{assetsCDN}/s/??global/dist/init.js,global/dist/login/login.js,global/dist/publish-type/init.js,global/dist/crypto/sha3.js,global/dist/weixin-weibo-float-menu/init.js,sea-modules/xiongsongsong/template/1.1.0/template.js,sea-modules/arale/popup/1.1.5/popup.js,sea-modules/arale/position/1.0.1/position.js,global/dist/card/init.js")
+        script.
+            seajs.use([
+                'sjplus/global/0.0.1/init',
+                'sjplus/global/0.0.1/login/login',
+                'sjplus/global/0.0.1/publish-type/init',
+                'sjplus/global/0.0.1/weixin-weibo-float-menu/init',
+                'sjplus/global/0.0.1/card/init'
+            ])
 
         block js
+        - if(req.session && req.session.userSessionNotice)
+            - Object.keys(req.session.userSessionNotice).forEach(function(item){
+                script(src="#{assetsCDN}/s/user-session-notice/dist/#{item}/init.js")
+                script.
+                    seajs.use(['sjplus/user-session-notice/0.0.1/require_modify_pwd/init'])
+            -})
+
+        script.
+            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F03fa9269ff13e7c3893916e712b703ee' type='text/javascript'%3E%3C/script%3E"));

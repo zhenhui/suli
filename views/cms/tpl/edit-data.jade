@@ -2,7 +2,7 @@ extends ../layout
 block content
     form(name="update-source",action="/update-data",method="post")
         input(type="hidden",name="page_id",value="#{docs.page_id}")
-        input(type="hidden",name="_csrf",value="#{token}")
+        input(type="hidden",name="_csrf",value="#{req.csrfToken()}")
         table(style="display:none")
             tr
                 th 页面名称
@@ -20,6 +20,7 @@ block content
         #editFormWrapper
         button(type="submit",style="padding:12px;font-size:22px;") 保存数据
 block js
+    script(src="#{assetsCDN}/s/cms/dist/data/init.js")
     script.
         var cf=!{result}
-        seajs.use('s/cms/data/init')
+        seajs.use('sjplus/cms/stable/data/init')

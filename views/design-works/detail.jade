@@ -1,51 +1,45 @@
-extends /layout
+block variables
+    -var pageTitle = docs.title
+    -var date=new Date(docs.ts)
+    -var createDate=date.getFullYear()+'年'+(date.getMonth()+1)+'月'+date.getDate()+'日'+date.getHours()+':'+date.getMinutes()
+    -var pageDescribe = '设计师：'+docs.owner_user+'，描述：'+docs.content+'，分类：'+docs.category+'，上传日期：'+createDate
 
+extends /layout
 block css
     link(rel="stylesheet",href="#{assetsCDN}/s/design-works/detail.css")
-block js
-    script.
-        var designWorksId="#{docs._id}"
-        seajs.use('s/design-works/detail')
-
 block content
     #main-container.wrapper-990.clearfix
         .main-content
             h1
-                a.avatar(href="/u/#{docs.owner_id}")
+                a.avatar.J-user-card(href="/u/#{docs.owner_id}",data-user-id="#{docs.owner_id}")
                     img(src="#{imgCDN}/avatar/#{docs.owner_id}_80x80")
                 span.title=docs.title
                 span.category 【#{docs.category}】
-                - var date=new Date(docs.ts)
-                    span.date #{date.getFullYear()}年#{date.getMonth()+1}月#{date.getDate()}日 #{date.getHours()} : #{date.getMinutes()}
+                    span.date=createDate
 
             .main-pic-container
                 .main-pic
-                    img(src="#{imgCDN}/read/#{docs.file_id.split(':')[0]}")
-                -if(docs.ps_id.length>0)
-                    .ps 附件下载
-                        -docs.ps_id.forEach(function(item,index){
-                            -item=item.split(':')
-                                a(href="#{imgCDN}/read/#{item[0]}",download="#{item[1]}") #{item[1]}
-                        -})
-            #J-comment-container.J-comment-container(data-id="#{docs._id}")
-                h2 正在加载评论...
-                #comment-container.comment-container
-                    .item-container.new-comment.J-new-comment.ks-waterfall
-                        textarea#J-comment-textarea(data-id="#{docs._id}")
-                        .J-send-new-comment
-                            button.J-send-new-comment-trigger.btn.btn-normal 发送
-
+                    img.J-preview-image(src="#{imgCDN}/read/#{docs.file_id.split(':')[0]}")
+            #J-comment-wrapper(data-page-id="#{docs._id}",data-type="design-works")
         .sidebar
             .des
                 h2 设计简介：
                 div.describe=docs.content
-                div.love-comment.clearfix
-                    a.J-like.trigger(data-id="#{docs._id}")
+                div.like-comment.clearfix
+                    a.J-like.trigger(data-id="#{docs._id}",data-type="design-works")
                         span.data-icon(data-icon!="&#xe007;")
-                        span.text.J-text 喜欢
-                    a.J-comment-trigger.trigger(data-id="#{docs._id}")
+                        span.text
+                            span.J-text 喜欢
+                            | (
+                            span.J-count=docs.index.like
+                            | )
+                    a.J-comment.J-comment-trigger.trigger(data-id="#{docs._id}",href="#J-comment-wrapper")
                         span.data-icon(data-icon!="&#xe006;").
-                        span.text.J-text 评论
+                        span.text
+                            span.J-text 评论
+                                | (
+                                span.J-count=docs.index.comment
+                                | )
                 //.banner
                     h2 更多
                     p
@@ -53,8 +47,21 @@ block content
                             img(src="#{assetsCDN}/s/global/temp1.png")
                         a.pic(herf="#")
                             img(src="#{assetsCDN}/s/global/temp2.png")
-            //.tag
-                h2 相关标签
-                .tag-control
-                    #foreach
-                        a=item
+            - if(Array.isArray(docs.tag))
+                .tag
+                    h2 相关标签
+                    .tag-control
+                        - docs.tag.forEach(function(item){
+                            a=item
+                        - })
+    #preview-img(style="position:fixed;left:0;top:0;z-index:12;")
+    #preview-close(style="display:none;background#:aaa;position:fixed;cursor:pointer;right:0;top:0;line-height:50px;font-size:50px;z-index:13;color:#fff;padding:0 12px;background:#000;filter:alpha(opacity=40);opacity:.5;") &times
+    #preview-img-mask(style="display:none;position:fixed;left:0;top:0;bottom:0;right:0;z-index:11;background:#000;filter:alpha(opacity=40);opacity:.5;")
+block js
+    script(src='#{assetsCDN}/s/global/jquery-drag-ui.js')
+    script(src='#{assetsCDN}/s/design-works/drag.js')
+    script(src="#{assetsCDN}/s/??design-works/dist/detail/detail.js,global/dist/like/init.js,global/dist/comment/comment.js")
+    script.
+        var designWorksId="#{docs._id}"
+        seajs.use('sjplus/design-works/0.0.1/detail/detail')
+

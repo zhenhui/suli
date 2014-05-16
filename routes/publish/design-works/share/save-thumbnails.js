@@ -21,8 +21,8 @@ var fileSize = 10 * 1024 * 1000
 //缩略图规格
 var resizeParam = [
     {
-        width: 230,
-        height: 175,
+        width: 460,
+        height: 350,
         quality: 90
     },
     {
@@ -99,6 +99,7 @@ exports.saveFile = function (req, res) {
     var options = {
         chunk_size: 1024 * 256 * 10,
         metadata: {
+            temp: true,
             owner: ownerID,
             type: '作品缩略图'
         }
@@ -128,14 +129,7 @@ exports.saveFile = function (req, res) {
 
                 //获取大小
                 gm(file.path).size(function (err, size) {
-                    if (!err && size.width === 460 && size.height === 350) {
-                        saveImageFile(file, size)
-                    } else {
-                        console.log('尺寸不正确', err)
-                        uploadInfo.err.push('尺寸不正确')
-                        end()
-                        unlink(file.path)
-                    }
+                    saveImageFile(file, size)
                 })
 
             } else {
@@ -175,14 +169,16 @@ exports.saveFile = function (req, res) {
                 break;
         }
 
-        _gm.write(qualityPath, function (err) {
+        var defaultWidth = 230
+        var defaultHeight = 175
+        _gm.resize(defaultWidth, defaultHeight, '!').write(qualityPath, function (err) {
                 if (!err) {
-                    var fileName = file.fileId + '_' + size.width + 'x' + size.height + '.' + file.format
+                    var fileName = file.fileId + '_' + defaultWidth + 'x' + defaultHeight + '.' + file.format
                     var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
                     gs.writeFile(qualityPath, function (err) {
                         if (!err) {
                             //此ID用作返回给客户端
-                            uploadInfo._id = file.fileId + '_' + resizeParam[0].width + 'x' + resizeParam[0].height + '.' + file.format
+                            uploadInfo._id = fileName
                             console.log('成功保存原图' + fileName)
                         } else {
                             uploadInfo.err.push('无法保存优化后的图片到数据库中')
@@ -235,7 +231,7 @@ exports.saveFile = function (req, res) {
             switch (file.format) {
                 //PSD因为压缩后会生成jpg，所以其实是case 'jpg|psd''
                 case 'jpg':
-                    gm(file.path).resize(cur.width, cur.height).interlace('Line').noProfile().quality(cur.quality).write(dstSrc, function (err) {
+                    gm(file.path).resize(cur.width, cur.height, '!').interlace('Line').noProfile().quality(cur.quality).write(dstSrc, function (err) {
                         if (!err) {
                             save(fileName, dstSrc)
                         } else {
@@ -249,7 +245,7 @@ exports.saveFile = function (req, res) {
                     //增加背景色是为了减弱gif的锯齿，类似于ps中的杂边
                     //http://imagemagick.org/Usage/anim_mods/
                     //Resize with Flatten, A General Solution.
-                    gm.subClass({ imageMagick: true })(file.path).coalesce().borderColor('white').border(0, 0).resize(cur.width, cur.height).write(dstSrc, function (err) {
+                    gm.subClass({ imageMagick: true })(file.path).coalesce().borderColor('white').border(0, 0).resize(cur.width, cur.height, '!').write(dstSrc, function (err) {
                         if (!err) {
                             save(fileName, dstSrc)
                         } else {
@@ -260,7 +256,7 @@ exports.saveFile = function (req, res) {
                     })
                     break;
                 case 'png':
-                    gm(file.path).resize(cur.width, cur.height).write(dstSrc, function (err) {
+                    gm(file.path).resize(cur.width, cur.height, '!').write(dstSrc, function (err) {
                         if (!err) {
                             save(fileName, dstSrc)
                         } else {
@@ -284,6 +280,7 @@ exports.saveFile = function (req, res) {
                             owner: ownerID,
                             width: size.width,
                             height: size.height,
+                            temp: true,
                             type: "作品缩略图"
                         }
                     }

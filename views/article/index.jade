@@ -1,9 +1,10 @@
+block variables
+    -var pageTitle='视界Beta文章列表'
+    -var pageDescribe = '最新文章：'+data[0].title+'。'+data[0].content
+
 extends /layout
 block css
     link(rel="stylesheet",href="#{assetsCDN}/s/article/article.css")
-block js
-    script.
-        seajs.use('s/article/init')
 block content
     .wrapper
         .wrapper-990.clearfix
@@ -11,7 +12,7 @@ block content
                 -data.forEach(function(item){
                     .article
                         h2
-                            a(href="/u/#{item.owner_id}")
+                            a.J-user-card(href="/u/#{owner_id}",data-user-id="#{item.owner_id}")
                                 img.avatar(src="#{imgCDN}/avatar/#{item.owner_id}_30x30")
                             span.title
                                 a(href="/article/#{item.title}")=item.title
@@ -28,3 +29,9 @@ block content
             #sidebar
                 h2 分类
                 #category-container
+block js
+    script(src="#{assetsCDN}/s/article/dist/list/init.js")
+    script.
+        seajs.use([
+            'sjplus/article/0.0.1/list/init'
+        ])

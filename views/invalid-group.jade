@@ -9,8 +9,8 @@ block content
             -})
     -if(status===-10)
         script.
-            seajs.use('s/global/login/login',function(login){
-                login.login(function(){
-                    window.location.reload()
+            seajs.use('sjplus/global/0.0.1/login/login',function(login){
+                login.login(function(data){
+                    if(data.status===1) window.location.reload()
                 })
             })

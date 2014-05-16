@@ -1,57 +1,59 @@
-extends /layout
+extends ../layout
 
 block css
-    link(rel='stylesheet', href='#{assetsCDN}/s/admin/user/manager.css')
+    link(rel="stylesheet",href="/s/admin/user/manager.css")
 block js
     script.
         seajs.use('s/admin/user/manager')
-
 block content
-    .wrapper
-        .wrapper-990
-            h1 添加新用户
-            form#add-user(action="/admin/user/add-user",method="post",name="add-user")
-                input(type="hidden",name="_csrf",value="#{token}")
-                table
-                    tr
-                        th(width) 用户名
+    ul.nav.nav-tabs
+        li.active
+            a(href="#edit-user",data-toggle="tab") 管理用户
+        li
+            a(href="#fixed-bug",data-toggle="tab") 进程操作
+    .tab-content
+        #edit-user.tab-pane.active
+            table.table.table-bordered.table-striped.table-condensed
+                tr
+                    th(width="10%").user-name 用户名
+                    th(width="50%").group 权限(空格隔开)
+                    th.st 创建时间
+                    th.control 操作
+                - docs.forEach(function(user){
+                    tr(data-id="#{user._id}").J-item
+                        td(align="right")
+                            span.user-name=user.user
                         td
-                            input(type="text",name="user-name")
-                    tr
-                        th 密码
+                            - if(Array.isArray(user.group))
+                                input.form-control.J-group(type="text",name="group",value="#{user.group.join(' ')}")
+                            - else
+                                | 无任何权限
                         td
-                            input(type="password",name="pwd1")
-                    tr
-                        th 确认密码
+                            - var d = new Date(user.ts)
+                            span.ts #{d.getFullYear()}-#{d.getMonth()+1}-#{d.getDate()} #{d.toLocaleTimeString()}
                         td
-                            input(type="password",name="pwd2")
-                    tr
-                        th 权限(空格隔开)
-                        td
-                            input(type="text",name="group")
-                    tr
-                        th
-                        td
-                            input.btn.btn-large(type="submit",value="添加用户")
-            h1 编辑用户权限
-            #edit-user
-                table(style="width:100%")
-                    tr
-                        th(width="10%").user-name 用户名
-                        th(width="60%").group 权限(空格隔开)
-                        th.st 创建时间
-                        th.control 操作
-                    - docs.forEach(function(user){
-                        tr(data-id="#{user._id}").J-item
-                            td(align="right")
-                                span.user-name=user.user
-                            td
-                                input.group.text-field.J-group(type="text",name="group",value="#{user.group.join(' ')}")
-                            td
-                                - var d = new Date(user.ts)
-                                span.ts #{d.getFullYear()}-#{d.getMonth()+1}-#{d.getDate()} #{d.toLocaleTimeString()}
-                            td
-                                a(href="#").btn.J-update-user 更新权限
-                                | &nbsp
-                                a(href="#",data-id="").btn.J-delete-user 删除
-                    -})
+                            a(href="#").btn.J-update-user 更新权限
+                            | &nbsp
+                            a(href="#",data-id="").btn.J-delete-user 删除
+                - })
+        #fixed-bug.tab-pane
+            table.table.table-bordered.table-striped.table-condensed
+                tr
+                    th(width="20%") 名称
+                    th(width="60%") 操作
+                tr
+                    td git pull
+                    td
+                        .form-inline
+                            .form-group.git-pull
+                                input.J-git-pull(type="button",value="Git pull").btn.btn-danger
+                            textarea#gitPullResult.form-control(rows="10",placeholder="操作结果")
+                tr
+                    td 重启PM2进程
+                    td
+                        form.form-inline
+                            .form-group
+                                input#pm2id.form-control(type="text",placeholder="pm2 id",size="6")(style="text-align:center")
+                            .form-group &nbsp
+                                input.J-result-pm2-id(type="button",value="重启进程").btn.btn-danger
+                            textarea#restartPM2idResult.form-control(rows="10",placeholder="操作结果")

@@ -1,0 +1,33 @@
+extends /layout
+block css
+    link(rel="stylesheet",href="#{assetsCDN}/s/register/index.css")
+block content
+    .wrapper
+        .wrapper-990
+
+            #register-wrapper
+                #register-type-container
+                    img(src="#{assetsCDN}/s/register/img/email-type.png")
+                    h2 视界+账户注册
+                    p 使用用户名和邮箱注册
+                form#register-form(name="register",action="/register",method="post")
+                    .require-field
+                        input(type="text",autocomplete="off",name="_",placeholder="用户名，至少2个字符")
+                        input(type="text",autocomplete="off",name="__",placeholder="常用邮箱")
+                        input(type="password",autocomplete="off",name="___",placeholder="密码，至少3位")
+                    #tips-wrapper
+                        .tips-content
+                    #submit-wrapper.submit
+                        span.captcha
+                            input(type="text",name="captcha",maxlength="4")
+                            a(href="javascript:void(0)")#captchaTrigger
+                                img#captchaImg(src="/captcha?t=#{Date.now()}")
+                        span.label
+                            input#read-rule(type="checkbox",name="read-rule",value="yes",checked="checked")
+                            label(for="read-rule") 同意注册协议
+                        input(type="button",value="取消",onclick="location,history.back()").btn.btn-large
+                        input(type="submit",value="申请注册").btn.btn-large.btn-highlight
+block js
+    script(src="#{assetsCDN}/s/register/dist/init.js?t=20131213.js")
+    script.
+        seajs.use(["sjplus/register/0.0.1/init"])

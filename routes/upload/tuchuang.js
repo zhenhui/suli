@@ -16,7 +16,7 @@ var ObjectID = DB.mongodb.ObjectID
 var gm = require('gm')
 var app = require('app')
 
-var fileSize = 501 * 1024
+var fileSize = 801 * 1024
 
 function deleteRequestFile(file) {
     if (Array.isArray(file)) {

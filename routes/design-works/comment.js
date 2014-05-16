@@ -12,9 +12,20 @@ var ObjectID = DB.mongodb.ObjectID
 var xss = require('xss')
 
 
-app.post('/design-works/comment/new', function (req, res) {
+app.post('/comment/new', function (req, res) {
 
     var result = {err: []}
+
+    var type = req.body.type
+
+    var allowType = ['design-works', 'article']
+
+    if (allowType.indexOf(type) < 0) {
+        result.err.push('暂不支持' + type + '类型的评论')
+        result.status = -4
+        res.json(result)
+        return
+    }
 
     if (require('helper').isLogin(req) === false) {
         result.status = -1
@@ -35,7 +46,6 @@ app.post('/design-works/comment/new', function (req, res) {
         ts: Date.now()
     }
 
-
     //作品ID是否正确
     try {
         var id = ObjectID(data.work_id)
@@ -55,10 +65,10 @@ app.post('/design-works/comment/new', function (req, res) {
 
     data.content = xss(data.content)
 
-    var works = new DB.mongodb.Collection(DB.Client, 'design-works')
-    var comment = new DB.mongodb.Collection(DB.Client, 'design-works-comment')
+    var collection = new DB.mongodb.Collection(DB.Client, type)
+    var comment = new DB.mongodb.Collection(DB.Client, 'comment')
 
-    works.findOne({_id: id, status: {$gte: 1}}, {_id: 1}, function (err, docs) {
+    collection.findOne({_id: id, status: {$gte: 1}}, {_id: 1}, function (err, docs) {
         if (!err && docs) {
             comment.insert(data, {safe: true}, function (err, docs) {
                 if (!err && docs.length > 0) {
@@ -69,7 +79,7 @@ app.post('/design-works/comment/new', function (req, res) {
                     comment.count({work_id: id.toString()}, function (err, num) {
                         //开始更新字段
                         if (!err && num >= 0) {
-                            works.update({_id: id}, {$set: {'index.comment': num}}, {w: 1}, function (err, num) {
+                            collection.update({_id: id}, {$set: {'index.comment': num}}, {w: 1}, function (err, num) {
                                 if (!err) {
                                     console.log('成功:更新了作品' + id.toString() + '的评论数为' + num)
                                 } else {
@@ -96,7 +106,7 @@ app.post('/design-works/comment/new', function (req, res) {
 
 
 //获取某条作品的评论
-app.get('/design-works/comment/list', function (req, res) {
+app.get('/comment/list', function (req, res) {
 
     var result = {err: []}
     var _id = req.query.id
@@ -132,7 +142,7 @@ app.get('/design-works/comment/list', function (req, res) {
         return
     }
 
-    var comment = new DB.mongodb.Collection(DB.Client, 'design-works-comment')
+    var comment = new DB.mongodb.Collection(DB.Client, 'comment')
 
     var filter = {work_id: _id, status: {$gte: 1}}
     comment.count(filter, function (err, count) {

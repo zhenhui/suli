@@ -1,0 +1,38 @@
+extends /layout
+block css
+    link(rel="stylesheet",href="#{assetsCDN}/s/register/validator.css")
+block content
+    .wrapper
+        .wrapper-990
+            .active-info
+                - if(status===1)
+                    | 您已经完成注册！
+                    p 用户名或邮箱名，均可作为登陆名使用，如果您忘记了密码，可在登陆窗口中点击找回密码。我们会将新密码发送到您的邮箱中。
+                    p 您的用户名为：#{user}
+                    p 您的邮箱为：#{email}
+                    p 提示:用户名或邮箱均可作为登陆名使用哦.
+                    input#start-login-trigger.btn.btn-confirm(type="button",value="现在登陆")
+                - else if(status===-2)
+                    | 链接已经失效
+                - else if(status===-3)
+                    | 您不能在登陆状态下，激活账户
+block js
+    script.
+        seajs.use('sjplus/global/0.0.1/login/login',function(login){
+            $('#start-login-trigger').on('click',function(ev){
+                ev.stopPropagation()
+                ev.preventDefault()
+                var $this=$(this)
+                if(!$this.data('is-bind')){
+                    login.login(function(data){
+                        if(data.status===1){
+                            location.href='/'
+                        }
+                    })
+                    console.log('done')
+                    $this.data('is-bind',true)
+                }else{
+                    login.login()
+                }
+            })
+        })

@@ -1,0 +1,22 @@
+{
+    "family": "sjplus",
+    "name": "global",
+    "version": "0.0.1",
+    "description": "global file",
+    "spm": {
+        "include":"relative",
+        "output": [
+            "init.js",
+            "comment/comment.js",
+            "crypto/sha3.js",
+            "like/init.js",
+            "login/login.js",
+            "login/require_modify_pwd.js",
+            "publish-type/init.js",
+            "tab/init.js",
+            "weixin-weibo-float-menu/init.js",
+            "card/init.js"
+        ]
+
+    }
+}

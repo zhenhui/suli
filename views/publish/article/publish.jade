@@ -1,13 +1,8 @@
 extends /layout
 
 block css
-    link(rel="stylesheet",href="#{assetsCDN}/s/reset.css")
-    link(rel='stylesheet',href='#{assetsCDN}/s/publish/article/article.css')
+    link(rel="stylesheet",href="#{assetsCDN}/s/??reset.css,publish/src/article/article.css")
     link(rel='stylesheet',href='http://g.tbcdn.cn/kissy/k/1.4.0/??css/dpl/base-min.css,editor/theme/cool/editor-min.css')
-
-block js
-    script.
-        seajs.use('s/publish/article/init')
 
 block content
     #publish.wrapper
@@ -63,3 +58,7 @@ block content
                         td(colspan=2)
                             //button.btn.btn-large(type="submit",name="preview") 预览
                             button.btn.btn-large(type="submit",name="publish") 发布
+block js
+    script(src="#{assetsCDN}/s/publish/dist/article/init.js")
+    script.
+        seajs.use('sjplus/publish/0.0.1/article/init')

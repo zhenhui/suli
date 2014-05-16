@@ -6,6 +6,11 @@ html
 body
   font: 12px "微软雅黑", simhei, simsun, "Lucida Grande", Helvetica, Arial, sans-serif
   color: #333
+  min-width 990px
+
+html
+body
+  box-sizing border-box
 
 .clearfix:after
   content: "."
@@ -44,6 +49,7 @@ a:hover
   border: none
   padding: 3px 12px
   font-family: "华文细黑", "Microsoft Yahei", sans-serif
+  cursor default
 
 .btn-normal
   padding: 5px 12px
@@ -54,6 +60,7 @@ a:hover
   border: solid 1px border-color
 
 .btn:hover
+.btn.btn-highlight
   background hover-color
   color #fff
 
@@ -79,6 +86,11 @@ a:hover
 .btn-error:hover
   color: #fff
 
+.btn.btn-disabled
+  background-color #bebfb3
+  color #666
+  cursor not-allowed
+
 //标签
 .text-success
   color: #00c600
@@ -89,16 +101,19 @@ a:hover
 //导航
 #navigation
   background: #fff
-  height: 80px
 
 #navigation .wrapper-990
   position: relative
   margin-top: 0
+  height 80px
+  width auto
+  min-width 400px
+  max-width 990px
 
 #navigation h1
   position: absolute
   font-size: 56px
-  top 5px
+  top 11px
   color: #ff3b35
 
 #navigation h1 a
@@ -106,12 +121,14 @@ a:hover
 
 #navigation ul
   position: absolute
-  top: 37px
-  right: 0
+  top: 34px
+  right: 8px
+  line-height 20px
 
 #navigation ul li {
-  float: left
+  float: right
   margin-left: 32px
+  white-space nowrap
 }
 
 //面包屑
@@ -123,11 +140,6 @@ a:hover
   font-size: 20px
 
 //登陆
-#login-register-area
-  visibility hidden
-
-#login-register-area.show
-  visibility visible
 
 #login-register-area .J-spector
   margin: 0 1px
@@ -185,62 +197,40 @@ a:hover
   text-align center
 
 #email-login
-  background-position -70px 0
+  background-position - 70px 0
 
 #weibo-login
-  background-position -147px 0
+  background-position - 147px 0
 
 #domain-login:hover
-  background-position 0 -48px
+  background-position 0 - 48px
 
 #email-login:hover
-  background-position -70px -48px
+  background-position - 70px - 48px
 
 #weibo-login:hover
-  background-position -147px -48px
+  background-position - 147px - 48px
 
 #login-register-area .J-login-register-triggers
   overflow: hidden
 
 #login-register-area
   height 22px
-  position relative
-  overflow hidden
-  width 140px
-
-//登陆后的用户信息
-.login-user-info
-  position: absolute
-  top: 20px
-  left: 0
-  cursor: pointer
+  cursor pointer
 
 .login-user-info span.avatar
+  display inline-block
   height: 20px
   width: 20px
-  overflow: hidden
-  text-align: center
-  position: absolute
-  left: 0
-  top: 0
-
-.login-user-info span.avatar i
-  display: inline-block
-  height: 20px
-  overflow: hidden
-  width: 0
-  position: relative
-  vertical-align: middle
+  vertical-align middle
 
 .login-user-info span.avatar img
-  width: 0
-  height: 0
-  display: inline-block
-  vertical-align: middle
-  border-radius: 2px
+  border-radius 2px
 
 .login-user-info .J-user-name
-  margin-left: 24px
+  margin-left 4px
+  display inline-block
+  vertical-align middle
 
 //登陆后的用户菜单
 .logged-list
@@ -278,7 +268,7 @@ a:hover
   left: 22px
   top: 22px
   width: 200px
-  height: 200px
+  height: 171px
   background url(http://www.sjplus.cn/read/52843ad7fe82797014000140.png)
 
 .publish-control a.design-works span.bg
@@ -309,7 +299,7 @@ a:hover
 .publish-control a span.title
   position: absolute
   left: 0
-  top: 240px
+  top: 222px
   width: 100%
   text-align: center
   font-size: 20px
@@ -323,8 +313,8 @@ a:hover
   visibility visible
 
 .publish-control a:hover span.bg strong
-  filter: unquote("progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#CC000000', endColorstr='#CC000000');")
-  background: rgba(0, 0, 0, 0.8);
+  filter unquote("progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#CC000000', endColorstr='#CC000000')")
+  background rgba(0, 0, 0, 0.8)
 
 .ui-dialog:focus
   outline: none
@@ -432,6 +422,54 @@ span.ks-dialog-close-x
 
 .tab .behavior-active
   font-size: 20px !important
+
+/*标签*/
+
+.tag-control a
+  display inline-block
+  background #fff
+  border solid 1px #999
+  border-radius 2px
+  padding 3px 11px 3px 8px
+  margin-right 5px
+  margin-bottom 5px
+  position relative
+
+.tag-control a .close
+  position absolute
+  right 2px
+  top 2px
+  visibility hidden
+
+.tag-control a.active
+  background hover-color
+  color #fff
+  border solid 1px hover-color
+
+.tag-control a.active .close
+  visibility visible
+
+#footer
+  position relative
+
+#feedback
+  position absolute
+  right 0
+  top 36px
+  font-size 12px
+
+#feedback div
+  float left
+  margin-right 22px
+
+#feedback h4
+  font-size 18px
+  font-weight normal
+  margin-bottom 18px
+
+#feedback a
+  display inline-block
+  margin-right 3em
 
 ::-webkit-scrollbar
   width: 12px

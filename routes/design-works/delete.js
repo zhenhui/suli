@@ -38,5 +38,22 @@ app.get('/design-works/delete', function (req, res) {
             result.err.push('无法删除')
         }
         res.jsonp(result)
+
+        //更新user表中的作品数量
+        var user = new DB.mongodb.Collection(DB.userClient, 'user')
+        design.count({owner_id: req.session._id, status: {$gte: 1}}, function (err, count) {
+            if (count >= 0) {
+                user.update({_id: DB.mongodb.ObjectID(req.session._id)}, {$set: {'index.design-works': count}}, {}, function (err, result) {
+                    if (!err && result === 1) {
+                        console.log('成功更新user中的作品数量指标', result)
+                    } else {
+                        console.log('失败：更新user中的作品数量指标', err, result)
+                    }
+                })
+            } else {
+                console.log('失败：无法统计count并更新到user表中', err)
+            }
+        })
+
     })
 })

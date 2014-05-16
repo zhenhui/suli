@@ -1,0 +1,13 @@
+body {
+  margin: 22px;
+}
+.tab-content {
+  margin: 22px auto;
+}
+#add-user {
+  width: 500px;
+  margin-left: 0;
+}
+.J-git-pulld {
+  margin-bottom: 12px;
+}

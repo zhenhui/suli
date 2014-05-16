@@ -1,21 +1,47 @@
+block variables
+    -var pageTitle = title
+    -var pageDescribe = content.replace(/(?:<[^>]*>|&nbsp(?:;)?|[\r\n\s])/gm,'').substring(0,202)+'...'
+
 extends /layout
 block css
     link(rel="stylesheet",href="#{assetsCDN}/s/article/detail.css")
-block js
-    script.
-        seajs.use('s/article/init')
 block content
     .wrapper
         .wrapper-990.clearfix
-            -if(typeof title!=='undefined')
-                #article-content
-                    #article-title
-                        h1
-                           a(href="/u/#{owner_id}")
-                                img.avatar(src="#{imgCDN}/avatar/#{owner_id}_30x30")
-                                =title
-                    #article-img
-                        img(width="770",height="200",src="#{imgCDN}/read/#{thumbnails_id}")
-                    #content-wrapper !{content}
-            -else
-                | Nothing
+            .main-content.clearfix
+                -if(typeof title!=='undefined')
+                    #article-content
+                        #article-title
+                            h1
+                               a.J-user-card(href="/u/#{owner_id}",data-user-id="#{owner_id}")
+                                    img.avatar(src="#{imgCDN}/avatar/#{owner_id}_30x30")
+                               a(href="/article/#{title}")=title
+                        #article-img
+                            img(width="770",height="200",src="#{imgCDN}/read/#{thumbnails_id}")
+                        #content-wrapper !{content}
+                -else
+                    | Nothing
+            .sidebar
+                .des
+                    div.like-comment.clearfix
+                        a.J-like.trigger(data-id="#{_id}",data-type="article")
+                            span.data-icon(data-icon!="&#xe007;")
+                            span.text
+                                span.J-text 喜欢
+                                | (
+                                span.J-count=index.like
+                                | )
+                        a.J-comment-trigger.trigger(data-id="#{_id}",href="#J-comment-wrapper")
+                            span.data-icon(data-icon!="&#xe006;").
+                            span.text
+                                span.J-text 评论
+                                    | (
+                                    span.J-count=index.comment
+                                    | )
+        .wrapper-990
+            #J-comment-wrapper(data-page-id="#{_id}",data-type="article")
+block js
+    script(src="#{assetsCDN}/s/??article/dist/detail/init.js,global/dist/like/init.js,global/dist/comment/comment.js")
+    script.
+        var articleId="#{_id}"
+        seajs.use('sjplus/article/0.0.1/detail/init')
